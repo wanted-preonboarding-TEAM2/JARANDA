@@ -1,8 +1,13 @@
-import AppRouter from "routes/routes";
+import AppRouter from 'routes/routes';
+import { Global } from '@emotion/react';
+import reset from 'GlobalStyle';
 
 function App() {
   return (
-    <AppRouter />
+    <>
+      <Global styles={reset} />
+      <AppRouter />
+    </>
   );
 }
 
