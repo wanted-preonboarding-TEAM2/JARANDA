@@ -1,13 +1,5 @@
 import styled from '@emotion/styled';
 
-const PageButtonContainer = styled.li``
-
-const StyledButton = styled.button`
-  border: 1px solid green;
-  width: 40px;
-  height: 40px;
-`
-
 function PageButton({ page, setCurrentPage, getCurrentPageUserInfos }) {
 
   const handleClickButton = () => {
@@ -22,5 +14,14 @@ function PageButton({ page, setCurrentPage, getCurrentPageUserInfos }) {
     </PageButtonContainer>
   )
 }
+
+const PageButtonContainer = styled.li``
+
+const StyledButton = styled.button`
+  width: 40px;
+  height: 40px;
+  color: #555555;
+  font-size: 14px;
+`
 
 export default PageButton;
