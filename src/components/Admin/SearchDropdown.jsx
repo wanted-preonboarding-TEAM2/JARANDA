@@ -5,7 +5,12 @@ import { RiArrowDownSFill } from 'react-icons/ri';
 import { useDetectOutsideClick } from '../../utils/hooks/useDetectOutsideClick';
 
 const StyledDropdownOpener = styled.div`
-  //
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledDropDownContainer = styled.div`
@@ -14,11 +19,23 @@ const StyledDropDownContainer = styled.div`
 
 const StyledUl = styled.ul`
   display: ${props => (props.isOpen ? 'block' : 'none')};
+  border-radius: 5px;
+  background: white;
+  border: 0.5px solid #edf1f9;
+
   position: absolute;
   top: 30px;
 `;
 const StyledLi = styled.li`
-  background-color: #fff;
+  margin-top: 4px;
+  padding: 0 6px;
+  :hover {
+    cursor: pointer;
+    background-color: #edf1f9;
+  }
+  :last-child {
+    margin-bottom: 4px;
+  }
 `;
 
 export default function SearchDropdown({ selectedOption, handleListClick }) {
