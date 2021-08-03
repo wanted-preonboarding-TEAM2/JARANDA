@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import USER from 'constants/user.js';
+import React, { useRef } from 'react';
 import { RiArrowDownSFill } from 'react-icons/ri';
+import { useDetectOutsideClick } from '../../utils/hooks/useDetectOutsideClick';
 
 const StyledDropdownOpener = styled.div`
   //
@@ -20,7 +22,8 @@ const StyledLi = styled.li`
 `;
 
 export default function SearchDropdown({ selectedOption, handleListClick }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  const [isOpen, setIsOpen] = useDetectOutsideClick(ref, false);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -31,38 +34,27 @@ export default function SearchDropdown({ selectedOption, handleListClick }) {
     setIsOpen(false);
   };
 
-  const transLateToKor = () => {
-    const options = {
-      id: '계정',
-      name: '이름',
-      address: '주소',
-      age: '나이',
-      role: '역할',
-    };
-    return options[selectedOption];
-  };
-
   return (
     <StyledDropDownContainer>
       <StyledDropdownOpener onClick={handleClick}>
-        {transLateToKor(selectedOption)} <RiArrowDownSFill />
+        {USER.KO[selectedOption.toUpperCase()]} <RiArrowDownSFill />
       </StyledDropdownOpener>
-      <StyledUl isOpen={isOpen}>
+      <StyledUl isOpen={isOpen} ref={ref}>
         {/* TODO 재사용 가능한 드롭다운이 될 수 있게, 반복문으로 아래를 만들것. */}
-        <StyledLi onClick={handleItemClick} data-option="id">
-          계정
+        <StyledLi onClick={handleItemClick} data-option={USER.EN.ID}>
+          {USER.KO.ID}
         </StyledLi>
-        <StyledLi onClick={handleItemClick} data-option="name">
-          이름
+        <StyledLi onClick={handleItemClick} data-option={USER.EN.NAME}>
+          {USER.KO.NAME}
         </StyledLi>
-        <StyledLi onClick={handleItemClick} data-option="address">
-          주소
+        <StyledLi onClick={handleItemClick} data-option={USER.EN.ADDRESS}>
+          {USER.KO.ADDRESS}
         </StyledLi>
-        <StyledLi onClick={handleItemClick} data-option="age">
-          나이
+        <StyledLi onClick={handleItemClick} data-option={USER.EN.AGE}>
+          {USER.KO.AGE}
         </StyledLi>
-        <StyledLi onClick={handleItemClick} data-option="role">
-          역할
+        <StyledLi onClick={handleItemClick} data-option={USER.EN.ROLE}>
+          {USER.KO.ROLE}
         </StyledLi>
       </StyledUl>
     </StyledDropDownContainer>
