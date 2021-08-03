@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { CustomInput, CustomButton } from 'elements';
 
 const ModalContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
-  inset: inherit;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalBox = styled.div`
@@ -39,10 +42,39 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
-const CreditCardModal = ({ open, close, cardInfo, handleChange }) => {
-  const { cardNum, expireDate, cvc } = cardInfo;
-  console.log('cardInfo', cardNum, expireDate, cvc);
-  console.log(handleChange, 'handleChange');
+const CreditCardModal = ({ open, close, setUserInfo }) => {
+  const [cardNum, setCardNum] = useState('');
+  const [expiredDate, setExpiredDate] = useState('');
+  const [cvc, setCvc] = useState('');
+
+  const cardInfoChange = e => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case 'cardNum':
+        setCardNum(value);
+        break;
+      case 'expiredDate':
+        setExpiredDate(value);
+        break;
+      case 'cvc':
+        setCvc(value);
+        break;
+      default:
+    }
+  };
+
+  const setCardInfo = () => {
+    setUserInfo(prev => {
+      prev.cardInfo = {
+        cardNum,
+        expiredDate,
+        cvc,
+      };
+      return prev;
+    });
+    close();
+  };
   return (
     <>
       {open ? (
@@ -51,27 +83,30 @@ const CreditCardModal = ({ open, close, cardInfo, handleChange }) => {
             <CloseBtn onClick={close}>X</CloseBtn>
             <CustomInput
               type="text"
+              name="cardNum"
               placeholder="신용카드 번호"
               defaultValue={cardNum}
-              onChange={handleChange}
+              onChange={cardInfoChange}
             />
             <div>
               <CustomInput
-                type="number"
+                type="text"
+                name="expiredDate"
                 placeholder="신용카드 만료일 (MM/YY)"
-                defaultValue={expireDate}
-                onChange={handleChange}
+                defaultValue={expiredDate}
+                onChange={cardInfoChange}
               />
               <CustomInput
                 type="number"
+                name="cvc"
                 minLength={3}
                 maxLength={3}
                 placeholder="신용카드 CVC"
                 defaultValue={cvc}
-                onChange={handleChange}
+                onChange={cardInfoChange}
               />
             </div>
-            <CustomButton>카드 등록</CustomButton>
+            <CustomButton onClick={setCardInfo}>카드 등록</CustomButton>
           </ModalBox>
         </ModalContainer>
       ) : null}

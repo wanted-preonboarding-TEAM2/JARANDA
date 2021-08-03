@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { CustomInput } from 'elements';
 
 const CreditCardContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 15px 10px;
   margin-bottom: 15px;
   cursor: pointer;
@@ -16,17 +16,17 @@ const CreditCardContainer = styled.div`
   }
 `;
 
-const CreditCardInfo = ({ handleModalOpen, setUserInfo }) => {
-  //const { cardNum, expireDate, cvc } = setUserInfo;
-  console.log(setUserInfo, 'setUserInfo');
+const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
+  const { cardNum, expiredDate, cvc } = cardInfo;
   return (
     <CreditCardContainer onClick={handleModalOpen}>
-      <CustomInput placeholder="신용카드 번호" readOnly />
+      <CustomInput placeholder="신용카드 번호" readOnly value={cardNum} />
 
       <div>
         <CustomInput
           type="number"
           placeholder="신용카드 만료일 (MM/YY)"
+          value={expiredDate}
           readOnly
         />
         <CustomInput
@@ -34,6 +34,7 @@ const CreditCardInfo = ({ handleModalOpen, setUserInfo }) => {
           minLength={3}
           maxLength={3}
           placeholder="신용카드 CVC"
+          value={cvc}
           readOnly
         />
       </div>

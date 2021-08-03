@@ -4,11 +4,10 @@ import { CustomInput, CustomButton } from 'elements';
 import CreditCardInfo from './CreditCardInfo';
 import CreditCardModal from 'modal/CreditCardModal';
 import Role from './Role';
-import { setLocalStorage } from 'utils/LocalStorageHandler';
+import { saveUserInfo } from 'services/LocalStorageWorker';
+import LS_KEY from 'constants/localStorageKey';
 
 const SignUpContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -62,7 +61,7 @@ const Signup = () => {
     name: '',
     cardInfo: {
       cardNum: '',
-      expireDate: '',
+      expiredDate: '',
       cvc: '',
     },
     address: '',
@@ -109,6 +108,16 @@ const Signup = () => {
   const handleChange = e => {
     const { name, value } = e.target;
 
+    if (creditModalOpen) {
+      console.log(name, value);
+      setUserInfo({
+        ...userInfo,
+        cardInfo: {
+          [name]: value,
+        },
+      });
+    }
+
     switch (name) {
       case 'id':
         setUserInfo({
@@ -146,14 +155,6 @@ const Signup = () => {
           [name]: value,
         });
         break;
-      case 'cardInfo':
-        setUserInfo({
-          ...userInfo,
-          cardInfo: {
-            [name]: value,
-          },
-        });
-        break;
       case 'age':
         setUserInfo({
           ...userInfo,
@@ -173,8 +174,12 @@ const Signup = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    setLocalStorage('userInfo', userInfo);
+    saveUserInfo(userInfo);
   };
+
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
   return (
     <>
@@ -241,7 +246,7 @@ const Signup = () => {
 
             <CreditCardInfo
               handleModalOpen={handleModalOpen}
-              setUserInfo={setUserInfo.cardInfo}
+              cardInfo={userInfo.cardInfo}
             />
             <CustomInput
               name="age"
@@ -263,8 +268,7 @@ const Signup = () => {
           <CreditCardModal
             open={creditModalOpen}
             close={handleModalOpen}
-            cardInfo={userInfo}
-            handleChange={handleChange}
+            setUserInfo={setUserInfo}
           />
         )}
       </SignUpContainer>
