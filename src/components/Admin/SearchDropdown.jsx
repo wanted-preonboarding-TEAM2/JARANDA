@@ -27,6 +27,11 @@ export default function SearchDropdown({ selectedOption, handleListClick }) {
   };
 
   const handleItemClick = ({ target }) => {
+    handleListClick(target.dataset.option);
+    setIsOpen(false);
+  };
+
+  const transLateToKor = () => {
     const options = {
       id: '계정',
       name: '이름',
@@ -34,15 +39,13 @@ export default function SearchDropdown({ selectedOption, handleListClick }) {
       age: '나이',
       role: '역할',
     };
-
-    handleListClick(options[target.dataset.option]);
-    setIsOpen(false);
+    return options[selectedOption];
   };
 
   return (
     <StyledDropDownContainer>
       <StyledDropdownOpener onClick={handleClick}>
-        {selectedOption} <RiArrowDownSFill />
+        {transLateToKor(selectedOption)} <RiArrowDownSFill />
       </StyledDropdownOpener>
       <StyledUl isOpen={isOpen}>
         {/* TODO 재사용 가능한 드롭다운이 될 수 있게, 반복문으로 아래를 만들것. */}
