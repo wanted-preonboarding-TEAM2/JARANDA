@@ -10,7 +10,6 @@ const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 export default function Admin() {
   return (
     <div style={{ padding: '5%' }}>
-      Admin
       <TableContainer>
         <HeaderContainer>
           <TableHeader title="Users" number={1000} />
