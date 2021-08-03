@@ -9,6 +9,7 @@ const reset = css`
   a {
     text-decoration: none;
     color: #333;
+    cursor: pointer;
   }
   li {
     list-style: none;
