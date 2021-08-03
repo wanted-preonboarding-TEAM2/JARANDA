@@ -4,11 +4,10 @@ import { CustomInput, CustomButton } from 'elements';
 import CreditCardInfo from './CreditCardInfo';
 import CreditCardModal from 'modal/CreditCardModal';
 import Role from './Role';
+import { setLocalStorage } from 'utils/LocalStorageHandler';
 
 const SignUpContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-color: azure;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,29 +18,33 @@ const SignupInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
-  padding: 10px;
-  height: 80%;
+  margin: 50px 0;
 
   form {
-    height: 100%;
     width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px 0px;
+    gap: 15px 0px;
   }
+`;
+
+const SignupTitle = styled.p`
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 40px;
 `;
 
 const AddressContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 15px 0;
+  gap: 15px 0;
 
   div {
     display: flex;
+    gap: 0 15px;
   }
 `;
 
@@ -101,11 +104,6 @@ const Signup = () => {
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
-
-  // const onChangeCreditNumber = e => {
-  //   //const regex = /^[0-9\b -]{0,16}$/;
-  //   setCreditValue(e.target.value);
-  // };
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -171,27 +169,18 @@ const Signup = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    setLocalStorage('userInfo', userInfo);
   };
-
-  // useEffect(() => {
-  //   if (creditValue.length === 16) {
-  //     setCreditValue(
-  //       creditValue
-  //         .replace(/-/g, '')
-  //         .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4'),
-  //     );
-  //   }
-  // }, [creditValue]);
-
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
 
   return (
     <>
       <SignUpContainer>
         <SignupInner>
-          <h1>회원 가입</h1>
+          <SignupTitle>
+            10초만에 가입하고 <br />
+            선생님 정보를 받아보세요
+          </SignupTitle>
           <form onSubmit={handleSubmit}>
             <CustomInput
               type="text"
@@ -264,7 +253,7 @@ const Signup = () => {
               name="role"
               defaultValue="teacher"
             />
-            <CustomButton type="button">회원 가입</CustomButton>
+            <CustomButton type="submit">회원 가입</CustomButton>
           </form>
         </SignupInner>
         {creditModalOpen && (

@@ -6,7 +6,7 @@ const CreditCardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0 10px;
+  gap: 15px 10px;
   margin-bottom: 15px;
   cursor: pointer;
 
