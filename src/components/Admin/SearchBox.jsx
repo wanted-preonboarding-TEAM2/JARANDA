@@ -4,6 +4,7 @@ import SearchDropdown from './SearchDropdown';
 // import usersData from './users';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey.js';
+import USER from 'constants/user.js';
 
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const StyledButton = styled.button`
 
 export default function SearchBox() {
   const [value, setValue] = useState('');
-  const [selectedOption, setSelectedOption] = useState('id');
+  const [selectedOption, setSelectedOption] = useState(USER.EN.ID);
   // TODO: 로컬스토리지에 데이터를 넣는걸 만들자!
   // console.log(usersData);
   // localStorageHelper.setItem('userInfo', usersData);
@@ -35,11 +36,10 @@ export default function SearchBox() {
     // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
     if (!value.trim()) return alert('공백 입력은 불가능합니다!!!');
     const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
-    console.log(
-      users.filter(users =>
-        `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
-      ),
+    const searchResult = users.filter(users =>
+      `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
     );
+    console.log(searchResult);
   };
 
   const handleListClick = option => {
@@ -59,8 +59,6 @@ export default function SearchBox() {
       <StyledInput
         value={value}
         type="search"
-        name="searchUser"
-        id="searchUser"
         onChange={handleInputChange}
         onKeyPress={e => e.code === 'Enter' && handleSearch()}
       />
