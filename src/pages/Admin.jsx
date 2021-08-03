@@ -54,6 +54,7 @@ export default function Admin() {
         />
         <PagedButtonList
           pageNumbers={pageNumbers}
+          currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           getCurrentPageUserInfos={getCurrentPageUserInfos}
         />
