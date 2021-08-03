@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import SearchDropdown from './SearchDropdown';
-// import usersData from './users';
+
+import { AiOutlineSearch } from 'react-icons/ai';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey.js';
 import USER from 'constants/user.js';
@@ -9,8 +10,15 @@ import USER from 'constants/user.js';
 const SearchBoxContainer = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid #b0bec5;
   justify-content: space-between;
+`;
+
+const InputContainer = styled.div`
+  margin-left: 8px;
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  padding: 0 12px;
 `;
 
 const StyledInput = styled.input`
@@ -18,6 +26,7 @@ const StyledInput = styled.input`
   padding: 10px 10px;
   border: 0;
   flex: 1;
+  background-color: rgba(0, 0, 0, 0);
 `;
 
 const StyledButton = styled.button`
@@ -56,15 +65,17 @@ export default function SearchBox() {
         selectedOption={selectedOption}
         handleListClick={handleListClick}
       />
-      <StyledInput
-        value={value}
-        type="search"
-        onChange={handleInputChange}
+      <InputContainer>
+        <StyledInput
+          value={value}
+          type="search"
+          onChange={handleInputChange}
         onKeyPress={e => e.code === 'Enter' && handleSearch()}
-      />
-      <StyledButton type="button" onClick={handleSearch}>
-        검색
-      </StyledButton>
+        />
+        <StyledButton type="button" onClick={handleSearch}>
+          <AiOutlineSearch />
+        </StyledButton>
+      </InputContainer>
     </SearchBoxContainer>
   );
 }
