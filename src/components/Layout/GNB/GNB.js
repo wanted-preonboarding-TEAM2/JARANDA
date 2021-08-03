@@ -56,22 +56,15 @@ const StyledMenuList = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.5s;
-
-  // NOTE: only screen 은 스크린화면에서만 동작하게? ==> 알아내자!
   @media only screen and (max-width: 960px) {
-    // display: inherit;
     display: ${({ show }) => (show ? 'inherit;' : 'none;')};
     position: absolute;
     flex-direction: column;
     top: 150px;
     left: 0;
     background: #66bb6a;
-    // background: white;
     width: 100%;
     height: calc(100vh - 150px);
-    // opacity: 0;
-    // ${({ show }) => show && 'opacity: 1;'}
     font-size: 1.5em;
     justify-content: start;
     z-index: 999;

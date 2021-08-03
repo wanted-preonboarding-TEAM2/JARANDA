@@ -17,7 +17,7 @@ const JarandaBannerText = styled.p`
   margin: auto;
 `;
 
-const MainSection = styled.section`
+const StyledSection = styled.section`
   width: 913px;
   margin: auto;
   @media only screen and (max-width: 960px) {
@@ -37,7 +37,7 @@ export default function Layout({ children }) {
         </JarandaBannerText>
       </JarandaBannerContainer>
       <GNB />
-      <MainSection>{children}</MainSection>
+      <StyledSection>{children}</StyledSection>
       {/* Footer */}
     </>
   );
