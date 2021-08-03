@@ -5,7 +5,6 @@ import CreditCardInfo from './CreditCardInfo';
 import CreditCardModal from 'modal/CreditCardModal';
 import Role from './Role';
 import { saveUserInfo } from 'services/LocalStorageWorker';
-import LS_KEY from 'constants/localStorageKey';
 
 const SignUpContainer = styled.div`
   background-color: #fff;
@@ -226,9 +225,6 @@ const Signup = () => {
                   name="address"
                   placeholder=" 주소를 입력해주세요"
                   value={userInfo.address}
-                  onChange={() => {
-                    return;
-                  }}
                   readOnly
                 />
                 <CustomButton type="button" width="100px" onClick={loadLayout}>
