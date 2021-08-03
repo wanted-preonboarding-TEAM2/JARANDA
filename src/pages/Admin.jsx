@@ -42,7 +42,6 @@ export default function Admin() {
   return (
     currentPageData.length &&
     <div style={{ padding: '5%' }}>
-      Admin
       <TableContainer>
         <HeaderContainer>
           <TableHeader title="Users" number={1000} />
