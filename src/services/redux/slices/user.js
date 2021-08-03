@@ -13,7 +13,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: function (state, action) {
-      // NOTE: 로그인할 때 어떻게 이 유저가 teacher, parent, admin인지 알 수 있죠?
       state.id = action.payload.id;
       state.uid = action.payload.uid;
       state.name = action.payload.name;
@@ -29,3 +28,4 @@ export const userSlice = createSlice({
 });
 
 export const selectUser = state => state.user;
+export const selectCurrentUserRole = state => state.user.role;
