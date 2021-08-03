@@ -17,6 +17,7 @@ const InputContainer = styled.div`
   margin-left: 8px;
   display: flex;
   background-color: white;
+  border: 0.5px solid #edf1f9;
   border-radius: 20px;
   padding: 0 12px;
 `;
@@ -70,7 +71,7 @@ export default function SearchBox() {
           value={value}
           type="search"
           onChange={handleInputChange}
-        onKeyPress={e => e.code === 'Enter' && handleSearch()}
+          onKeyPress={e => e.code === 'Enter' && handleSearch()}
         />
         <StyledButton type="button" onClick={handleSearch}>
           <AiOutlineSearch />

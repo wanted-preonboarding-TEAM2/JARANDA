@@ -9,21 +9,22 @@ const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 
 export default function Admin() {
   return (
-    <div style={{ padding: '5%' }}>
-      Admin
+    <Container>
       <TableContainer>
         <HeaderContainer>
-          <TableHeader title="Users" number={1000} />
+          <TableHeader title="사용자 계정" number={1000} />
           <SearchBox />
         </HeaderContainer>
         <Table dataProps={dataProps} tableData={userMockData} />
       </TableContainer>
-    </div>
+    </Container>
   );
 }
 
+const Container = styled.div``;
+
 const TableContainer = styled.div`
-  background-color: #f8faff;
+  /* background-color: #f8faff; */
 `;
 
 const HeaderContainer = styled.div`

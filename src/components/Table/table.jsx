@@ -21,7 +21,11 @@ const dataPropsMapper = {
   },
   card: {
     title: '카드 번호',
-    parseData: data => data,
+    parseData: data =>
+      `${data.substr(0, 4)}-${data.substr(4, 4)}-${data.substr(
+        8,
+        4,
+      )}-${data.substr(12, 4)}`,
   },
   age: {
     title: '나이',
@@ -30,7 +34,13 @@ const dataPropsMapper = {
   role: {
     title: '권한',
     parseData: data =>
-      data === 1 ? '학부모' : data === 2 ? '선생님' : '관리자',
+      data === 1 ? (
+        <StyledTag color="#389e0d">부모님</StyledTag>
+      ) : data === 2 ? (
+        <StyledTag color="#096dd9">선생님</StyledTag>
+      ) : (
+        <StyledTag color="#cf1322">관리자</StyledTag>
+      ),
   },
 };
 
@@ -60,7 +70,9 @@ const Table = ({ dataProps, tableData }) => {
                 </TableData>
               ))}
               <TableData key={`threeDots ${index}`}>
-                <BsThreeDots color="#b2b9c8" />
+                <MoreButton>
+                  <BsThreeDots color="#b2b9c8" />
+                </MoreButton>
               </TableData>
             </TableRow>
           ))}
@@ -71,6 +83,16 @@ const Table = ({ dataProps, tableData }) => {
 };
 
 export default Table;
+
+const StyledTag = styled.span`
+  background-color: ${props => props.color}22;
+  border: 0.5px solid ${props => props.color}BE;
+  font-weight: 600;
+  color: ${props => props.color};
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 5px;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -118,12 +140,6 @@ const TableHeader = styled.tr`
   .sibling_table {
     width: 5%;
   }
-
-  @media screen and (min-width: 1280px) {
-    th {
-      padding: 1vh 12px;
-    }
-  }
 `;
 
 const TableRow = styled.tr`
@@ -132,7 +148,8 @@ const TableRow = styled.tr`
   text-align: center;
   white-space: nowrap;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 15px;
+  /* box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff; */
 
   .id_table {
     width: 15%;
@@ -163,22 +180,33 @@ const TableRow = styled.tr`
 
   :hover {
     /* background-color: skyblue !important; */
+    background-color: #edf1f9;
   }
 `;
 
 const TableData = styled.td`
-  padding: 0 4px;
+  padding: 0 8px;
   overflow: hidden;
   text-overflow: ellipsis;
 
   border-bottom: 0.5px solid #edf1f9;
   border-top: 0.5px solid #edf1f9;
-  :first-child {
+  :first-of-type {
     border-left: 0.5px solid #edf1f9;
-    border-radius: 10px 0 0 10px;
+    border-radius: 15px 0 0 15px;
   }
-  :last-child {
+  :last-of-type {
     border-right: 0.5px solid #edf1f9;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 15px 15px 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 4px;
+  }
+`;
+
+const MoreButton = styled.button`
+  :hover {
+    cursor: pointer;
   }
 `;
