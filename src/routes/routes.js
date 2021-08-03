@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ROUTES from 'constants/routesPath';
-import * as Pages from 'pages'
+import * as Pages from 'pages';
 
 export default function AppRouter() {
   return (
@@ -15,6 +15,5 @@ export default function AppRouter() {
         <Route component={Pages.RouteNoMatch} />
       </Switch>
     </Router>
-  )
+  );
 }
-
