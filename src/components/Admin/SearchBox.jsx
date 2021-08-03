@@ -22,8 +22,14 @@ const StyledButton = styled.button`
 
 export default function SearchBox() {
   const [value, setValue] = useState('');
+  const [selectedOption, setSelectedOption] = useState('계정');
+
   const handleSearch = ({ target }) => {
     console.log(target);
+  };
+
+  const handleListClick = option => {
+    setSelectedOption(option);
   };
 
   const handleInputChange = ({ target }) => {
@@ -32,7 +38,10 @@ export default function SearchBox() {
 
   return (
     <SearchBoxContainer>
-      <SearchDropdown />
+      <SearchDropdown
+        selectedOption={selectedOption}
+        handleListClick={handleListClick}
+      />
       <StyledInput
         value={value}
         type="search"
