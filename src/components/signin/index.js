@@ -3,8 +3,6 @@ import styled from '@emotion/styled';
 import { CustomInput, CustomButton } from 'elements';
 
 const SignInContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
   background-color: rgb(249, 249, 249);
   background: url(https://jaranda.kr/assets/image/account/background.sign_in.png)
     no-repeat top right;
