@@ -55,8 +55,8 @@ export default function SearchBox() {
     setSelectedOption(option);
   };
 
-  const handleInputChange = e => {
-    setValue(e.target.value);
+  const handleInputChange = ({target}) => {
+    setValue(target.value);
   };
 
   return (
@@ -70,7 +70,7 @@ export default function SearchBox() {
           value={value}
           type="search"
           onChange={handleInputChange}
-        onKeyPress={e => e.code === 'Enter' && handleSearch()}
+          onKeyPress={({code}) => code === 'Enter' && handleSearch()}
         />
         <StyledButton type="button" onClick={handleSearch}>
           <AiOutlineSearch />
