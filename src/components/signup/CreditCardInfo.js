@@ -16,7 +16,9 @@ const CreditCardContainer = styled.div`
   }
 `;
 
-const CreditCardInfo = ({ handleModalOpen }) => {
+const CreditCardInfo = ({ handleModalOpen, setUserInfo }) => {
+  //const { cardNum, expireDate, cvc } = setUserInfo;
+  console.log(setUserInfo, 'setUserInfo');
   return (
     <CreditCardContainer onClick={handleModalOpen}>
       <CustomInput placeholder="신용카드 번호" readOnly />

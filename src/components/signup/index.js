@@ -7,18 +7,24 @@ import Role from './Role';
 import { setLocalStorage } from 'utils/LocalStorageHandler';
 
 const SignUpContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: no-repeat top right
+    url('https://jaranda.kr/assets/image/account/background.sign_in.png');
 `;
 
 const SignupInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 0;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
+  padding: 50px;
 
   form {
     width: 500px;
@@ -56,8 +62,8 @@ const Signup = () => {
     name: '',
     cardInfo: {
       cardNum: '',
-      expNum: '',
-      cvcNum: '',
+      expireDate: '',
+      cvc: '',
     },
     address: '',
     addressDetail: '',
@@ -66,11 +72,6 @@ const Signup = () => {
   };
   const [userInfo, setUserInfo] = useState(initialUserInfo);
   const [creditModalOpen, setCreditModalOpen] = useState(false); //카드 정보 모달
-  const [creditValue, setCreditValue] = useState({
-    cardNum: '',
-    expNum: '',
-    cvcNum: '',
-  }); //카드 번호
   const postcodeRef = useRef(null);
 
   const loadLayout = () => {
@@ -104,11 +105,6 @@ const Signup = () => {
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
-
-  // const onChangeCreditNumber = e => {
-  //   //const regex = /^[0-9\b -]{0,16}$/;
-  //   setCreditValue(e.target.value);
-  // };
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -243,7 +239,7 @@ const Signup = () => {
 
             <CreditCardInfo
               handleModalOpen={handleModalOpen}
-              setUserInfo={setUserInfo}
+              setUserInfo={setUserInfo.cardInfo}
             />
             <CustomInput
               name="age"
@@ -265,7 +261,8 @@ const Signup = () => {
           <CreditCardModal
             open={creditModalOpen}
             close={handleModalOpen}
-            creditValue={creditValue}
+            cardInfo={userInfo.cardInfo}
+            handleChange={handleChange}
           />
         )}
       </SignUpContainer>

@@ -39,9 +39,9 @@ const CloseBtn = styled.div`
   cursor: pointer;
 `;
 
-const CreditCardModal = ({ open, close, creditValue, onChangeNum }) => {
-  const { cardNum, expNum, cvcNum } = creditValue;
-  console.log('creditValue', cardNum, expNum, cvcNum);
+const CreditCardModal = ({ open, close, cardInfo, handleChange }) => {
+  const { cardNum, expireDate, cvc } = cardInfo;
+  console.log('cardInfo', cardNum, expireDate, cvc);
   return (
     <>
       {open ? (
@@ -51,26 +51,26 @@ const CreditCardModal = ({ open, close, creditValue, onChangeNum }) => {
             <CustomInput
               type="text"
               placeholder="신용카드 번호"
-              onChange={onChangeNum}
-              value={cardNum}
+              defaultValue={cardNum}
+              onChange={handleChange}
             />
             <div>
               <CustomInput
                 type="number"
                 placeholder="신용카드 만료일 (MM/YY)"
-                onChange={onChangeNum}
-                value={expNum}
+                defaultValue={expireDate}
+                onChange={handleChange}
               />
               <CustomInput
                 type="number"
                 minLength={3}
                 maxLength={3}
                 placeholder="신용카드 CVC"
-                onChange={onChangeNum}
-                value={cvcNum}
+                defaultValue={cvc}
+                onChange={handleChange}
               />
             </div>
-            <CustomButton onChange={onChangeNum}>카드 등록</CustomButton>
+            <CustomButton onChange={handleChange}>카드 등록</CustomButton>
           </ModalBox>
         </ModalContainer>
       ) : null}
