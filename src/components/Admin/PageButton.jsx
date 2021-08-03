@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 
-const PageButtonContainer = styled.li`
-
-`
+const PageButtonContainer = styled.li``
 
 const StyledButton = styled.button`
   border: 1px solid green;
@@ -11,12 +9,11 @@ const StyledButton = styled.button`
 `
 
 function PageButton({ page, setCurrentPage, getCurrentPageUserInfos }) {
-  
+
   const handleClickButton = () => {
     setCurrentPage(page);
-    getCurrentPageUserInfos();
   }
-  
+
   return (
     <PageButtonContainer>
       <StyledButton onClick={handleClickButton}>
