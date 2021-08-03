@@ -149,7 +149,9 @@ const Signup = () => {
       case 'cardInfo':
         setUserInfo({
           ...userInfo,
-          [name]: value,
+          cardInfo: {
+            [name]: value,
+          },
         });
         break;
       case 'age':
@@ -261,7 +263,7 @@ const Signup = () => {
           <CreditCardModal
             open={creditModalOpen}
             close={handleModalOpen}
-            cardInfo={userInfo.cardInfo}
+            cardInfo={userInfo}
             handleChange={handleChange}
           />
         )}

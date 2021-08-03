@@ -42,6 +42,7 @@ const CloseBtn = styled.div`
 const CreditCardModal = ({ open, close, cardInfo, handleChange }) => {
   const { cardNum, expireDate, cvc } = cardInfo;
   console.log('cardInfo', cardNum, expireDate, cvc);
+  console.log(handleChange, 'handleChange');
   return (
     <>
       {open ? (
@@ -70,7 +71,7 @@ const CreditCardModal = ({ open, close, cardInfo, handleChange }) => {
                 onChange={handleChange}
               />
             </div>
-            <CustomButton onChange={handleChange}>카드 등록</CustomButton>
+            <CustomButton>카드 등록</CustomButton>
           </ModalBox>
         </ModalContainer>
       ) : null}
