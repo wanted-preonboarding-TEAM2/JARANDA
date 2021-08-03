@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 
 const Input = styled.input`
   padding: 16px;
+  height: 40px;
   border: none;
   border-bottom: 1px solid lightgray;
   background-color: transparent;
@@ -11,16 +11,30 @@ const Input = styled.input`
 `;
 
 function CustomInput(props) {
-  const { placeholder, type, value, readonly } = props;
-  return <Input placeholder={placeholder} type={type} value={value} required />;
+  const {
+    placeholder,
+    type,
+    value,
+    name,
+    minLength,
+    maxLength,
+    onClick,
+    onChange,
+    readOnly,
+  } = props;
+  return (
+    <Input
+      placeholder={placeholder}
+      type={type}
+      name={name}
+      value={value}
+      minLength={minLength}
+      maxLength={maxLength}
+      onClick={onClick}
+      onChange={onChange}
+      required
+      readOnly={readOnly}
+    />
+  );
 }
-
-Input.propTypes = {
-  placeholder: PropTypes.string.isRequired,
-};
-
-Input.defaultProps = {
-  type: 'text',
-  readonly: false,
-};
 export default CustomInput;
