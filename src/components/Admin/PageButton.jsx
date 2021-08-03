@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-function PageButton({ page, setCurrentPage, getCurrentPageUserInfos }) {
+function PageButton({ page, setCurrentPage }) {
 
   const handleClickButton = () => {
     setCurrentPage(page);
