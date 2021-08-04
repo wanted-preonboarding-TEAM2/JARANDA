@@ -107,7 +107,11 @@ const SignUp = ({ isModal, closeModal }) => {
             10초만에 가입하고 <br />
             선생님 정보를 받아보세요
           </Title>
-          <Form userInfo={userInfo} setUserInfo={setUserInfo} />
+          <Form
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            isModal={isModal}
+          />
         </Inner>
       </Container>
       <div ref={postcodeRef}></div>

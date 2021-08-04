@@ -7,7 +7,7 @@ import { saveUserInfo } from 'services/LocalStorageWorker';
 import { CustomInput, CustomButton } from 'elements';
 import Role from './Role';
 
-const SignUpForm = ({ userInfo, setUserInfo }) => {
+const SignUpForm = ({ userInfo, setUserInfo, isModal }) => {
   const [creditModalOpen, setCreditModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -142,7 +142,9 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
           onChange={handleChange}
         />
         <Role handleChange={handleChange} name="role" defaultValue="teacher" />
-        <CustomButton type="submit">회원 가입</CustomButton>
+        <CustomButton type="submit">
+          {isModal ? '유저 생성' : '회원 가입'}
+        </CustomButton>
       </form>
     </>
   );
