@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import SearchDropdown from './SearchDropdown';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey.js';
 import USER from 'constants/user.js';
-import usersData from './users.json';
+import Dropdown from 'components/Dropdown/DropDown';
+import { RiArrowDownSFill } from 'react-icons/ri';
 
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -66,9 +66,15 @@ export default function SearchBox({ handleOnSearch }) {
 
   return (
     <SearchBoxContainer>
-      <SearchDropdown
-        selectedOption={selectedOption}
-        handleListClick={handleListClick}
+      <Dropdown
+        visibleOption={
+          <>
+            {USER.KO[selectedOption.toUpperCase()]} <RiArrowDownSFill />
+          </>
+        }
+        optionList={Object.values(USER.EN)}
+        onItemClick={handleListClick}
+        print={data => USER.KO[data.toUpperCase()]}
       />
       <InputContainer>
         <StyledInput

@@ -49,7 +49,7 @@ export default function Admin() {
   return (
     <TableContainer>
       <HeaderContainer>
-        <TableHeader title="Users" number={1000} />
+        <TableHeader title="계정 수" number={tableData.length} />
         <SearchBox handleOnSearch={handleOnSearch} />
       </HeaderContainer>
       <Table dataProps={dataProps} tableData={currentPageData} />
