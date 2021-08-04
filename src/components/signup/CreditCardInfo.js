@@ -24,7 +24,7 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
 
       <div>
         <CustomInput
-          type="number"
+          type="text"
           placeholder="신용카드 만료일 (MM/YY)"
           value={expiredDate}
           readOnly

@@ -1,15 +1,61 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import AddressInfo from './AddressInfo';
 import CreditCardInfo from './CreditCardInfo';
 import CreditCardModal from 'modal/CreditCardModal';
-import { saveUserInfo } from 'services/LocalStorageWorker';
+import { saveUserInfo, checkIdExist } from 'services/LocalStorageWorker';
 import { CustomInput, CustomButton } from 'elements';
 import Role from './Role';
+import {
+  idValidation,
+  pwValidation,
+  addressValidation,
+  nameValidation,
+  cardValidation,
+  ageValidation,
+} from 'utils/Validation';
 
-const SignUpForm = ({ userInfo, setUserInfo }) => {
+const initialUserInfo = {
+  id: '',
+  password: '',
+  name: '',
+  cardInfo: {
+    cardNum: '',
+    expiredDate: '',
+    cvc: '',
+  },
+  address: '',
+  addressDetail: '',
+  age: '',
+  role: 'teacher',
+};
+
+const initialError = {
+  id: '',
+  password: '',
+  passwordConfirm: '',
+  name: '',
+  cardInfo: {
+    cardNum: '',
+    expiredDate: '',
+    cvc: '',
+  },
+  address: '',
+  addressDetail: '',
+  age: '',
+};
+
+const ErrorMessage = styled.div`
+  width: 100%;
+  text-align: left;
+  color: red;
+`;
+
+const SignUpForm = () => {
+  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
-
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
@@ -21,6 +67,7 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
       setUserInfo({
         ...userInfo,
         cardInfo: {
+          ...userInfo.cardInfo,
           [name]: value,
         },
       });
@@ -40,10 +87,7 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
         });
         break;
       case 'passwordConfirm':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
+        setPasswordConfirm(value);
         break;
       case 'name':
         setUserInfo({
@@ -79,11 +123,75 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
     }
   };
 
+  const checkValidation = e => {
+    const { name } = e.target;
+
+    if (creditModalOpen) {
+      console.log('modalopen');
+      console.log(name);
+      console.log(userInfo.cardInfo);
+      setErrors({
+        ...errors,
+        cardInfo: {
+          ...errors.cardInfo,
+          [name]: cardValidation(userInfo.cardInfo, name).message,
+        },
+      });
+      return;
+    }
+
+    switch (name) {
+      case 'id':
+        setErrors({
+          ...errors,
+          [name]: idValidation(userInfo.id).message,
+        });
+        return false;
+      case 'password':
+        setErrors({
+          ...errors,
+          [name]: pwValidation(userInfo.password).message,
+        });
+        return false;
+      case 'passwordConfirm':
+        setErrors({
+          ...errors,
+          [name]: pwValidation(passwordConfirm).message,
+        });
+        return false;
+      case 'name':
+        setErrors({
+          ...errors,
+          [name]: nameValidation(userInfo.name).message,
+        });
+        return false;
+      case 'id':
+        setErrors({
+          ...errors,
+          [name]: addressValidation(userInfo.address).message,
+        });
+        return false;
+      case 'age':
+        setErrors({
+          ...errors,
+          [name]: ageValidation(userInfo.age).message,
+        });
+        return false;
+      default:
+    }
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-
+    if (Object.values(errors).every(item => item === '')) {
+      console.log('submit');
+    } else {
+      alert('입력을 확인해주세요');
+    }
     saveUserInfo(userInfo);
   };
+
+  checkIdExist();
 
   return (
     <>
@@ -94,45 +202,56 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
           placeholder="아이디를 입력하세요"
           value={userInfo.id}
           onChange={handleChange}
+          onBlur={checkValidation}
         />
-
+        {errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
         <CustomInput
           type="password"
           name="password"
           placeholder="비밀번호를 입력하세요"
           value={userInfo.password}
           onChange={handleChange}
+          onBlur={checkValidation}
         />
+        {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         <CustomInput
           type="password"
           name="passwordConfirm"
           placeholder="비밀번호를 한번 더 입력해주세요"
-          value={userInfo.passwordConfirm}
+          value={passwordConfirm}
           onChange={handleChange}
+          onBlur={checkValidation}
         />
+        {errors.passwordConfirm && (
+          <ErrorMessage>{errors.passwordConfirm}</ErrorMessage>
+        )}
         <CustomInput
           type="text"
           name="name"
           placeholder="이름를 입력하세요"
           value={userInfo.name}
           onChange={handleChange}
+          onBlur={checkValidation}
         />
+        {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
         <AddressInfo
           userInfo={userInfo}
           setUserInfo={setUserInfo}
           handleChange={handleChange}
+          checkValidation={checkValidation}
+          errors={errors}
         />
         <CreditCardInfo
           handleModalOpen={handleModalOpen}
           cardInfo={userInfo.cardInfo}
         />
-        {creditModalOpen && (
-          <CreditCardModal
-            open={creditModalOpen}
-            close={handleModalOpen}
-            setUserInfo={setUserInfo}
-          />
-        )}
+        <CreditCardModal
+          open={creditModalOpen}
+          close={handleModalOpen}
+          setUserInfo={setUserInfo}
+          checkValidation={checkValidation}
+          errors={errors}
+        />
         <CustomInput
           name="age"
           type="number"
@@ -140,6 +259,7 @@ const SignUpForm = ({ userInfo, setUserInfo }) => {
           placeholder="나이를 입력해주세요"
           value={userInfo.age}
           onChange={handleChange}
+          onBlur={checkValidation}
         />
         <Role handleChange={handleChange} name="role" defaultValue="teacher" />
         <CustomButton type="submit">회원 가입</CustomButton>

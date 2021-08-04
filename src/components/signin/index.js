@@ -72,7 +72,7 @@ const Signin = () => {
         </BackgroundImg>
         <SignInInner>
           <SignInLogo
-            class="icon"
+            className="icon"
             alt="icon"
             src="https://jaranda.kr/assets/image/index/jaranda.logo.index.png"
           />

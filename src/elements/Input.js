@@ -23,6 +23,7 @@ function CustomInput(props) {
     maxLength,
     onClick,
     onChange,
+    onBlur,
     readOnly,
   } = props;
   return (
@@ -35,6 +36,7 @@ function CustomInput(props) {
       maxLength={maxLength}
       onClick={onClick}
       onChange={onChange}
+      onBlur={onBlur}
       required
       readOnly={readOnly}
     />

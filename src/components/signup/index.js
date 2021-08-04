@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import Form from './Form';
 
@@ -7,6 +7,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const Inner = styled.div`
@@ -40,22 +41,6 @@ const Title = styled.p`
 `;
 
 const SignUp = () => {
-  const initialUserInfo = {
-    id: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    cardInfo: {
-      cardNum: '',
-      expiredDate: '',
-      cvc: '',
-    },
-    address: '',
-    addressDetail: '',
-    age: '',
-    role: 'teacher',
-  };
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
   const postcodeRef = useRef(null);
 
   return (
@@ -72,7 +57,7 @@ const SignUp = () => {
             10초만에 가입하고 <br />
             선생님 정보를 받아보세요
           </Title>
-          <Form userInfo={userInfo} setUserInfo={setUserInfo} />
+          <Form />
         </Inner>
       </Container>
       <div ref={postcodeRef}></div>

@@ -45,3 +45,71 @@ export const nameValidation = name => {
 
   return { result: true, message: '' };
 };
+
+export const addressValidation = data => {
+  const Regex = /^[가-힣0-9\\s]+$/;
+
+  if (!Regex.test(data)) {
+    return {
+      result: false,
+      message: '주소는 한글이나 숫자만 가능합니다',
+    };
+  }
+
+  return { result: true, message: '' };
+};
+
+export const cardValidation = (data, name) => {
+  const cardNumRegex = /^[가-힣0-9\\s](-){3}$/;
+  const expiredDateRegex = /^[0-9]{2}(\/)[0-9]{2}$/;
+  const cvcRegex = /^[0-9]{3}$/;
+
+  if (name === 'cardNum' && !cardNumRegex.test(data.cardNum)) {
+    return {
+      result: false,
+      message: '카드번호는 숫자만 가능합니다',
+    };
+  }
+
+  if (name === 'expiredDate' && data.expiredDate.length < 3) {
+    return {
+      result: false,
+      message: '정확히 입력해주세요',
+    };
+  }
+
+  if (name === 'expiredDate' && !expiredDateRegex.test(data.expiredDate)) {
+    return {
+      result: false,
+      message: '만료일 형식을 확인해주세요 (YY/MM)',
+    };
+  }
+
+  if (name === 'cvc' && !cvcRegex.test(data.cvc)) {
+    return {
+      result: false,
+      message: 'cvc는 숫자만 가능합니다',
+    };
+  }
+
+  return { result: true, message: '' };
+};
+
+export const ageValidation = data => {
+  const Regex = /^[0-9]{2,3}$/;
+
+  if (data.length > 3) {
+    return {
+      result: false,
+      message: '1000살이 넘으셨나요?',
+    };
+  }
+  if (!Regex.test(data)) {
+    return {
+      result: false,
+      message: '나이는 숫자만 가능합니다',
+    };
+  }
+
+  return { result: true, message: '' };
+};
