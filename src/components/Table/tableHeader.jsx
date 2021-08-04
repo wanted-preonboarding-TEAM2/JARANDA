@@ -14,12 +14,12 @@ export default TableHeader;
 
 const Container = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `;
 const Title = styled.h3`
   margin-right: 12px;
 `;
 
 const Amount = styled.h3`
-  color: lightgray;
+  color: darkgray;
 `;
