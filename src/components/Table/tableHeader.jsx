@@ -21,5 +21,5 @@ const Title = styled.h3`
 `;
 
 const Amount = styled.h3`
-  color: lightgray;
+  color: darkgray;
 `;

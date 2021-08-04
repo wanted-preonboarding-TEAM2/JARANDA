@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Dropdown from 'components/Dropdown/DropDown';
 import React from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 
@@ -44,7 +45,17 @@ const dataPropsMapper = {
   },
 };
 
+const moreButtonList = ['수정', '삭제'];
+
 const Table = ({ dataProps, tableData }) => {
+  const onItemClick = value => {
+    if (value === '수정') {
+      console.log('수정');
+    } else if (value === '삭제') {
+      console.log('삭제');
+    }
+  };
+
   return (
     <Container>
       <StyledTable>
@@ -70,9 +81,11 @@ const Table = ({ dataProps, tableData }) => {
                 </TableData>
               ))}
               <TableData key={`threeDots ${index}`}>
-                <MoreButton>
-                  <BsThreeDots color="#b2b9c8" />
-                </MoreButton>
+                <Dropdown
+                  visibleOption={<BsThreeDots color="#b2b9c8" />}
+                  optionList={moreButtonList}
+                  onItemClick={onItemClick}
+                />
               </TableData>
             </TableRow>
           ))}
@@ -134,11 +147,11 @@ const TableHeader = styled.tr`
   }
 
   .role_table {
-    width: 15%;
+    width: 10%;
   }
 
   .sibling_table {
-    width: 5%;
+    width: 10%;
   }
 `;
 
@@ -149,7 +162,6 @@ const TableRow = styled.tr`
   white-space: nowrap;
   background-color: white;
   border-radius: 15px;
-  /* box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff; */
 
   .id_table {
     width: 15%;
@@ -172,15 +184,14 @@ const TableRow = styled.tr`
   }
 
   .role_table {
-    width: 15%;
+    width: 10%;
   }
   .sibling_table {
-    width: 5%;
+    width: 10%;
   }
 
   :hover {
-    /* background-color: skyblue !important; */
-    background-color: #edf1f9;
+    background-color: #dce35b33;
   }
 `;
 
@@ -196,17 +207,15 @@ const TableData = styled.td`
     border-radius: 15px 0 0 15px;
   }
   :last-of-type {
+    overflow: initial;
     border-right: 0.5px solid #edf1f9;
     border-radius: 0 15px 15px 0;
+    :hover {
+      cursor: pointer;
+    }
   }
 
   @media screen and (max-width: 768px) {
     padding: 0 4px;
-  }
-`;
-
-const MoreButton = styled.button`
-  :hover {
-    cursor: pointer;
   }
 `;

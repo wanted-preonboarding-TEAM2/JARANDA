@@ -34,15 +34,28 @@ export default function PagedButtonList({
   };
 
   useEffect(() => {
+    setVisiblePageNumbers([...Array(5).keys()].map(i => i + 1));
+  }, [pageNumbers]);
+
+  useEffect(() => {
     setCurrentPage(visiblePageNumbers[0]);
-  }, [visiblePageNumbers]);
+  }, [visiblePageNumbers, setCurrentPage]);
+
+  const isFirstPage = visiblePageNumbers[0] === pageNumbers[0];
+  const isLastPage =
+    visiblePageNumbers[visiblePageNumbers.length - 1] ===
+      pageNumbers[pageNumbers.length - 1] ||
+    !visiblePageNumbers[visiblePageNumbers.length - 1] ||
+    pageNumbers.length < 5;
 
   return (
     <PageListContainer>
       <StyledButton
-        isFirstPage={visiblePageNumbers[0] === pageNumbers[0] ? true : false}
+        isFirstPage={isFirstPage}
+        disabled={isFirstPage}
+        onClick={changePageNumbersBackward}
       >
-        <IoIosArrowBack onClick={changePageNumbersBackward} />
+        <IoIosArrowBack />
       </StyledButton>
       {visiblePageNumbers.map(
         (page, idx) =>
@@ -51,20 +64,16 @@ export default function PagedButtonList({
               key={`pageNumber-${idx + 1}`}
               page={page}
               setCurrentPage={setCurrentPage}
-              isActive={page === currentPage ? true : false}
+              isActive={page === currentPage}
             />
           ),
       )}
       <StyledButton
-        isLastPage={
-          visiblePageNumbers[visiblePageNumbers.length - 1] ===
-            pageNumbers[pageNumbers.length - 1] ||
-          !visiblePageNumbers[visiblePageNumbers.length - 1]
-            ? true
-            : false
-        }
+        isLastPage={isLastPage}
+        disabled={isLastPage}
+        onClick={changePageNumberForward}
       >
-        <IoIosArrowForward onClick={changePageNumberForward} />
+        <IoIosArrowForward />
       </StyledButton>
     </PageListContainer>
   );
@@ -79,8 +88,12 @@ const PageListContainer = styled.ul`
 
 const StyledButton = styled.button`
   color: ${props =>
-    props.isFirstPage ? '#b3b2b2' : props.isLastPage ? '#b3b2b2' : '#555555'};
+    props.isFirstPage || props.isLastPage ? '#b3b2b2' : '#555555'};
   font-size: 20px;
   padding: 10px;
   cursor: pointer;
+  :hover {
+    cursor: ${props =>
+      props.isFirstPage || props.isLastPage ? 'default' : 'point'};
+  }
 `;
