@@ -23,7 +23,9 @@ export default function AppRouter() {
   useEffect(() => {
     const loggedInUser = getLoginValidation();
 
-    dispatch(loginSuccess(loggedInUser));
+    if (loggedInUser) {
+      dispatch(loginSuccess(loggedInUser));
+    }
   }, []);
 
   return (
