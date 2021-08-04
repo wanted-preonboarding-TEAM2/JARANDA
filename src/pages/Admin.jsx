@@ -51,11 +51,14 @@ export default function Admin() {
         setCurrentPage={setCurrentPage}
       />
     </TableContainer>
+
   );
 }
 
+const Container = styled.div``;
+
 const TableContainer = styled.div`
-  background-color: #f8faff;
+  /* background-color: #f8faff; */
 `;
 
 const HeaderContainer = styled.div`

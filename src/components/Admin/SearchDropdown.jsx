@@ -6,6 +6,7 @@ import { useDetectOutsideClick } from 'utils/hooks/useDetectOutsideClick';
 
 const StyledDropdownOpener = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 14px;
   :hover {
@@ -15,6 +16,7 @@ const StyledDropdownOpener = styled.div`
 
 const StyledDropDownContainer = styled.div`
   position: relative;
+  width: 50px;
 `;
 
 const StyledUl = styled.ul`
@@ -29,16 +31,13 @@ const StyledUl = styled.ul`
 `;
 
 const StyledLi = styled.li`
-  height: inerit;
-  margin-top: 4px;
-  padding: 0 6px;
+  padding: 4px;
+  font-size: 14px;
   width: 40px;
-  &:hover {
+  text-align: center;
+  :hover {
     cursor: pointer;
     background-color: #edf1f9;
-  }
-  &:last-child {
-    margin-bottom: 4px;
   }
 `;
 
