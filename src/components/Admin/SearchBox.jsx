@@ -38,13 +38,16 @@ export default function SearchBox({ handleOnSearch }) {
   const [value, setValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(USER.EN.ID);
   // TODO: 로컬스토리지에 데이터를 넣는걸 만들자!
-  localStorageHelper.setItem('userInfo', usersData);
 
   const handleSearch = () => {
     // TODO: get localStorage & filtering with search keyword
-    // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
-    if (!value.trim()) return alert('공백 입력은 불가능합니다!!!');
     const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
+    // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
+    if (!value.trim()) {
+      handleOnSearch(users);
+      return;
+    }
+
     const searchResult =
       users &&
       users.filter(users =>

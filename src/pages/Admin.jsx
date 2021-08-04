@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import TableHeader from 'components/Table/tableHeader';
 import PagedButtonList from 'components/Admin/PagedButtonList';
-import Data from 'components/Admin/users.json';
+import usersData from 'components/Admin/users.json';
+import { localStorageHelper } from 'utils/localStorageHelper';
+import LS_KEY from 'constants/localStorageKey';
 
 const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -14,12 +16,18 @@ export default function Admin() {
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
-  const [tableData, setTableData] = useState(Data);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
+    console.log(3);
+    localStorageHelper.setItem('userInfo', usersData);
+    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
+  }, []);
+
+  useEffect(() => {
+    console.log(1);
     const indexOfLast = currentPage * ITEMS_PER_PAGE;
     const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
-    console.log(tableData);
     const pageData = tableData && tableData.slice(indexOfFirst, indexOfLast);
     setCurrentPageData(pageData);
   }, [currentPage, tableData]);
@@ -29,6 +37,7 @@ export default function Admin() {
       { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
       (_, i) => i + 1,
     );
+    console.log('pageList', pageList);
     setPageNumbers(pageList);
     setCurrentPage(1);
   }, [tableData]);
@@ -51,11 +60,8 @@ export default function Admin() {
         setCurrentPage={setCurrentPage}
       />
     </TableContainer>
-
   );
 }
-
-const Container = styled.div``;
 
 const TableContainer = styled.div`
   /* background-color: #f8faff; */
