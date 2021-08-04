@@ -87,6 +87,7 @@ const GNBContainer = styled.div`
 `;
 
 const StyledImg = styled.img`
+  object-fit: cover;
   width: 102px;
   height: 70px;
   @media (max-width: 960px) {
