@@ -20,8 +20,8 @@ const StyledDropDownContainer = styled.div`
 `;
 
 const StyledUl = styled.ul`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  height: ${({ isOpen }) => (isOpen ? '125px' : '0px')};
+  display: ${({isOpen}) => (isOpen ? 'block' : 'none')};
+  height: ${({isOpen}) => (isOpen ? '125px' : '0px')};
   border-radius: 5px;
   background: white;
   border: 0.5px solid #edf1f9;
@@ -60,11 +60,13 @@ export default function SearchDropdown({ selectedOption, handleListClick }) {
         {USER.KO[selectedOption.toUpperCase()]} <RiArrowDownSFill />
       </StyledDropdownOpener>
       <StyledUl isOpen={isOpen} ref={ref}>
-        {Object.entries(USER.EN).map(([key, value]) => (
-          <StyledLi key={key} onClick={handleItemClick} data-option={value}>
-            {USER.KO[key]}
-          </StyledLi>
-        ))}
+        {
+          Object.entries(USER.EN).map(([key, value]) =>
+            (<StyledLi key={key} onClick={handleItemClick} data-option={value}>
+              {USER.KO[key]}
+            </StyledLi>)
+          )
+        }
       </StyledUl>
     </StyledDropDownContainer>
   );

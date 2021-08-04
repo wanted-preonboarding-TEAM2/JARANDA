@@ -3,13 +3,12 @@ import styled from '@emotion/styled';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MenuItem from './MenuItem.js';
 import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
-import ROLE from 'constants/role.js';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentUserRole } from 'services/redux/slices/user.js';
 
 export default function GNB() {
-  // TODO: 현재의 상태를 가져와야함 (로그인x...선생님...부모님...어드민...) 그리고 AcceptedPage[ROLE] 을 넣어주면 됨
-  // NOTE: 현재는 NO_LOGIN 으로 일단 세팅해놓음.
-  const currentRole = ROLE.NO_LOGIN;
+  const currentRole = useSelector(selectCurrentUserRole);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleClickMenu = () => {
@@ -88,6 +87,7 @@ const GNBContainer = styled.div`
 `;
 
 const StyledImg = styled.img`
+  object-fit: cover;
   width: 102px;
   height: 70px;
   @media (max-width: 960px) {

@@ -1,0 +1,83 @@
+import React, { useRef, useState } from 'react';
+import styled from '@emotion/styled';
+import Form from './Form';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
+
+  form {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px 0px;
+  }
+`;
+
+const BackgroundImage = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+`;
+
+const Title = styled.p`
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 40px;
+`;
+
+const SignUp = () => {
+  const initialUserInfo = {
+    id: '',
+    password: '',
+    passwordConfirm: '',
+    name: '',
+    cardInfo: {
+      cardNum: '',
+      expiredDate: '',
+      cvc: '',
+    },
+    address: '',
+    addressDetail: '',
+    age: '',
+    role: 'teacher',
+  };
+  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const postcodeRef = useRef(null);
+
+  return (
+    <>
+      <BackgroundImage>
+        <img
+          src="https://jaranda.kr/assets/image/account/background.sign_in.png"
+          alt="backgroungImage"
+        />
+      </BackgroundImage>
+      <Container>
+        <Inner>
+          <Title>
+            10초만에 가입하고 <br />
+            선생님 정보를 받아보세요
+          </Title>
+          <Form userInfo={userInfo} setUserInfo={setUserInfo} />
+        </Inner>
+      </Container>
+      <div ref={postcodeRef}></div>
+    </>
+  );
+};
+
+export default SignUp;
