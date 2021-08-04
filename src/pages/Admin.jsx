@@ -8,57 +8,49 @@ import PagedButtonList from 'components/Admin/PagedButtonList';
 import Data from 'components/Admin/users.json';
 
 const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
+const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
-  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [tableData, setTableData] = useState(Data);
 
-  const getCurrentPageUserInfos = () => {
-    const indexOfLast = currentPage * usersPerPage;
-    const indexOfFirst = indexOfLast - usersPerPage;
-    const pageData = Data.slice(indexOfFirst, indexOfLast);
+  useEffect(() => {
+    const indexOfLast = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
+    console.log(tableData);
+    const pageData = tableData && tableData.slice(indexOfFirst, indexOfLast);
     setCurrentPageData(pageData);
-  }
-
-  const calculatePages = (totalUserData) => {
-    const lastPageNumber = Math.ceil(totalUserData.length / usersPerPage);
-    const pages = [];
-    for(let i = 1; i <= lastPageNumber; i++) {
-      pages.push(i);
-    }
-    setPageNumbers(pages);
-  }
+  }, [currentPage, tableData]);
 
   useEffect(() => {
-    getCurrentPageUserInfos();
-  }, [currentPage])
+    const pageList = Array.from(
+      { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
+      (_, i) => i + 1,
+    );
+    setPageNumbers(pageList);
+    setCurrentPage(1);
+  }, [tableData]);
 
-  useEffect(() => {
-    calculatePages(Data);
-  }, [])
+  const handleOnSearch = result => {
+    setTableData(result);
+  };
 
   return (
-    currentPageData.length &&
-    <div style={{ padding: '5%' }}>
-      <TableContainer>
-        <HeaderContainer>
-          <TableHeader title="Users" number={1000} />
-          <SearchBox />
-        </HeaderContainer>
-        <Table
-          dataProps={dataProps}
-          tableData={currentPageData}
-        />
-        <PagedButtonList
-          pageNumbers={pageNumbers}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          getCurrentPageUserInfos={getCurrentPageUserInfos}
-        />
-      </TableContainer>
-    </div>
+    <TableContainer>
+      <HeaderContainer>
+        <TableHeader title="Users" number={1000} />
+        <SearchBox handleOnSearch={handleOnSearch} />
+      </HeaderContainer>
+      <Table dataProps={dataProps} tableData={currentPageData} />
+      <PagedButtonList
+        // TODO: pageNumbers -> totalPage
+        pageNumbers={pageNumbers}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </TableContainer>
   );
 }
 
