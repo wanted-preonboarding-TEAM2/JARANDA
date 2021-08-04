@@ -11,7 +11,7 @@ const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
-  const [pageNumbers, setPageNumbers] = useState([]);
+  const [pageNumbers, setPageNumbers] = useState([1]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
   const [tableData, setTableData] = useState(Data);
