@@ -19,13 +19,11 @@ export default function Admin() {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    console.log(3);
     localStorageHelper.setItem('userInfo', usersData);
     setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
   }, []);
 
   useEffect(() => {
-    console.log(1);
     const indexOfLast = currentPage * ITEMS_PER_PAGE;
     const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
     const pageData = tableData && tableData.slice(indexOfFirst, indexOfLast);
@@ -37,7 +35,6 @@ export default function Admin() {
       { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
       (_, i) => i + 1,
     );
-    console.log('pageList', pageList);
     setPageNumbers(pageList);
     setCurrentPage(1);
   }, [tableData]);
@@ -49,7 +46,7 @@ export default function Admin() {
   return (
     <TableContainer>
       <HeaderContainer>
-        <TableHeader title="계정 수" number={tableData.length} />
+        <TableHeader title="계정 관리" number={tableData.length} />
         <SearchBox handleOnSearch={handleOnSearch} />
       </HeaderContainer>
       <Table dataProps={dataProps} tableData={currentPageData} />

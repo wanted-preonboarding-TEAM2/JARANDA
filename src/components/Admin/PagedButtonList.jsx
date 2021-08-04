@@ -31,7 +31,6 @@ export default function PagedButtonList({
         ),
       );
     }
-    console.log('visible', visiblePageNumbers[visiblePageNumbers.length - 1]);
   };
 
   useEffect(() => {
@@ -40,7 +39,7 @@ export default function PagedButtonList({
 
   useEffect(() => {
     setCurrentPage(visiblePageNumbers[0]);
-  }, [visiblePageNumbers]);
+  }, [visiblePageNumbers, setCurrentPage]);
 
   const isFirstPage = visiblePageNumbers[0] === pageNumbers[0];
   const isLastPage =

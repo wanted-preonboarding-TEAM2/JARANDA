@@ -49,19 +49,21 @@ const DropdownHeader = styled.div`
 
 const DropdownList = styled.ul`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  width: 50px;
   /* height: ${({ isOpen }) => (isOpen ? '125px' : '0px')}; */
   border-radius: 5px;
   z-index: 99;
   background-color: white;
   border: 0.5px solid #edf1f9;
   position: absolute;
-  top: 30px;
+  top: 20px;
 `;
 
 const DropdownItem = styled.li`
   padding: 4px;
+
   font-size: 14px;
-  width: 40px;
+  width: 100%;
   text-align: center;
   :hover {
     cursor: pointer;

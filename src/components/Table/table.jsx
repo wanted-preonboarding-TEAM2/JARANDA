@@ -162,7 +162,6 @@ const TableRow = styled.tr`
   white-space: nowrap;
   background-color: white;
   border-radius: 15px;
-  /* box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff; */
 
   .id_table {
     width: 15%;
@@ -192,8 +191,7 @@ const TableRow = styled.tr`
   }
 
   :hover {
-    /* background-color: skyblue !important; */
-    background-color: #edf1f9;
+    background-color: #dce35b33;
   }
 `;
 
