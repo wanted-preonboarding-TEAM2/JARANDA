@@ -16,7 +16,7 @@ export default function PagedButtonList({ pageNumbers, currentPage, setCurrentPa
 
   const changePageNumberForward = () => {
     if (visiblePageNumbers[visiblePageNumbers.length - 1] !== pageNumbers.length) {
-      setVisiblePageNumbers(visiblePageNumbers.map(page => page + 5));
+      setVisiblePageNumbers(visiblePageNumbers.map(page => page + 5 <= pageNumbers[pageNumbers.length - 1] ? page + 5 : undefined));
     }
   }
 
@@ -30,6 +30,7 @@ export default function PagedButtonList({ pageNumbers, currentPage, setCurrentPa
         <IoIosArrowBack onClick={changePageNumbersBackward}/>
       </StyledButton>
       {visiblePageNumbers.map((page, idx) => (
+        page <= pageNumbers[pageNumbers.length - 1] &&
         <PageButton
           key={`pageNumber-${idx + 1}`}
           page={page}
@@ -38,7 +39,7 @@ export default function PagedButtonList({ pageNumbers, currentPage, setCurrentPa
           isActive={page === currentPage ? true : false}
         />
       ))}
-      <StyledButton isLastPage={visiblePageNumbers[visiblePageNumbers.length - 1] === pageNumbers[pageNumbers.length - 1] ? true : false}>
+      <StyledButton isLastPage={visiblePageNumbers[visiblePageNumbers.length - 1] === pageNumbers[pageNumbers.length - 1] || !visiblePageNumbers[visiblePageNumbers.length - 1] ? true : false}>
         <IoIosArrowForward onClick={changePageNumberForward}/>
       </StyledButton>
     </PageListContainer>
