@@ -45,6 +45,7 @@ const AddressInfo = ({
             }
             fullAddr += extraAddr !== '' ? ` (${extraAddr})` : '';
           }
+          console.log(fullAddr);
 
           setUserInfo({
             ...userInfo,
@@ -63,8 +64,11 @@ const AddressInfo = ({
           type="text"
           name="address"
           placeholder=" 주소를 입력해주세요"
-          defaultValue={userInfo.address}
-          readOnly
+          value={userInfo.address}
+          onChange={() => {
+            return;
+          }}
+          readonly
         />
         <CustomButton type="button" width="100px" onClick={loadLayout}>
           주소
