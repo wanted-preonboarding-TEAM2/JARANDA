@@ -24,7 +24,7 @@ const PARENT = [
 const ADMIN = [
   { to: '/admin/teacher', title: '선생님 관리' },
   { to: '/admin/parent', title: '학부모 관리' },
-  { to: '/adnmin', title: '관리자' },
+  { to: '/admin', title: '관리자' },
 ];
 
 const ACCEPTED_PAGE_BY_ROLE = {
