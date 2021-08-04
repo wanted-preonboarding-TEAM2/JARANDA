@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import Form from './Form';
 import { css } from '@emotion/react';
@@ -69,22 +69,6 @@ const CloseBtnContainer = styled.div`
 `;
 
 const SignUp = ({ isModal, closeModal }) => {
-  const initialUserInfo = {
-    id: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    cardInfo: {
-      cardNum: '',
-      expiredDate: '',
-      cvc: '',
-    },
-    address: '',
-    addressDetail: '',
-    age: '',
-    role: 'teacher',
-  };
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
   const postcodeRef = useRef(null);
 
   return (
@@ -107,11 +91,7 @@ const SignUp = ({ isModal, closeModal }) => {
             10초만에 가입하고 <br />
             선생님 정보를 받아보세요
           </Title>
-          <Form
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
-            isModal={isModal}
-          />
+          <Form isModal={isModal} />
         </Inner>
       </Container>
       <div ref={postcodeRef}></div>
