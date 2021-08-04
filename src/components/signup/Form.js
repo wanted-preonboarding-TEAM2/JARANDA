@@ -178,6 +178,7 @@ const SignUpForm = ({ isModal }) => {
     e.preventDefault();
     if (checkIdExist(userInfo.id)) {
       alert('아이디가 이미 존재합니다');
+      return;
     }
     if (Object.values(errors).every(item => item === '')) {
       console.log('submit');
