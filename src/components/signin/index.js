@@ -3,13 +3,11 @@ import styled from '@emotion/styled';
 import { CustomInput, CustomButton } from 'elements';
 
 const SignInContainer = styled.div`
-  background-color: rgb(249, 249, 249);
-  background: url(https://jaranda.kr/assets/image/account/background.sign_in.png)
-    no-repeat top right;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 `;
 
 const SignInInner = styled.div`
@@ -17,24 +15,24 @@ const SignInInner = styled.div`
   flex-direction: column;
   align-items: center;
   background: rgb(255, 255, 255);
-  padding: 90px;
+  padding: 50px 90px;
   box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
   font-size: 14px;
   color: rgb(30, 29, 41);
-  height: 60%;
 
   form {
-    height: 100%;
     width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px 0px;
+    gap: 15px 0px;
   }
 `;
 
-const SignInLogo = styled.img``;
+const SignInLogo = styled.img`
+  margin-bottom: 40px;
+`;
 
 const SignInForm = styled.form``;
 
@@ -42,11 +40,18 @@ const SignInDiv = styled.div``;
 
 const SignInSpan = styled.span``;
 
+const BackgroundImg = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -10;
+`;
+
 const Signdivider = styled.div`
   background-color: #e5e5e5;
   height: 1px;
   width: 100%;
-  margin: 24px 0;
+  margin: 10px 0;
 `;
 
 const Signin = () => {
@@ -59,6 +64,12 @@ const Signin = () => {
   return (
     <>
       <SignInContainer>
+        <BackgroundImg>
+          <img
+            src="https://jaranda.kr/assets/image/account/background.sign_in.png"
+            alt="backgroungImage"
+          />
+        </BackgroundImg>
         <SignInInner>
           <SignInLogo
             class="icon"
