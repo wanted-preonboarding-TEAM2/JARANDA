@@ -69,7 +69,7 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
       setCardNum(
         cardNum
           .replace(/-/g, '')
-          .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4'),
+          .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4'),
       );
     }
     if (expiredDate.length === 4) {
