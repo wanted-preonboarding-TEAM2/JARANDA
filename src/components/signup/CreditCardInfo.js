@@ -20,13 +20,17 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
   const { cardNum, expiredDate, cvc } = cardInfo;
   return (
     <Container onClick={handleModalOpen}>
-      <CustomInput placeholder="신용카드 번호" readOnly value={cardNum} />
+      <CustomInput
+        placeholder="신용카드 번호"
+        defaultValue={cardNum}
+        readOnly
+      />
 
       <div>
         <CustomInput
-          type="number"
+          type="text"
           placeholder="신용카드 만료일 (MM/YY)"
-          value={expiredDate}
+          defaultValue={expiredDate}
           readOnly
         />
         <CustomInput
@@ -34,7 +38,7 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
           minLength={3}
           maxLength={3}
           placeholder="신용카드 CVC"
-          value={cvc}
+          defaultValue={cvc}
           readOnly
         />
       </div>

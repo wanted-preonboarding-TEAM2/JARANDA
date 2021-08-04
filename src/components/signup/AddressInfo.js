@@ -15,7 +15,19 @@ const Container = styled.div`
   }
 `;
 
-const AddressInfo = ({ userInfo, setUserInfo, handleChange }) => {
+const ErrorMessage = styled.div`
+  width: 100%;
+  text-align: left;
+  color: red;
+`;
+
+const AddressInfo = ({
+  userInfo,
+  setUserInfo,
+  handleChange,
+  errors,
+  checkValidation,
+}) => {
   const loadLayout = () => {
     window.daum.postcode.load(() => {
       const postcode = new window.daum.Postcode({
@@ -51,7 +63,7 @@ const AddressInfo = ({ userInfo, setUserInfo, handleChange }) => {
           type="text"
           name="address"
           placeholder=" 주소를 입력해주세요"
-          value={userInfo.address}
+          defaultValue={userInfo.address}
           readOnly
         />
         <CustomButton type="button" width="100px" onClick={loadLayout}>
@@ -64,7 +76,11 @@ const AddressInfo = ({ userInfo, setUserInfo, handleChange }) => {
         placeholder="나머지 주소를 입력해주세요"
         value={userInfo.addressDetail}
         onChange={handleChange}
+        onBlur={checkValidation}
       />
+      {errors.addressDetail && (
+        <ErrorMessage>{errors.addressDetail}</ErrorMessage>
+      )}
     </Container>
   );
 };
