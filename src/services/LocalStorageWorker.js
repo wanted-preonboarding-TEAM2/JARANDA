@@ -10,8 +10,14 @@ export const saveUserInfo = data => {
   LSHelper.setItem(LS_KEY.USER_INFO, userInfos);
 };
 
-const getUserInfo = () => {
+export const getUserInfo = () => {
   const data = LSHelper.getItem(LS_KEY.USER_INFO) ?? [];
+
+  return data;
+};
+
+export const getLoginValidation = () => {
+  const data = LSHelper.getItem(LS_KEY.LOGIN_VALIDATION);
 
   return data;
 };
