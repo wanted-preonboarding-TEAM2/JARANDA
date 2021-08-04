@@ -60,35 +60,36 @@ export const addressValidation = data => {
 };
 
 export const cardValidation = (data, name) => {
-  const cardNumRegex = /^[가-힣0-9\\s](-){3}$/;
+  const cardNumRegex = /^[0-9\s]+$/;
   const expiredDateRegex = /^[0-9]{2}(\/)[0-9]{2}$/;
   const cvcRegex = /^[0-9]{3}$/;
 
-  if (name === 'cardNum' && !cardNumRegex.test(data.cardNum)) {
+  if (name === 'cardNum' && !cardNumRegex.test(data)) {
     return {
       result: false,
-      message: '카드번호는 숫자만 가능합니다',
+      message: '카드번호를 정확히 입력해 주세요',
     };
   }
 
-  if (name === 'expiredDate' && data.expiredDate.length < 3) {
+  if (name === 'cardNum' && data.length < 16) {
+    console.log('data.cardNum', data.cardNum);
     return {
       result: false,
-      message: '정확히 입력해주세요',
+      message: '카드 번호 정확히 16자리 입력해 주세요',
     };
   }
 
-  if (name === 'expiredDate' && !expiredDateRegex.test(data.expiredDate)) {
+  if (name === 'expiredDate' && !expiredDateRegex.test(data)) {
     return {
       result: false,
       message: '만료일 형식을 확인해주세요 (YY/MM)',
     };
   }
 
-  if (name === 'cvc' && !cvcRegex.test(data.cvc)) {
+  if (name === 'cvc' && !cvcRegex.test(data) && data.length < 3) {
     return {
       result: false,
-      message: 'cvc는 숫자만 가능합니다',
+      message: 'cvc 3자리 입력해주세요',
     };
   }
 

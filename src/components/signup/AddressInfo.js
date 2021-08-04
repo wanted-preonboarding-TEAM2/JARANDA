@@ -63,7 +63,7 @@ const AddressInfo = ({
           type="text"
           name="address"
           placeholder=" 주소를 입력해주세요"
-          value={userInfo.address}
+          defaultValue={userInfo.address}
           readOnly
         />
         <CustomButton type="button" width="100px" onClick={loadLayout}>

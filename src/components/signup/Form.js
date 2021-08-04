@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import AddressInfo from './AddressInfo';
 import CreditCardInfo from './CreditCardInfo';
@@ -51,7 +51,7 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
-const SignUpForm = () => {
+const SignUpForm = ({ isModal }) => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
@@ -126,20 +126,6 @@ const SignUpForm = () => {
   const checkValidation = e => {
     const { name } = e.target;
 
-    if (creditModalOpen) {
-      console.log('modalopen');
-      console.log(name);
-      console.log(userInfo.cardInfo);
-      setErrors({
-        ...errors,
-        cardInfo: {
-          ...errors.cardInfo,
-          [name]: cardValidation(userInfo.cardInfo, name).message,
-        },
-      });
-      return;
-    }
-
     switch (name) {
       case 'id':
         setErrors({
@@ -154,6 +140,13 @@ const SignUpForm = () => {
         });
         return false;
       case 'passwordConfirm':
+        if (passwordConfirm !== userInfo.password) {
+          setErrors({
+            ...errors,
+            [name]: '비밀번호와 일치하지 않습니다',
+          });
+          return;
+        }
         setErrors({
           ...errors,
           [name]: pwValidation(passwordConfirm).message,
@@ -183,10 +176,13 @@ const SignUpForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (checkIdExist(userInfo.id)) {
+      alert('아이디가 이미 존재합니다');
+    }
     if (Object.values(errors).every(item => item === '')) {
       console.log('submit');
     } else {
-      alert('입력을 확인해주세요');
+      //alert('입력을 확인해주세요');
     }
     saveUserInfo(userInfo);
   };
@@ -249,8 +245,9 @@ const SignUpForm = () => {
           open={creditModalOpen}
           close={handleModalOpen}
           setUserInfo={setUserInfo}
-          checkValidation={checkValidation}
+          cardValidation={cardValidation}
           errors={errors}
+          setErrors={setErrors}
         />
         <CustomInput
           name="age"
@@ -262,7 +259,9 @@ const SignUpForm = () => {
           onBlur={checkValidation}
         />
         <Role handleChange={handleChange} name="role" defaultValue="teacher" />
-        <CustomButton type="submit">회원 가입</CustomButton>
+        <CustomButton type="submit">
+          {isModal ? '유저 생성' : '회원 가입'}
+        </CustomButton>
       </form>
     </>
   );

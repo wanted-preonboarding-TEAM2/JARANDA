@@ -24,7 +24,7 @@ function CustomInput(props) {
     onClick,
     onChange,
     onBlur,
-    readOnly,
+    readonly,
   } = props;
   return (
     <Input
@@ -38,7 +38,7 @@ function CustomInput(props) {
       onChange={onChange}
       onBlur={onBlur}
       required
-      readOnly={readOnly}
+      readonly={readonly}
     />
   );
 }

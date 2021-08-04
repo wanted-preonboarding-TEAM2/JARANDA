@@ -22,8 +22,7 @@ const StyledSection = styled.section`
   margin: auto;
   @media only screen and (max-width: 960px) {
     width: auto;
-    padding-left: 32px;
-    padding-right: 27px;
+    padding: 0;
   }
 `;
 

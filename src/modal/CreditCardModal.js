@@ -55,23 +55,21 @@ const ErrorMessage = styled.div`
   text-align: center;
 `;
 
-const CreditCardModal = ({
-  open,
-  close,
-  setUserInfo,
-  checkValidation,
-  errors,
-}) => {
+const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
   const [cardNum, setCardNum] = useState('');
   const [expiredDate, setExpiredDate] = useState('');
   const [cvc, setCvc] = useState('');
+
+  const [cardNumError, setCardNumError] = useState('');
+  const [expiredDateError, setExpiredDateError] = useState('');
+  const [cvcError, setCvcError] = useState('');
 
   useEffect(() => {
     if (cardNum.length === 16) {
       setCardNum(
         cardNum
           .replace(/-/g, '')
-          .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-****'),
+          .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4'),
       );
     }
     if (expiredDate.length === 4) {
@@ -106,6 +104,20 @@ const CreditCardModal = ({
       default:
     }
   };
+  const checkValidation = e => {
+    const { name } = e.target;
+    switch (name) {
+      case 'cardNum':
+        setCardNumError(cardValidation(cardNum, name).message);
+        return false;
+      case 'expiredDate':
+        setExpiredDateError(cardValidation(expiredDate, name).message);
+        return false;
+      case 'cvc':
+        setCvcError(cardValidation(cvc, name).message);
+        return false;
+    }
+  };
 
   const setCardInfo = () => {
     setUserInfo(prev => {
@@ -118,6 +130,7 @@ const CreditCardModal = ({
     });
     close();
   };
+
   return (
     <>
       {open ? (
@@ -132,9 +145,7 @@ const CreditCardModal = ({
               onChange={cardInfoChange}
               onBlur={checkValidation}
             />
-            {errors.cardInfo.cardNum && (
-              <ErrorMessage>{errors.cardInfo.cardNum}</ErrorMessage>
-            )}
+            {cardNumError && <ErrorMessage>{cardNumError}</ErrorMessage>}
             <div>
               <Box>
                 <CustomInput
@@ -146,9 +157,9 @@ const CreditCardModal = ({
                   onBlur={checkValidation}
                 />
 
-                {errors.cardInfo.expiredDate && (
+                {expiredDateError && (
                   <ErrorMessage style={{ marginTop: '14px' }}>
-                    {errors.cardInfo.expiredDate}
+                    {expiredDateError}
                   </ErrorMessage>
                 )}
               </Box>
@@ -163,9 +174,9 @@ const CreditCardModal = ({
                   onChange={cardInfoChange}
                   onBlur={checkValidation}
                 />
-                {errors.cardInfo.cvc && (
+                {cvcError && (
                   <ErrorMessage style={{ marginTop: '14px' }}>
-                    {errors.cardInfo.cvc}
+                    {cvcError}
                   </ErrorMessage>
                 )}
               </Box>
