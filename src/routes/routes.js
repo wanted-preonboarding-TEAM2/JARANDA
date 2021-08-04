@@ -6,12 +6,26 @@ import ParentRoute from './ParentRoute';
 import TeacherRoute from './TeacherRoute.js';
 import AdminRoute from './AdminRoute.js';
 import RouteIf from './RouteIf';
-import { useSelector } from 'react-redux';
-import { selectCurrentUserRole } from 'services/redux/slices/user';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  loginSuccess,
+  selectCurrentUserRole,
+} from 'services/redux/slices/user';
 import ROLE from 'constants/role.js';
+import { useEffect } from 'react';
+import { getLoginValidation } from 'services/LocalStorageWorker';
 
 export default function AppRouter() {
+  const dispatch = useDispatch();
+
   const myRole = useSelector(selectCurrentUserRole);
+
+  useEffect(() => {
+    const loggedInUser = getLoginValidation();
+
+    dispatch(loginSuccess(loggedInUser));
+  }, []);
+
   return (
     <Router>
       <Layout>

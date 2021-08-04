@@ -6,17 +6,38 @@ const initialState = {
   name: '',
   uid: '',
   role: ROLE.NO_LOGIN,
+  loginStatus: {
+    loading: false,
+    success: false,
+    failure: null,
+  },
 };
 
 export const userSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
-    login: function (state, action) {
-      state.id = action.payload.id;
-      state.uid = action.payload.uid;
-      state.name = action.payload.name;
-      state.role = action.payload.role;
+    loginRequest: function (state) {
+      state.loginStatus.loading = true;
+      state.loginStatus.success = false;
+      state.loginStatus.failure = false;
+    },
+    loginSuccess: function (state, action) {
+      const { id, uid, name, role } = action.payload;
+
+      state.id = id;
+      state.uid = uid;
+      state.name = name;
+      state.role = role;
+
+      state.loginStatus.loading = false;
+      state.loginStatus.success = true;
+      state.loginStatus.failure = false;
+    },
+    loginFailure: function (state, action) {
+      state.loginStatus.loading = false;
+      state.loginStatus.success = false;
+      state.loginStatus.failure = action.payload.errorMessage;
     },
     logout: function (state) {
       state.id = '';
@@ -26,6 +47,8 @@ export const userSlice = createSlice({
     },
   },
 });
+
+export const { loginRequest, loginSuccess, loginFailure } = userSlice.actions;
 
 export const selectUser = state => state.user;
 export const selectCurrentUserRole = state => state.user.role;
