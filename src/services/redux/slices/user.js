@@ -5,7 +5,7 @@ const initialState = {
   id: '',
   name: '',
   uid: '',
-  role: ROLE.ADMIN, //ROLE.NO_LOGIN
+  role: ROLE.NO_LOGIN,
 };
 
 export const userSlice = createSlice({

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
+
 import { CustomInput } from 'elements';
 
-const CreditCardContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 15px 10px;
-  margin-bottom: 15px;
   cursor: pointer;
 
   div {
@@ -19,7 +19,7 @@ const CreditCardContainer = styled.div`
 const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
   const { cardNum, expiredDate, cvc } = cardInfo;
   return (
-    <CreditCardContainer onClick={handleModalOpen}>
+    <Container onClick={handleModalOpen}>
       <CustomInput placeholder="신용카드 번호" readOnly value={cardNum} />
 
       <div>
@@ -38,7 +38,7 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
           readOnly
         />
       </div>
-    </CreditCardContainer>
+    </Container>
   );
 };
 

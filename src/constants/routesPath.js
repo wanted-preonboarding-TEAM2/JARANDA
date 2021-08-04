@@ -2,7 +2,7 @@ const ROUTES = {
   HOME: '/',
   ADMIN: '/admin',
   TEACHER: '/teacher',
-  PARENTS: '/parents',
+  PARENT: '/parent',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
 };
