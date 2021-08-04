@@ -5,7 +5,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey.js';
 import USER from 'constants/user.js';
-// import usersData from './users.json';
+import usersData from './users.json';
 
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -37,8 +37,7 @@ export default function SearchBox({ handleOnSearch }) {
   const [value, setValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(USER.EN.ID);
   // TODO: 로컬스토리지에 데이터를 넣는걸 만들자!
-  // console.log(usersData);
-  // localStorageHelper.setItem('userInfo', usersData);
+  localStorageHelper.setItem('userInfo', usersData);
 
   const handleSearch = () => {
     // TODO: get localStorage & filtering with search keyword
