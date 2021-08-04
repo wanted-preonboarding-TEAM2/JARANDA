@@ -15,6 +15,12 @@ import {
   ageValidation,
 } from 'utils/Validation';
 
+const ErrorMessage = styled.div`
+  width: 100%;
+  text-align: left;
+  color: red;
+`;
+
 const initialUserInfo = {
   id: '',
   password: '',
@@ -44,12 +50,6 @@ const initialError = {
   addressDetail: '',
   age: '',
 };
-
-const ErrorMessage = styled.div`
-  width: 100%;
-  text-align: left;
-  color: red;
-`;
 
 const SignUpForm = ({ isModal }) => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
@@ -158,10 +158,10 @@ const SignUpForm = ({ isModal }) => {
           [name]: nameValidation(userInfo.name).message,
         });
         return false;
-      case 'id':
+      case 'addressDetail':
         setErrors({
           ...errors,
-          [name]: addressValidation(userInfo.address).message,
+          [name]: addressValidation(userInfo.addressDetail).message,
         });
         return false;
       case 'age':
@@ -174,24 +174,29 @@ const SignUpForm = ({ isModal }) => {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(
-      Object.values(errors).forEach(error => {
-        console.log(error);
+  const checkErrorExists = () => {
+    const errorListFlat = Object.values(errors)
+      .map(error => {
         if (typeof error === 'object') {
           return Object.values(error);
         }
         return error;
-      }),
-    );
+      })
+      .flat();
+
+    return errorListFlat.every(list => list === '');
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (!checkErrorExists()) {
+      alert('입력을 확인해주세요');
+      return;
+    }
 
     if (checkIdExist(userInfo.id)) {
       alert('아이디가 이미 존재합니다');
-      return;
-    }
-    if (Object.values(errors).every(item => item === '')) {
-      alert('입력을 확인해주세요');
       return;
     }
 
