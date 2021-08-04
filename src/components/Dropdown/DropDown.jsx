@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import { useRef } from 'react';
+import { useDetectOutsideClick } from 'utils/hooks/useDetectOutsideClick';
 
 const Dropdown = ({
   visibleOption,
@@ -7,7 +9,8 @@ const Dropdown = ({
   onItemClick,
   print = data => data,
 }) => {
-  const [isOpened, setIsOpened] = useState(false);
+  const ref = useRef(null);
+  const [isOpened, setIsOpened] = useDetectOutsideClick(ref, false);
 
   const handleItemClick = value => {
     onItemClick(value);
@@ -19,7 +22,7 @@ const Dropdown = ({
       <DropdownHeader onClick={() => setIsOpened(!isOpened)}>
         {visibleOption}
       </DropdownHeader>
-      <DropdownList isOpen={isOpened}>
+      <DropdownList ref={ref} isOpen={isOpened}>
         {optionList.map(value => (
           <DropdownItem key={value} onClick={() => handleItemClick(value)}>
             {print(value)}
