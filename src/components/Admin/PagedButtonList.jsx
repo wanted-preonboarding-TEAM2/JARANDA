@@ -4,18 +4,24 @@ import { useState, useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import PageButton from './PageButton.jsx';
 
+const PAGES_PER_LIST = 5;
+
 export default function PagedButtonList({
   pageNumbers,
   currentPage,
   setCurrentPage,
 }) {
   const [visiblePageNumbers, setVisiblePageNumbers] = useState(
-    [...Array(5).keys()].map(i => i + 1),
+    pageNumbers.length < 5
+      ? [...Array(pageNumbers.length).keys()].map(i => i + 1)
+      : [...Array(PAGES_PER_LIST).keys()].map(i => i + 1),
   );
 
   const changePageNumbersBackward = () => {
     if (visiblePageNumbers[0] !== 1) {
-      setVisiblePageNumbers(visiblePageNumbers.map(page => page - 5));
+      setVisiblePageNumbers(
+        visiblePageNumbers.map(page => page - PAGES_PER_LIST),
+      );
     }
   };
 
@@ -24,18 +30,18 @@ export default function PagedButtonList({
       visiblePageNumbers[visiblePageNumbers.length - 1] !== pageNumbers.length
     ) {
       setVisiblePageNumbers(
-        visiblePageNumbers.map(page =>
-          page + 5 <= pageNumbers[pageNumbers.length - 1]
-            ? page + 5
-            : undefined,
-        ),
+        visiblePageNumbers.map(page => page + PAGES_PER_LIST),
       );
     }
   };
 
   useEffect(() => {
-    setVisiblePageNumbers([...Array(5).keys()].map(i => i + 1));
-  }, [pageNumbers]);
+    pageNumbers.length <= PAGES_PER_LIST
+      ? setVisiblePageNumbers(pageNumbers)
+      : setVisiblePageNumbers(
+          [...Array(PAGES_PER_LIST).keys()].map(i => i + 1),
+        );
+  }, [pageNumbers.length]);
 
   useEffect(() => {
     setCurrentPage(visiblePageNumbers[0]);
