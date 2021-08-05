@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { localStorageHelper } from 'utils/localStorageHelper';
-import LS_KEY from 'constants/localStorageKey.js';
+import React, { useCallback, useEffect, useState } from 'react';
 import USER from 'constants/user.js';
 import Dropdown from 'components/Dropdown/DropDown';
 import { RiArrowDownSFill } from 'react-icons/ri';
+import useDebounce from 'utils/hooks/useDebounce';
+import { searchUsersByOption } from 'services/utils/searchUsersByOption.js';
 
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -30,30 +29,18 @@ const StyledInput = styled.input`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-const StyledButton = styled.button`
-  //
-  cursor: pointer;
-`;
-
 export default function SearchBox({ handleOnSearch }) {
   const [value, setValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(USER.EN.ID);
-  // TODO: 로컬스토리지에 데이터를 넣는걸 만들자!
 
-  const handleSearch = () => {
-    // TODO: get localStorage & filtering with search keyword
-    const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
-    // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
-    if (!value.trim()) {
-      handleOnSearch(users);
-      return;
-    }
+  const debouncedValue = useDebounce({ value, delay: 500 });
+  const debouncedSearch = useCallback(() => {
+    handleOnSearch(searchUsersByOption(debouncedValue, selectedOption));
+  }, [handleOnSearch, debouncedValue, selectedOption]);
 
-    const searchResult = users?.filter(users =>
-      `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
-    );
-    handleOnSearch(searchResult);
-  };
+  useEffect(() => {
+    debouncedSearch();
+  }, [debouncedSearch]);
 
   const handleListClick = option => {
     setSelectedOption(option);
@@ -61,22 +48,6 @@ export default function SearchBox({ handleOnSearch }) {
 
   const handleInputChange = ({ target: { value } }) => {
     setValue(value);
-    const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
-    // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
-    if (!value.trim()) {
-      handleOnSearch(users);
-      return;
-    }
-
-    const searchResult = users?.filter(users =>
-      `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
-    );
-    handleOnSearch(searchResult);
-  };
-
-  const handleInputKeyDown = ({ key }) => {
-    // TODO: 리팩토링 하기
-    key === 'Enter' && handleSearch();
   };
 
   return (
@@ -92,15 +63,7 @@ export default function SearchBox({ handleOnSearch }) {
         print={data => USER.KO[data.toUpperCase()]}
       />
       <InputContainer>
-        <StyledInput
-          value={value}
-          type="search"
-          onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
-        />
-        <StyledButton type="button" onClick={handleSearch}>
-          <AiOutlineSearch />
-        </StyledButton>
+        <StyledInput value={value} type="search" onChange={handleInputChange} />
       </InputContainer>
     </SearchBoxContainer>
   );
