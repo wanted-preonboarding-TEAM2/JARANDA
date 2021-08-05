@@ -112,7 +112,7 @@ const Signin = () => {
         return;
       }
     },
-    [id, password],
+    [id, password, dispatch],
   );
 
   return (

@@ -99,17 +99,12 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
   };
   const checkValidation = e => {
     const { name } = e.target;
-    switch (name) {
-      case 'cardNum':
-        setCardNumError(cardValidation(cardNum, name).message);
-        return false;
-      case 'expiredDate':
-        setExpiredDateError(cardValidation(expiredDate, name).message);
-        return false;
-      case 'cvc':
-        setCvcError(cardValidation(cvc, name).message);
-        return false;
-    }
+    const optinos = {
+      cardNum: setCardNumError(cardValidation(cardNum, name).message),
+      expDate: setExpiredDateError(cardValidation(expiredDate, name).message),
+      cvc: setCvcError(cardValidation(cvc, name).message),
+    };
+    optinos[name] && optinos[name]();
   };
 
   const setCardInfo = () => {
