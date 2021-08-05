@@ -19,14 +19,12 @@ export default function AppRouter() {
   const dispatch = useDispatch();
 
   const myRole = useSelector(selectCurrentUserRole);
-
   useEffect(() => {
     const loggedInUser = getLoginValidation();
-
     if (loggedInUser) {
       dispatch(loginSuccess(loggedInUser));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>
