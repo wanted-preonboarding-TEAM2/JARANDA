@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import Dropdown from 'components/Dropdown/DropDown';
 import React from 'react';
-import { BsThreeDots } from 'react-icons/bs';
+import { RiArrowDownSFill } from 'react-icons/ri';
+import { setUserInfo } from 'services/LocalStorageWorker';
 
 const dataPropsMapper = {
   id: {
@@ -12,10 +13,6 @@ const dataPropsMapper = {
     title: '이름',
     parseData: data => data,
   },
-  //   uid: {
-  //     title: '이름',
-  //     parseData: data => data,
-  //   },
   address: {
     title: '주소',
     parseData: data => data,
@@ -34,25 +31,18 @@ const dataPropsMapper = {
   },
   role: {
     title: '권한',
-    parseData: data =>
-      data === 1 ? (
-        <StyledTag color="#389e0d">부모님</StyledTag>
-      ) : data === 2 ? (
-        <StyledTag color="#096dd9">선생님</StyledTag>
-      ) : (
-        <StyledTag color="#cf1322">관리자</StyledTag>
-      ),
+    parseData: data => data,
   },
 };
 
-const moreButtonList = ['수정', '삭제'];
-
-const Table = ({ dataProps, tableData }) => {
-  const onItemClick = value => {
-    if (value === '수정') {
-      console.log('수정');
-    } else if (value === '삭제') {
-      console.log('삭제');
+const Table = ({ dataProps, currentPageData, tableData, setTableData }) => {
+  const handleEditUserRole = data => {
+    setUserInfo(data);
+    const newTableData = tableData;
+    const index = tableData.findIndex(user => user.id === data.id);
+    if (index !== -1) {
+      newTableData[index] = data;
+      setTableData([...newTableData]);
     }
   };
 
@@ -69,24 +59,54 @@ const Table = ({ dataProps, tableData }) => {
           </TableHeader>
         </thead>
         <tbody>
-          {tableData.map((data, index) => (
+          {currentPageData.map((data, index) => (
             <TableRow key={index}>
-              {dataProps.map((props, index) => (
-                <TableData
-                  key={`${props} ${index}`}
-                  data={data[props]}
-                  className={`${props}_table`}
-                >
-                  {dataPropsMapper[props].parseData(data[props])}
-                </TableData>
-              ))}
-              <TableData key={`threeDots ${index}`}>
-                <Dropdown
-                  visibleOption={<BsThreeDots color="#b2b9c8" />}
-                  optionList={moreButtonList}
-                  onItemClick={onItemClick}
-                />
-              </TableData>
+              {dataProps.map((props, index) =>
+                props === 'role' ? (
+                  <TableData
+                    key={`${props} ${index}`}
+                    data={data[props]}
+                    className={`${props}_table`}
+                  >
+                    <Dropdown
+                      visibleOption={
+                        dataPropsMapper[props].parseData(data[props]) === 1 ? (
+                          <>
+                            <StyledTag color="#389e0d">부모님</StyledTag>
+                            <StyledArrowDown />
+                          </>
+                        ) : dataPropsMapper[props].parseData(data[props]) ===
+                          2 ? (
+                          <>
+                            <StyledTag color="#096dd9">선생님</StyledTag>
+                            <StyledArrowDown />
+                          </>
+                        ) : (
+                          <>
+                            <StyledTag color="#cf1322">관리자</StyledTag>
+                            <StyledArrowDown />
+                          </>
+                        )
+                      }
+                      optionList={[1, 2, 3]}
+                      onItemClick={value =>
+                        handleEditUserRole({ ...data, role: value })
+                      }
+                      print={data =>
+                        data === 1 ? '부모님' : data === 2 ? '선생님' : '관리자'
+                      }
+                    />
+                  </TableData>
+                ) : (
+                  <TableData
+                    key={`${props} ${index}`}
+                    data={data[props]}
+                    className={`${props}_table`}
+                  >
+                    {dataPropsMapper[props].parseData(data[props])}
+                  </TableData>
+                ),
+              )}
             </TableRow>
           ))}
         </tbody>
@@ -193,6 +213,10 @@ const TableRow = styled.tr`
   :hover {
     /* background-color: #dce35b33; */
   }
+`;
+
+const StyledArrowDown = styled(RiArrowDownSFill)`
+  width: 14px;
 `;
 
 const TableData = styled.td`

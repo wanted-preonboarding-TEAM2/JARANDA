@@ -199,7 +199,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     saveUserInfo(userInfo);
 
     if (isModal) {
-      handleAddUser(userInfo);
+      handleAddUser();
       closeModal();
     }
   };

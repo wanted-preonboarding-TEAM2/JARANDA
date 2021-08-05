@@ -19,7 +19,6 @@ const ITEMS_PER_PAGE = 10;
 export default function Admin() {
   const [pageNumbers, setPageNumbers] = useState([1]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentPageData, setCurrentPageData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
 
@@ -30,19 +29,11 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    const indexOfLast = currentPage * ITEMS_PER_PAGE;
-    const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
-    const pageData = tableData && tableData.slice(indexOfFirst, indexOfLast);
-    setCurrentPageData(pageData);
-  }, [currentPage, tableData]);
-
-  useEffect(() => {
     const pageList = Array.from(
       { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
       (_, i) => i + 1,
     );
     setPageNumbers(pageList);
-    setCurrentPage(1);
   }, [tableData]);
 
   const handleOnSearch = useCallback(result => {
@@ -53,9 +44,14 @@ export default function Admin() {
     setIsModalShow(!isModalShow);
   };
 
-  const handleAddUser = user => {
+  const handleAddUser = () => {
     setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
   };
+
+  const currentPageData = tableData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   return (
     <TableContainer>
@@ -68,7 +64,12 @@ export default function Admin() {
           </StyledAddUserButton>
         </ButtonContainer>
       </HeaderContainer>
-      <Table dataProps={dataProps} tableData={currentPageData} />
+      <Table
+        dataProps={dataProps}
+        currentPageData={currentPageData}
+        tableData={tableData}
+        setTableData={setTableData}
+      />
       <PagedButtonList
         // TODO: pageNumbers -> totalPage
         pageNumbers={pageNumbers}

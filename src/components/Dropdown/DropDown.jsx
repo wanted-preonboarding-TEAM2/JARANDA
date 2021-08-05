@@ -37,7 +37,6 @@ export default Dropdown;
 
 const DropdownContainer = styled.div`
   position: relative;
-  width: 50px;
 `;
 
 const DropdownHeader = styled.div`
@@ -52,13 +51,14 @@ const DropdownHeader = styled.div`
 
 const DropdownList = styled.ul`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  width: 50px;
+
+  width: 100%;
   border-radius: 5px;
   z-index: 99;
   background-color: white;
   border: 0.5px solid #edf1f9;
   position: absolute;
-  top: 20px;
+  top: 24px;
 `;
 
 const DropdownItem = styled.li`
