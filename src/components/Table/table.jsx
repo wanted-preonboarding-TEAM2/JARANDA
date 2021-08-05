@@ -75,7 +75,7 @@ const Table = ({ dataProps, tableData }) => {
                 <TableData
                   key={`${props} ${index}`}
                   data={data[props]}
-                  props={`${props}_table`}
+                  className={`${props}_table`}
                 >
                   {dataPropsMapper[props].parseData(data[props])}
                 </TableData>
@@ -138,7 +138,7 @@ const TableHeader = styled.tr`
     width: 20%;
   }
 
-  .card_table {
+  .cardInfo_table {
     width: 20%;
   }
 
@@ -175,7 +175,7 @@ const TableRow = styled.tr`
     width: 20%;
   }
 
-  .card_table {
+  .cardInfo_table {
     width: 20%;
   }
 
