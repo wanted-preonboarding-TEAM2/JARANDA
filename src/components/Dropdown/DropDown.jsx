@@ -50,7 +50,6 @@ const DropdownHeader = styled.div`
 const DropdownList = styled.ul`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   width: 50px;
-  /* height: ${({ isOpen }) => (isOpen ? '125px' : '0px')}; */
   border-radius: 5px;
   z-index: 99;
   background-color: white;
@@ -67,6 +66,6 @@ const DropdownItem = styled.li`
   text-align: center;
   :hover {
     cursor: pointer;
-    background-color: #edf1f9;
+    background-color: #dce35b33;
   }
 `;

@@ -48,11 +48,7 @@ export default function PagedButtonList({
   }, [visiblePageNumbers, setCurrentPage]);
 
   const isFirstPage = visiblePageNumbers[0] === pageNumbers[0];
-  const isLastPage =
-    visiblePageNumbers[visiblePageNumbers.length - 1] ===
-      pageNumbers[pageNumbers.length - 1] ||
-    !visiblePageNumbers[visiblePageNumbers.length - 1] ||
-    pageNumbers.length < 5;
+  const isLastPage = pageNumbers.length - currentPage < 5;
 
   return (
     <PageListContainer>
