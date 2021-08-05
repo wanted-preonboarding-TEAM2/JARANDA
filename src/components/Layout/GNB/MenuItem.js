@@ -22,9 +22,9 @@ const MenuItemSytle = styled(NavLink)`
   }
 `;
 
-export default function MenuItem({ children, to }) {
+export default function MenuItem({ children, to, handleLogout }) {
   return (
-    <MenuItemSytle to={to} activeStyle={{ color: '#333' }}>
+    <MenuItemSytle to={to} activeStyle={{ color: '#333' }} onClick={handleLogout}>
       <li>{children}</li>
     </MenuItemSytle>
   );

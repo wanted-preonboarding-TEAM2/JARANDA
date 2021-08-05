@@ -4,16 +4,22 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import MenuItem from './MenuItem.js';
 import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectCurrentUserRole } from 'services/redux/slices/user.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUserRole, userSlice } from 'services/redux/slices/user.js';
 
 export default function GNB() {
   const currentRole = useSelector(selectCurrentUserRole);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const dispatch = useDispatch();
+  const { logout } = userSlice.actions;
 
   const handleClickMenu = () => {
     setIsOpenMenu(!isOpenMenu);
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
 
   return (
     <GNBContainer>
@@ -26,6 +32,11 @@ export default function GNB() {
             {item.title}
           </MenuItem>
         ))}
+        { currentRole !== 'no_login' && (
+          <MenuItem key={'logout'} to="/" handleLogout={handleLogout}>
+            로그아웃
+          </MenuItem>
+        )}
       </StyledMenuList>
       <StyledHamburgerMenu onClick={handleClickMenu} />
     </GNBContainer>
