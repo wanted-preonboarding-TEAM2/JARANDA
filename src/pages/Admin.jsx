@@ -10,8 +10,7 @@ import usersData from 'components/Admin/users.json';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import Modal from 'modal/Modal';
-import Signup from 'components/signup';
-
+import Signup from './signup';
 
 const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -22,7 +21,7 @@ export default function Admin() {
   const [currentPageData, setCurrentPageData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
-  
+
   useEffect(() => {
     localStorageHelper.setItem('userInfo', usersData);
     setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));

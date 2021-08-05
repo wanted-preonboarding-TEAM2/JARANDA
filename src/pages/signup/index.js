@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
-import Form from './Form';
+import Form from 'components/signup/Form';
 import { css } from '@emotion/react';
 import { IoIosClose } from 'react-icons/io';
 
@@ -68,7 +68,7 @@ const CloseBtnContainer = styled.div`
   cursor: pointer;
 `;
 
-const SignUp = ({ isModal, closeModal }) => {
+const Index = ({ isModal, closeModal }) => {
   const postcodeRef = useRef(null);
 
   return (
@@ -99,4 +99,4 @@ const SignUp = ({ isModal, closeModal }) => {
   );
 };
 
-export default SignUp;
+export default Index;

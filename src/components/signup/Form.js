@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import AddressInfo from './AddressInfo';
-import CreditCardInfo from './CreditCardInfo';
-import CreditCardModal from 'modal/CreditCardModal';
-import { saveUserInfo, checkIdExist } from 'services/LocalStorageWorker';
+import AddressInfo from 'pages/signup/AddressInfo';
+import CreditCardInfo from 'pages/signup/CreditCardInfo';
+import CreditCardModal from './CreditCardModal';
+import { saveUserInfo } from 'services/LocalStorageWorker';
+import { checkIdExist, checkErrorExists } from 'pages/signup/utils';
 import { CustomInput, CustomButton } from 'elements';
-import Role from './Role';
+import Role from 'pages/signup/Role';
 import {
   idValidation,
   pwValidation,
@@ -56,6 +57,7 @@ const SignUpForm = ({ isModal }) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
+
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
@@ -174,23 +176,10 @@ const SignUpForm = ({ isModal }) => {
     }
   };
 
-  const checkErrorExists = () => {
-    const errorListFlat = Object.values(errors)
-      .map(error => {
-        if (typeof error === 'object') {
-          return Object.values(error);
-        }
-        return error;
-      })
-      .flat();
-
-    return errorListFlat.every(list => list === '');
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!checkErrorExists()) {
+    if (!checkErrorExists(errors)) {
       alert('입력을 확인해주세요');
       return;
     }
@@ -201,6 +190,8 @@ const SignUpForm = ({ isModal }) => {
     }
 
     saveUserInfo(userInfo);
+    setUserInfo(initialUserInfo);
+    setPasswordConfirm('');
   };
 
   checkIdExist();
