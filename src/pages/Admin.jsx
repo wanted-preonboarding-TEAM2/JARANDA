@@ -9,10 +9,8 @@ import PagedButtonList from 'components/Admin/PagedButtonList';
 import usersData from 'components/Admin/users.json';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
-import Modal from 'modal/Modal';
 import { useCallback } from 'react';
-import SignUpForm from 'components/signup/Form';
-import { IoIosClose } from 'react-icons/io';
+import SignupModal from 'modal/SignupModal';
 
 const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -78,47 +76,15 @@ export default function Admin() {
         setCurrentPage={setCurrentPage}
       />
       {/* TODO: 이걸 하나의 컴포넌트로 뺄 것 */}
-      <Modal show={isModalShow}>
-        {isModalShow && (
-          <FormContainer>
-            <CloseBtnContainer onClick={() => setIsModalShow(false)}>
-              <IoIosClose />
-            </CloseBtnContainer>
-            <SignUpForm
-              isModal={true}
-              closeModal={() => setIsModalShow(false)}
-              handleAddUser={handleAddUser}
-            />
-          </FormContainer>
-        )}
-      </Modal>
+
+      <SignupModal
+        isModalShow={isModalShow}
+        closeModal={() => setIsModalShow(false)}
+        handleAddUser={handleAddUser}
+      />
     </TableContainer>
   );
 }
-
-const CloseBtnContainer = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: 30px;
-  cursor: pointer;
-`;
-
-const FormContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px;
-  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
-  box-shadow: none;
-  background-color: white;
-
-  @media screen and (max-height: 800px) {
-    height: 600px;
-    overflow-y: scroll;
-  }
-`;
 
 const TableContainer = styled.div`
   padding-bottom: 40px;
