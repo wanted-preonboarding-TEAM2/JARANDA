@@ -76,9 +76,9 @@ const Signin = () => {
 
       dispatch(loginRequest());
 
-      const isLoginUser = findLoginUser({ id, password });
+      const user = findLoginUser({ id, password });
 
-      if (!isLoginUser) {
+      if (!user) {
         dispatch(
           loginFailure({
             errorMessage:
@@ -95,19 +95,19 @@ const Signin = () => {
         return;
       }
 
-      if (isLoginUser) {
-        const { id, uid, name, role } = isLoginUser;
+      if (user) {
+        const { id, uid, name, role } = user;
 
-        const loginUser = {
+        const loginValidation = {
           id,
           uid,
           name,
           role,
         };
 
-        dispatch(loginSuccess(loginUser));
+        dispatch(loginSuccess(loginValidation));
 
-        LSHelper.setItem(LS_KEY.LOGIN_VALIDATION, loginUser);
+        LSHelper.setItem(LS_KEY.LOGIN_VALIDATION, loginValidation);
 
         return;
       }
