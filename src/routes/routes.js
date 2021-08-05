@@ -18,13 +18,13 @@ import { getLoginValidation } from 'services/LocalStorageWorker';
 export default function AppRouter() {
   const dispatch = useDispatch();
 
-  const myRole = useSelector(selectCurrentUserRole);
   useEffect(() => {
     const loggedInUser = getLoginValidation();
     if (loggedInUser) {
       dispatch(loginSuccess(loggedInUser));
     }
   }, [dispatch]);
+  const myRole = useSelector(selectCurrentUserRole);
 
   return (
     <Router>
@@ -34,6 +34,8 @@ export default function AppRouter() {
           <Route path={ROUTES.ADMIN} component={AdminRoute} />
           <Route path={ROUTES.TEACHER} component={TeacherRoute} />
           <Route path={ROUTES.PARENT} component={ParentRoute} />
+          <Route path={ROUTES.HELP} component={Pages.Help} />
+          <Route path={ROUTES.APPLY_TEACHER} component={Pages.ApplyTeacher} />
           <RouteIf
             myRole={myRole}
             role={ROLE.NO_LOGIN}
