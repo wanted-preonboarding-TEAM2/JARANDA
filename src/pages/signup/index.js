@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
-import Form from './Form';
+
+import Form from 'components/signup/Form';
 
 const Container = styled.div`
   display: flex;
@@ -30,7 +31,15 @@ const Title = styled.p`
   margin-bottom: 40px;
 `;
 
-const SignUp = () => {
+const CloseBtnContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+`;
+
+const Index = () => {
   const postcodeRef = useRef(null);
 
   return (
@@ -55,4 +64,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Index;

@@ -1,7 +1,6 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import SearchBox from 'components/Admin/SearchBox.jsx';
 import Table from 'components/Table/table';
-import React from 'react';
-import { useState, useEffect } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import TableHeader from 'components/Table/tableHeader';
@@ -9,10 +8,10 @@ import PagedButtonList from 'components/Admin/PagedButtonList';
 import usersData from 'components/Admin/users.json';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
-import { useCallback } from 'react';
 import SignupModal from 'modal/SignupModal';
 
 const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
+
 const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
@@ -20,6 +19,11 @@ export default function Admin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
+
+  useEffect(() => {
+    localStorageHelper.setItem('userInfo', usersData);
+    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
+  }, []);
 
   useEffect(() => {
     const users = localStorageHelper.getItem('userInfo');

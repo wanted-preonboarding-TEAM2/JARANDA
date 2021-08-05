@@ -116,6 +116,9 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
       };
       return prev;
     });
+    setCardNum('');
+    setExpiredDate('');
+    setCvc('');
     close();
   };
 

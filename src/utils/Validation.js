@@ -73,7 +73,7 @@ export const cardValidation = (data, name) => {
   }
 
   if (name === 'cardNum' && data.length < 16) {
-    console.log('data.cardNum', data.cardNum);
+    console.log('data.cardNum', data);
     return {
       result: false,
       message: '카드 번호 정확히 16자리 입력해 주세요',
