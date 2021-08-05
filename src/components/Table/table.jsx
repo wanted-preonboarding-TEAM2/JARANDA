@@ -20,13 +20,13 @@ const dataPropsMapper = {
     title: '주소',
     parseData: data => data,
   },
-  card: {
+  cardInfo: {
     title: '카드 번호',
-    parseData: data =>
-      `${data.substr(0, 4)}-${data.substr(4, 4)}-${data.substr(
+    parseData: ({ cardNum }) =>
+      `${cardNum.substr(0, 4)}-${cardNum.substr(4, 4)}-${cardNum.substr(
         8,
         4,
-      )}-${data.substr(12, 4)}`,
+      )}-${cardNum.substr(12, 4)}`,
   },
   age: {
     title: '나이',

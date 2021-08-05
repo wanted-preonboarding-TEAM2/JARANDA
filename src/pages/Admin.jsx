@@ -13,7 +13,7 @@ import Modal from 'modal/Modal';
 import Signup from 'components/signup';
 import { useCallback } from 'react';
 
-const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
+const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
@@ -24,8 +24,9 @@ export default function Admin() {
   const [isModalShow, setIsModalShow] = useState(false);
 
   useEffect(() => {
-    localStorageHelper.setItem('userInfo', usersData);
-    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
+    const users = localStorageHelper.getItem('userInfo');
+    !users?.length && localStorageHelper.setItem('userInfo', usersData);
+    setTableData(localStorageHelper.getItem('userInfo'));
   }, []);
 
   useEffect(() => {
@@ -48,8 +49,12 @@ export default function Admin() {
     setTableData(result);
   }, []);
 
-  const handleAddUser = () => {
+  const handleClickAddUserBtn = () => {
     setIsModalShow(!isModalShow);
+  };
+
+  const handleAddUser = user => {
+    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
   };
 
   return (
@@ -58,7 +63,7 @@ export default function Admin() {
         <TableHeader title="계정 관리" number={tableData.length} />
         <ButtonContainer>
           <SearchBox handleOnSearch={handleOnSearch} />
-          <StyledAddUserButton onClick={handleAddUser}>
+          <StyledAddUserButton onClick={handleClickAddUserBtn}>
             <AiOutlineUserAdd />
           </StyledAddUserButton>
         </ButtonContainer>
@@ -70,8 +75,14 @@ export default function Admin() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <Modal show={isModalShow} closeModal={() => setIsModalShow(false)}>
-        <Signup isModal={true} closeModal={() => setIsModalShow(false)} />
+      <Modal show={isModalShow}>
+        {isModalShow && (
+          <Signup
+            isModal={true}
+            closeModal={() => setIsModalShow(false)}
+            handleAddUser={handleAddUser}
+          />
+        )}
       </Modal>
     </TableContainer>
   );
