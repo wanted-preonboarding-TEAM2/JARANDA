@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+import LS_KEY from 'constants/localStorageKey';
 import ROLE from 'constants/role.js';
+
+import { localStorageHelper as LSHelper } from 'utils/localStorageHelper';
+import { findLoginUser } from 'utils/user';
 
 const initialState = {
   id: '',
@@ -47,6 +52,41 @@ export const userSlice = createSlice({
     },
   },
 });
+
+export const postLogin =
+  ({ id, password }) =>
+  dispatch => {
+    dispatch(loginRequest());
+
+    const user = findLoginUser({ id, password });
+
+    if (!user) {
+      dispatch(
+        loginFailure({
+          errorMessage:
+            '아이디 또는 비밀번호가 잘못되었습니다. 다시 입력해주세요.',
+        }),
+      );
+      return;
+    }
+
+    if (user) {
+      const { id, uid, name, role } = user;
+
+      const loginValidation = {
+        id,
+        uid,
+        name,
+        role,
+      };
+
+      dispatch(loginSuccess(loginValidation));
+
+      LSHelper.setItem(LS_KEY.LOGIN_VALIDATION, loginValidation);
+
+      return;
+    }
+  };
 
 export const { loginRequest, loginSuccess, loginFailure } = userSlice.actions;
 
