@@ -191,7 +191,7 @@ const TableRow = styled.tr`
   }
 
   :hover {
-    background-color: #dce35b33;
+    /* background-color: #dce35b33; */
   }
 `;
 

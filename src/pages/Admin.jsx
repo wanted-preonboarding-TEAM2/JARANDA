@@ -12,7 +12,6 @@ import LS_KEY from 'constants/localStorageKey';
 import Modal from 'modal/Modal';
 import Signup from 'components/signup';
 
-
 const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
 
@@ -22,7 +21,7 @@ export default function Admin() {
   const [currentPageData, setCurrentPageData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
-  
+
   useEffect(() => {
     localStorageHelper.setItem('userInfo', usersData);
     setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
@@ -56,10 +55,12 @@ export default function Admin() {
     <TableContainer>
       <HeaderContainer>
         <TableHeader title="계정 관리" number={tableData.length} />
-        <StyledAddUserButton onClick={handleAddUser}>
-          <AiOutlineUserAdd />
-        </StyledAddUserButton>
-        <SearchBox handleOnSearch={handleOnSearch} />
+        <ButtonContainer>
+          <SearchBox handleOnSearch={handleOnSearch} />
+          <StyledAddUserButton onClick={handleAddUser}>
+            <AiOutlineUserAdd />
+          </StyledAddUserButton>
+        </ButtonContainer>
       </HeaderContainer>
       <Table dataProps={dataProps} tableData={currentPageData} />
       <PagedButtonList
@@ -77,6 +78,7 @@ export default function Admin() {
 
 const TableContainer = styled.div`
   /* background-color: #f8faff; */
+  padding-bottom: 40px;
 `;
 
 const HeaderContainer = styled.div`
@@ -87,14 +89,20 @@ const HeaderContainer = styled.div`
 `;
 
 const StyledAddUserButton = styled.button`
+  height: 37px;
+  width: 37px;
   background-color: white;
-  border: none;
-  padding: 8px;
+  border: 0.5px solid #edf1f9;
+  margin-left: 8px;
   font-size: 14px;
   color: black;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 50%;
   &:hover {
-    background-color: #e3f2fd;
+    background-color: #dce35b33;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
 `;
