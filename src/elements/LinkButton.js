@@ -11,12 +11,12 @@ const Button = styled.p`
     font-size: 14px;
     text-align: center;
     color: #fff;
-    background-color: #0085fd;
+    background-color: #aac14f;
     border: none;
     cursor: pointer;
 
     &:hover {
-      background-color: #439bea;
+      background-color: #d9d34e;
     }
   }
 `;

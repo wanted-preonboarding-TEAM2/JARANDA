@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 const Button = styled.button`
   width: ${props => (props.width ? `${props.width}` : '100%')};
-  background-color: #0085fd;
+  background-color: #aac14f;
   border: none;
   padding: 16px;
   font-size: 14px;
@@ -12,7 +12,7 @@ const Button = styled.button`
   padding: ${props => (props.margin ? `${props.margin}` : false)};
 
   &:hover {
-    background-color: #439bea;
+    background-color: #d9d34e;
   }
 `;
 
