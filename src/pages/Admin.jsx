@@ -10,8 +10,9 @@ import usersData from 'components/Admin/users.json';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import Modal from 'modal/Modal';
-import Signup from 'components/signup';
 import { useCallback } from 'react';
+import SignUpForm from 'components/signup/Form';
+import { IoIosClose } from 'react-icons/io';
 
 const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -19,7 +20,6 @@ const ITEMS_PER_PAGE = 10;
 export default function Admin() {
   const [pageNumbers, setPageNumbers] = useState([1]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentPageData, setCurrentPageData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
 
@@ -30,19 +30,11 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    const indexOfLast = currentPage * ITEMS_PER_PAGE;
-    const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
-    const pageData = tableData && tableData.slice(indexOfFirst, indexOfLast);
-    setCurrentPageData(pageData);
-  }, [currentPage, tableData]);
-
-  useEffect(() => {
     const pageList = Array.from(
       { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
       (_, i) => i + 1,
     );
     setPageNumbers(pageList);
-    setCurrentPage(1);
   }, [tableData]);
 
   const handleOnSearch = useCallback(result => {
@@ -50,12 +42,17 @@ export default function Admin() {
   }, []);
 
   const handleClickAddUserBtn = () => {
-    setIsModalShow(!isModalShow);
+    setIsModalShow(true);
   };
 
-  const handleAddUser = user => {
+  const handleAddUser = () => {
     setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
   };
+
+  const currentPageData = tableData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   return (
     <TableContainer>
@@ -68,28 +65,62 @@ export default function Admin() {
           </StyledAddUserButton>
         </ButtonContainer>
       </HeaderContainer>
-      <Table dataProps={dataProps} tableData={currentPageData} />
+      <Table
+        dataProps={dataProps}
+        currentPageData={currentPageData}
+        tableData={tableData}
+        setTableData={setTableData}
+      />
       <PagedButtonList
         // TODO: pageNumbers -> totalPage
         pageNumbers={pageNumbers}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+      {/* TODO: 이걸 하나의 컴포넌트로 뺄 것 */}
       <Modal show={isModalShow}>
         {isModalShow && (
-          <Signup
-            isModal={true}
-            closeModal={() => setIsModalShow(false)}
-            handleAddUser={handleAddUser}
-          />
+          <FormContainer>
+            <CloseBtnContainer onClick={() => setIsModalShow(false)}>
+              <IoIosClose />
+            </CloseBtnContainer>
+            <SignUpForm
+              isModal={true}
+              closeModal={() => setIsModalShow(false)}
+              handleAddUser={handleAddUser}
+            />
+          </FormContainer>
         )}
       </Modal>
     </TableContainer>
   );
 }
 
+const CloseBtnContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+`;
+
+const FormContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
+  box-shadow: none;
+  background-color: white;
+
+  @media screen and (max-height: 800px) {
+    height: 600px;
+    overflow-y: scroll;
+  }
+`;
+
 const TableContainer = styled.div`
-  /* background-color: #f8faff; */
   padding-bottom: 40px;
 `;
 

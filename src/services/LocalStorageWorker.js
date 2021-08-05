@@ -10,6 +10,15 @@ export const saveUserInfo = data => {
   LSHelper.setItem(LS_KEY.USER_INFO, userInfos);
 };
 
+export const setUserInfo = data => {
+  const userInfos = getUserInfo();
+  const id = userInfos.findIndex(user => user.id === data.id);
+  if (id !== -1) {
+    userInfos[id] = data;
+    LSHelper.setItem(LS_KEY.USER_INFO, userInfos);
+  }
+};
+
 export const checkIdExist = id => {
   const userInfos = getUserInfo();
   const idList = userInfos.map(user => user.id);

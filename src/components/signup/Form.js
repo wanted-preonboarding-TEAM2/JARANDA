@@ -45,6 +45,15 @@ const initialError = {
   age: '',
 };
 
+const StyledForm = styled.form`
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px 0px;
+`;
+
 const ErrorMessage = styled.div`
   width: 100%;
   text-align: left;
@@ -158,7 +167,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
           [name]: nameValidation(userInfo.name).message,
         });
         return false;
-      case 'id':
+      case 'address':
         setErrors({
           ...errors,
           [name]: addressValidation(userInfo.address).message,
@@ -199,7 +208,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     saveUserInfo(userInfo);
 
     if (isModal) {
-      handleAddUser(userInfo);
+      handleAddUser();
       closeModal();
     }
   };
@@ -207,80 +216,78 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   checkIdExist();
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <CustomInput
-          type="text"
-          name="id"
-          placeholder="아이디를 입력하세요"
-          value={userInfo.id}
-          onChange={handleChange}
-          onBlur={checkValidation}
-        />
-        {errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
-        <CustomInput
-          type="password"
-          name="password"
-          placeholder="비밀번호를 입력하세요"
-          value={userInfo.password}
-          onChange={handleChange}
-          onBlur={checkValidation}
-        />
-        {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-        <CustomInput
-          type="password"
-          name="passwordConfirm"
-          placeholder="비밀번호를 한번 더 입력해주세요"
-          value={passwordConfirm}
-          onChange={handleChange}
-          onBlur={checkValidation}
-        />
-        {errors.passwordConfirm && (
-          <ErrorMessage>{errors.passwordConfirm}</ErrorMessage>
-        )}
-        <CustomInput
-          type="text"
-          name="name"
-          placeholder="이름를 입력하세요"
-          value={userInfo.name}
-          onChange={handleChange}
-          onBlur={checkValidation}
-        />
-        {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-        <AddressInfo
-          userInfo={userInfo}
-          setUserInfo={setUserInfo}
-          handleChange={handleChange}
-          checkValidation={checkValidation}
-          errors={errors}
-        />
-        <CreditCardInfo
-          handleModalOpen={handleModalOpen}
-          cardInfo={userInfo.cardInfo}
-        />
-        <CreditCardModal
-          open={creditModalOpen}
-          close={handleModalOpen}
-          setUserInfo={setUserInfo}
-          cardValidation={cardValidation}
-          errors={errors}
-          setErrors={setErrors}
-        />
-        <CustomInput
-          name="age"
-          type="number"
-          maxLength={3}
-          placeholder="나이를 입력해주세요"
-          value={userInfo.age}
-          onChange={handleChange}
-          onBlur={checkValidation}
-        />
-        <Role handleChange={handleChange} name="role" defaultValue="teacher" />
-        <CustomButton type="submit">
-          {isModal ? '유저 생성' : '회원 가입'}
-        </CustomButton>
-      </form>
-    </>
+    <StyledForm onSubmit={handleSubmit}>
+      <CustomInput
+        type="text"
+        name="id"
+        placeholder="아이디를 입력하세요"
+        value={userInfo.id}
+        onChange={handleChange}
+        onBlur={checkValidation}
+      />
+      {errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
+      <CustomInput
+        type="password"
+        name="password"
+        placeholder="비밀번호를 입력하세요"
+        value={userInfo.password}
+        onChange={handleChange}
+        onBlur={checkValidation}
+      />
+      {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+      <CustomInput
+        type="password"
+        name="passwordConfirm"
+        placeholder="비밀번호를 한번 더 입력해주세요"
+        value={passwordConfirm}
+        onChange={handleChange}
+        onBlur={checkValidation}
+      />
+      {errors.passwordConfirm && (
+        <ErrorMessage>{errors.passwordConfirm}</ErrorMessage>
+      )}
+      <CustomInput
+        type="text"
+        name="name"
+        placeholder="이름을 입력하세요"
+        value={userInfo.name}
+        onChange={handleChange}
+        onBlur={checkValidation}
+      />
+      {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+      <AddressInfo
+        userInfo={userInfo}
+        setUserInfo={setUserInfo}
+        handleChange={handleChange}
+        checkValidation={checkValidation}
+        errors={errors}
+      />
+      <CreditCardInfo
+        handleModalOpen={handleModalOpen}
+        cardInfo={userInfo.cardInfo}
+      />
+      <CreditCardModal
+        open={creditModalOpen}
+        close={handleModalOpen}
+        setUserInfo={setUserInfo}
+        cardValidation={cardValidation}
+        errors={errors}
+        setErrors={setErrors}
+      />
+      <CustomInput
+        name="age"
+        type="number"
+        maxLength={3}
+        placeholder="나이를 입력해주세요"
+        value={userInfo.age}
+        onChange={handleChange}
+        onBlur={checkValidation}
+      />
+      <Role handleChange={handleChange} name="role" defaultValue="teacher" />
+      <CustomButton type="submit">
+        {isModal ? '유저 생성' : '회원 가입'}
+      </CustomButton>
+    </StyledForm>
   );
 };
 
