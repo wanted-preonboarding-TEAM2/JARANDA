@@ -9,7 +9,7 @@ function PageButton({ page, setCurrentPage, isActive }) {
     <PageButtonContainer isActive={isActive}>
       <StyledButton onClick={handleClickButton} isActive={isActive}>
         {page}
-      </StyledButton>
+    </StyledButton>
     </PageButtonContainer>
   );
 }
