@@ -5,3 +5,5 @@ export { default as Admin } from './Admin';
 export { default as Teacher } from './Teacher';
 export { default as Parents } from './Parents';
 export { default as RouteNoMatch } from './RouteNoMatch';
+export { default as Help } from './Help';
+export { default as ApplyTeacher } from './ApplyTeacher';

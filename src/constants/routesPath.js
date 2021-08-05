@@ -5,6 +5,8 @@ const ROUTES = {
   PARENT: '/parent',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
+  HELP: '/help',
+  APPLY_TEACHER: '/index_teacher',
 };
 
 export default ROUTES;
