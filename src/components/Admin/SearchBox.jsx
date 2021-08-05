@@ -18,7 +18,7 @@ const InputContainer = styled.div`
   display: flex;
   background-color: white;
   border: 0.5px solid #edf1f9;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0 12px;
 `;
 
@@ -32,6 +32,7 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
   //
+  cursor: pointer;
 `;
 
 export default function SearchBox({ handleOnSearch }) {
@@ -48,11 +49,9 @@ export default function SearchBox({ handleOnSearch }) {
       return;
     }
 
-    const searchResult =
-      users &&
-      users.filter(users =>
-        `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
-      );
+    const searchResult = users?.filter(users =>
+      `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
+    );
     handleOnSearch(searchResult);
   };
 
@@ -60,8 +59,24 @@ export default function SearchBox({ handleOnSearch }) {
     setSelectedOption(option);
   };
 
-  const handleInputChange = ({ target }) => {
-    setValue(target.value);
+  const handleInputChange = ({ target: { value } }) => {
+    setValue(value);
+    const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
+    // NOTE: 데이터 입력하고 검색버튼을 누르면 userInfo 에서 selectedOption을 필터링해서 가져온다.
+    if (!value.trim()) {
+      handleOnSearch(users);
+      return;
+    }
+
+    const searchResult = users?.filter(users =>
+      `${users[selectedOption]}`.toLowerCase().includes(value.toLowerCase()),
+    );
+    handleOnSearch(searchResult);
+  };
+
+  const handleInputKeyDown = ({ key }) => {
+    // TODO: 리팩토링 하기
+    key === 'Enter' && handleSearch();
   };
 
   return (
@@ -81,7 +96,7 @@ export default function SearchBox({ handleOnSearch }) {
           value={value}
           type="search"
           onChange={handleInputChange}
-          onKeyPress={({ code }) => code === 'Enter' && handleSearch()}
+          onKeyDown={handleInputKeyDown}
         />
         <StyledButton type="button" onClick={handleSearch}>
           <AiOutlineSearch />
