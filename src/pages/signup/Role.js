@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import ROLE from 'constants/role';
 
 const CustomSelect = styled.select`
   width: 100%;
@@ -9,8 +10,8 @@ const CustomSelect = styled.select`
 function Role({ handleChange, name }) {
   return (
     <CustomSelect onChange={handleChange} name={name}>
-      <option value="teacher">선생님</option>
-      <option value="parent">학부모</option>
+      <option value={ROLE.TEACHER}>선생님</option>
+      <option value={ROLE.PARENT}>학부모</option>
     </CustomSelect>
   );
 }

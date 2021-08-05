@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
-import AddressInfo from './AddressInfo';
-import CreditCardInfo from './CreditCardInfo';
-import CreditCardModal from 'modal/CreditCardModal';
-import { saveUserInfo, checkIdExist } from 'services/LocalStorageWorker';
+import { useHistory } from 'react-router';
+import AddressInfo from 'pages/signup/AddressInfo';
+import CreditCardInfo from 'pages/signup/CreditCardInfo';
+import CreditCardModal from './CreditCardModal';
+import { saveUserInfo } from 'services/LocalStorageWorker';
+import { checkIdExist, checkErrorExists } from 'pages/signup/utils';
 import { CustomInput, CustomButton } from 'elements';
-import Role from './Role';
+import Role from 'pages/signup/Role';
 import {
   idValidation,
   pwValidation,
@@ -66,72 +68,39 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
+  const history = useHistory();
+
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
 
-  const handleChange = e => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    e => {
+      const { name, value } = e.target;
 
-    if (creditModalOpen) {
+      if (creditModalOpen) {
+        setUserInfo({
+          ...userInfo,
+          cardInfo: {
+            ...userInfo.cardInfo,
+            [name]: value,
+          },
+        });
+        return;
+      }
+
+      if (name === 'passwordConfirm') {
+        setPasswordConfirm(value);
+        return;
+      }
+
       setUserInfo({
         ...userInfo,
-        cardInfo: {
-          ...userInfo.cardInfo,
-          [name]: value,
-        },
+        [name]: value,
       });
-    }
-
-    switch (name) {
-      case 'id':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'password':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'passwordConfirm':
-        setPasswordConfirm(value);
-        break;
-      case 'name':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'address':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'addressDetail':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'age':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'role':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      default:
-    }
-  };
+    },
+    [creditModalOpen, userInfo],
+  );
 
   const checkValidation = e => {
     const { name } = e.target;
@@ -186,32 +155,26 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(
-      Object.values(errors).forEach(error => {
-        console.log(error);
-        if (typeof error === 'object') {
-          return Object.values(error);
-        }
-        return error;
-      }),
-    );
+    if (!checkErrorExists(errors)) {
+      alert('입력을 확인해주세요');
+      return;
+    }
 
     if (checkIdExist(userInfo.id)) {
       alert('아이디가 이미 존재합니다');
       return;
     }
-    if (Object.values(errors).every(item => item === '')) {
-      alert('입력을 확인해주세요');
-      return;
-    }
 
     if (isModal && !window.confirm('정말로 유저를 만드시겠습니까?')) return;
     saveUserInfo(userInfo);
-
     if (isModal) {
       handleAddUser();
       closeModal();
     }
+    setUserInfo(initialUserInfo);
+    setPasswordConfirm('');
+    history.replace('/signin');
+    alert('회원가입에 성공하셨습니다');
   };
 
   checkIdExist();
@@ -292,4 +255,4 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   );
 };
 
-export default SignUpForm;
+export default React.memo(SignUpForm);
