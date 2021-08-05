@@ -51,7 +51,7 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
-const SignUpForm = ({ isModal }) => {
+const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
@@ -195,7 +195,13 @@ const SignUpForm = ({ isModal }) => {
       return;
     }
 
+    if (isModal && !window.confirm('정말로 유저를 만드시겠습니까?')) return;
     saveUserInfo(userInfo);
+
+    if (isModal) {
+      handleAddUser(userInfo);
+      closeModal();
+    }
   };
 
   checkIdExist();

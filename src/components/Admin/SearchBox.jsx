@@ -32,8 +32,8 @@ const StyledInput = styled.input`
 export default function SearchBox({ handleOnSearch }) {
   const [value, setValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(USER.EN.ID);
-
   const debouncedValue = useDebounce({ value, delay: 500 });
+
   const debouncedSearch = useCallback(() => {
     handleOnSearch(searchUsersByOption(debouncedValue, selectedOption));
   }, [handleOnSearch, debouncedValue, selectedOption]);
