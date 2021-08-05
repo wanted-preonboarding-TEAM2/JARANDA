@@ -56,6 +56,7 @@ const StyledForm = styled.form`
 
 const ErrorMessage = styled.div`
   width: 100%;
+  font-size: 12px;
   text-align: left;
   color: red;
 `;
