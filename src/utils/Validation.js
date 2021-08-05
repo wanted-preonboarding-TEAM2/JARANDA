@@ -10,6 +10,7 @@ export const idValidation = id => {
 
   return {
     result: true,
+    message: '',
   };
 };
 
@@ -60,7 +61,7 @@ export const addressValidation = data => {
 };
 
 export const cardValidation = (data, name) => {
-  const cardNumRegex = /^[0-9\s]+$/;
+  const cardNumRegex = /^[0-9\W]+$/;
   const expiredDateRegex = /^[0-9]{2}(\/)[0-9]{2}$/;
   const cvcRegex = /^[0-9]{3}$/;
 

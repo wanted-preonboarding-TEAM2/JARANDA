@@ -10,7 +10,7 @@ function Role({ handleChange, name }) {
   return (
     <CustomSelect onChange={handleChange} name={name}>
       <option value="teacher">선생님</option>
-      <option value="parents">학부모</option>
+      <option value="parent">학부모</option>
     </CustomSelect>
   );
 }

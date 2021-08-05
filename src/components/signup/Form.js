@@ -176,15 +176,25 @@ const SignUpForm = ({ isModal }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log(
+      Object.values(errors).forEach(error => {
+        console.log(error);
+        if (typeof error === 'object') {
+          return Object.values(error);
+        }
+        return error;
+      }),
+    );
+
     if (checkIdExist(userInfo.id)) {
       alert('아이디가 이미 존재합니다');
       return;
     }
     if (Object.values(errors).every(item => item === '')) {
-      console.log('submit');
-    } else {
-      //alert('입력을 확인해주세요');
+      alert('입력을 확인해주세요');
+      return;
     }
+
     saveUserInfo(userInfo);
   };
 
