@@ -18,7 +18,7 @@ const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
-  const [pageNumbers, setPageNumbers] = useState([1]);
+  const [totalPageNumber, setTotalPageNumber] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
@@ -30,11 +30,8 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    const pageList = Array.from(
-      { length: Math.ceil(tableData.length / ITEMS_PER_PAGE) },
-      (_, i) => i + 1,
-    );
-    setPageNumbers(pageList);
+    const lastPageNumber = Math.ceil(tableData.length / ITEMS_PER_PAGE);
+    setTotalPageNumber(lastPageNumber);
   }, [tableData]);
 
   const handleOnSearch = useCallback(result => {
@@ -72,8 +69,8 @@ export default function Admin() {
         setTableData={setTableData}
       />
       <PagedButtonList
-        // TODO: pageNumbers -> totalPage
-        pageNumbers={pageNumbers}
+        // TODO: totalPageNumber -> totalPage
+        totalPageNumber={totalPageNumber}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

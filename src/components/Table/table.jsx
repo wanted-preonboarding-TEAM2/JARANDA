@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Dropdown from 'components/Dropdown/DropDown';
 import React from 'react';
 import { RiArrowDownSFill } from 'react-icons/ri';
+import { BsFillInboxFill } from 'react-icons/bs';
 import { setUserInfo } from 'services/LocalStorageWorker';
 
 const dataPropsMapper = {
@@ -46,7 +47,12 @@ const Table = ({ dataProps, currentPageData, tableData, setTableData }) => {
     }
   };
 
-  return (
+  return tableData.length === 0 ? (
+    <EmptyContainer>
+      <BsFillInboxFill />
+      <EmptyMessage>검색 결과가 없습니다.</EmptyMessage>
+    </EmptyContainer>
+  ) : (
     <Container>
       <StyledTable>
         <thead>
@@ -125,6 +131,19 @@ const StyledTag = styled.span`
   font-size: 12px;
   padding: 3px 6px;
   border-radius: 5px;
+`;
+
+const EmptyContainer = styled.div`
+  padding: 5vh 0;
+  vertical-align: center;
+  text-align: center;
+  font-size: 15vh;
+  color: darkgray;
+`;
+
+const EmptyMessage = styled.p`
+  font-size: 1.5vh;
+  color: #333;
 `;
 
 const Container = styled.div`

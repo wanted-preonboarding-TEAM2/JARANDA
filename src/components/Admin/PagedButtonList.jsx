@@ -7,13 +7,13 @@ import PageButton from './PageButton.jsx';
 const PAGES_PER_LIST = 5;
 
 export default function PagedButtonList({
-  pageNumbers,
+  totalPageNumber,
   currentPage,
   setCurrentPage,
 }) {
   const [visiblePageNumbers, setVisiblePageNumbers] = useState(
-    pageNumbers.length < 5
-      ? [...Array(pageNumbers.length).keys()].map(i => i + 1)
+    totalPageNumber < 5
+      ? [...Array(totalPageNumber).keys()].map(i => i + 1)
       : [...Array(PAGES_PER_LIST).keys()].map(i => i + 1),
   );
 
@@ -26,9 +26,7 @@ export default function PagedButtonList({
   };
 
   const changePageNumberForward = () => {
-    if (
-      visiblePageNumbers[visiblePageNumbers.length - 1] !== pageNumbers.length
-    ) {
+    if (visiblePageNumbers[visiblePageNumbers.length - 1] !== totalPageNumber) {
       setVisiblePageNumbers(
         visiblePageNumbers.map(page => page + PAGES_PER_LIST),
       );
@@ -36,20 +34,22 @@ export default function PagedButtonList({
   };
 
   useEffect(() => {
-    pageNumbers.length <= PAGES_PER_LIST
-      ? setVisiblePageNumbers(pageNumbers)
+    totalPageNumber <= PAGES_PER_LIST
+      ? setVisiblePageNumbers(
+          [...Array(totalPageNumber).keys()].map(i => i + 1),
+        )
       : setVisiblePageNumbers(
           [...Array(PAGES_PER_LIST).keys()].map(i => i + 1),
         );
-  }, [pageNumbers.length]);
+  }, [totalPageNumber]);
 
   useEffect(() => {
     setCurrentPage(visiblePageNumbers[0]);
   }, [visiblePageNumbers, setCurrentPage]);
 
-  const isFirstPage = visiblePageNumbers[0] === pageNumbers[0];
-  const isLastPage = pageNumbers.length - currentPage < 5;
-
+  const isFirstPage = visiblePageNumbers[0] === 1;
+  const isLastPage =
+    totalPageNumber / PAGES_PER_LIST <= currentPage / PAGES_PER_LIST;
   return (
     <PageListContainer>
       <StyledButton
@@ -61,7 +61,7 @@ export default function PagedButtonList({
       </StyledButton>
       {visiblePageNumbers.map(
         (page, idx) =>
-          page <= pageNumbers[pageNumbers.length - 1] && (
+          page <= totalPageNumber && (
             <PageButton
               key={`pageNumber-${idx + 1}`}
               page={page}
