@@ -10,8 +10,9 @@ import usersData from 'components/Admin/users.json';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import Modal from 'modal/Modal';
-import Signup from 'components/signup';
 import { useCallback } from 'react';
+import SignUpForm from 'components/signup/Form';
+import { IoIosClose } from 'react-icons/io';
 
 const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -41,7 +42,7 @@ export default function Admin() {
   }, []);
 
   const handleClickAddUserBtn = () => {
-    setIsModalShow(!isModalShow);
+    setIsModalShow(true);
   };
 
   const handleAddUser = () => {
@@ -76,21 +77,50 @@ export default function Admin() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+      {/* TODO: 이걸 하나의 컴포넌트로 뺄 것 */}
       <Modal show={isModalShow}>
         {isModalShow && (
-          <Signup
-            isModal={true}
-            closeModal={() => setIsModalShow(false)}
-            handleAddUser={handleAddUser}
-          />
+          <FormContainer>
+            <CloseBtnContainer onClick={() => setIsModalShow(false)}>
+              <IoIosClose />
+            </CloseBtnContainer>
+            <SignUpForm
+              isModal={true}
+              closeModal={() => setIsModalShow(false)}
+              handleAddUser={handleAddUser}
+            />
+          </FormContainer>
         )}
       </Modal>
     </TableContainer>
   );
 }
 
+const CloseBtnContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+`;
+
+const FormContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px 0px;
+  box-shadow: none;
+  background-color: white;
+
+  @media screen and (max-height: 800px) {
+    height: 600px;
+    overflow-y: scroll;
+  }
+`;
+
 const TableContainer = styled.div`
-  /* background-color: #f8faff; */
   padding-bottom: 40px;
 `;
 
