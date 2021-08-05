@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
+import { useHistory } from 'react-router';
 import AddressInfo from 'pages/signup/AddressInfo';
 import CreditCardInfo from 'pages/signup/CreditCardInfo';
 import CreditCardModal from './CreditCardModal';
@@ -57,128 +58,96 @@ const SignUpForm = ({ isModal }) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
+  const history = useHistory();
 
   const handleModalOpen = () => {
     setCreditModalOpen(!creditModalOpen);
   };
 
-  const handleChange = e => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    e => {
+      const { name, value } = e.target;
 
-    if (creditModalOpen) {
+      if (creditModalOpen) {
+        setUserInfo({
+          ...userInfo,
+          cardInfo: {
+            ...userInfo.cardInfo,
+            [name]: value,
+          },
+        });
+        return;
+      }
+
+      if (name === 'passwordConfirm') {
+        setPasswordConfirm(value);
+        return;
+      }
+
       setUserInfo({
         ...userInfo,
-        cardInfo: {
-          ...userInfo.cardInfo,
-          [name]: value,
-        },
+        [name]: value,
       });
-    }
+    },
+    [creditModalOpen, userInfo],
+  );
 
-    switch (name) {
-      case 'id':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'password':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'passwordConfirm':
-        setPasswordConfirm(value);
-        break;
-      case 'name':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'address':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'addressDetail':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'age':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      case 'role':
-        setUserInfo({
-          ...userInfo,
-          [name]: value,
-        });
-        break;
-      default:
-    }
-  };
+  const checkValidation = useCallback(
+    e => {
+      const { name } = e.target;
 
-  const checkValidation = e => {
-    const { name } = e.target;
-
-    switch (name) {
-      case 'id':
-        setErrors({
-          ...errors,
-          [name]: idValidation(userInfo.id).message,
-        });
-        return false;
-      case 'password':
-        setErrors({
-          ...errors,
-          [name]: pwValidation(userInfo.password).message,
-        });
-        return false;
-      case 'passwordConfirm':
-        if (passwordConfirm !== userInfo.password) {
+      switch (name) {
+        case 'id':
           setErrors({
             ...errors,
-            [name]: '비밀번호와 일치하지 않습니다',
+            [name]: idValidation(userInfo.id).message,
           });
-          return;
-        }
-        setErrors({
-          ...errors,
-          [name]: pwValidation(passwordConfirm).message,
-        });
-        return false;
-      case 'name':
-        setErrors({
-          ...errors,
-          [name]: nameValidation(userInfo.name).message,
-        });
-        return false;
-      case 'addressDetail':
-        setErrors({
-          ...errors,
-          [name]: addressValidation(userInfo.addressDetail).message,
-        });
-        return false;
-      case 'age':
-        setErrors({
-          ...errors,
-          [name]: ageValidation(userInfo.age).message,
-        });
-        return false;
-      default:
-    }
-  };
+          break;
+        case 'password':
+          setErrors({
+            ...errors,
+            [name]: pwValidation(userInfo.password).message,
+          });
+          break;
+        case 'passwordConfirm':
+          if (passwordConfirm !== userInfo.password) {
+            setErrors({
+              ...errors,
+              [name]: '비밀번호와 일치하지 않습니다',
+            });
+            return;
+          }
+          setErrors({
+            ...errors,
+            [name]: pwValidation(passwordConfirm).message,
+          });
+          break;
+        case 'name':
+          setErrors({
+            ...errors,
+            [name]: nameValidation(userInfo.name).message,
+          });
+          break;
+        case 'addressDetail':
+          setErrors({
+            ...errors,
+            [name]: addressValidation(userInfo.addressDetail).message,
+          });
+          break;
+        case 'age':
+          setErrors({
+            ...errors,
+            [name]: ageValidation(userInfo.age).message,
+          });
+          break;
+        default:
+      }
+    },
+    [errors, passwordConfirm, userInfo],
+  );
 
   const handleSubmit = e => {
     e.preventDefault();
-
     if (!checkErrorExists(errors)) {
       alert('입력을 확인해주세요');
       return;
@@ -192,6 +161,8 @@ const SignUpForm = ({ isModal }) => {
     saveUserInfo(userInfo);
     setUserInfo(initialUserInfo);
     setPasswordConfirm('');
+    history.replace('/signin');
+    alert('회원가입에 성공하셨습니다');
   };
 
   checkIdExist();
@@ -274,4 +245,4 @@ const SignUpForm = ({ isModal }) => {
   );
 };
 
-export default SignUpForm;
+export default React.memo(SignUpForm);

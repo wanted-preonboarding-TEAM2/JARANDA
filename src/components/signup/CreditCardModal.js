@@ -105,17 +105,18 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
     }
   };
   const checkValidation = e => {
-    const { name } = e.target;
+    const { name, value } = e.target;
     switch (name) {
       case 'cardNum':
-        setCardNumError(cardValidation(cardNum, name).message);
-        return false;
+        setCardNumError(cardValidation(value, name).message);
+        break;
       case 'expiredDate':
-        setExpiredDateError(cardValidation(expiredDate, name).message);
-        return false;
+        setExpiredDateError(cardValidation(value, name).message);
+        break;
       case 'cvc':
-        setCvcError(cardValidation(cvc, name).message);
-        return false;
+        setCvcError(cardValidation(value, name).message);
+        break;
+      default:
     }
   };
 
@@ -128,6 +129,9 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
       };
       return prev;
     });
+    setCardNum('');
+    setExpiredDate('');
+    setCvc('');
     close();
   };
 
