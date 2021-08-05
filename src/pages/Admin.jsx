@@ -11,6 +11,7 @@ import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import Modal from 'modal/Modal';
 import Signup from 'components/signup';
+import { useCallback } from 'react';
 
 const dataProps = ['id', 'name', 'address', 'card', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
@@ -43,9 +44,9 @@ export default function Admin() {
     setCurrentPage(1);
   }, [tableData]);
 
-  const handleOnSearch = result => {
+  const handleOnSearch = useCallback(result => {
     setTableData(result);
-  };
+  }, []);
 
   const handleAddUser = () => {
     setIsModalShow(!isModalShow);
@@ -53,7 +54,7 @@ export default function Admin() {
 
   return (
     <TableContainer>
-      <HeaderContainer>
+      <HeaderContainer className="header">
         <TableHeader title="계정 관리" number={tableData.length} />
         <ButtonContainer>
           <SearchBox handleOnSearch={handleOnSearch} />
@@ -85,7 +86,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 24px;
+  padding: 8px 20px;
 `;
 
 const StyledAddUserButton = styled.button`
