@@ -1,21 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { postLogin, selectUser } from 'services/redux/slices/user';
+
 import LoginForm from './LoginForm';
-
-import {
-  loginFailure,
-  loginRequest,
-  loginSuccess,
-  selectUser,
-} from 'services/redux/slices/user';
-
-import { localStorageHelper as LSHelper } from 'utils/localStorageHelper';
-import { findLoginUser } from 'utils/user';
-
-import LS_KEY from 'constants/localStorageKey';
 import ErrorMessage from './ErrorMessage';
 
 const Container = styled.div`
@@ -74,18 +64,9 @@ const Signin = () => {
     e => {
       e.preventDefault();
 
-      dispatch(loginRequest());
+      dispatch(postLogin({ id, password }));
 
-      const user = findLoginUser({ id, password });
-
-      if (!user) {
-        dispatch(
-          loginFailure({
-            errorMessage:
-              '아이디 또는 비밀번호가 잘못되었습니다. 다시 입력해주세요.',
-          }),
-        );
-
+      if (errorMessage) {
         setErrorVisible(true);
 
         setTimeout(() => {
@@ -94,25 +75,8 @@ const Signin = () => {
 
         return;
       }
-
-      if (user) {
-        const { id, uid, name, role } = user;
-
-        const loginValidation = {
-          id,
-          uid,
-          name,
-          role,
-        };
-
-        dispatch(loginSuccess(loginValidation));
-
-        LSHelper.setItem(LS_KEY.LOGIN_VALIDATION, loginValidation);
-
-        return;
-      }
     },
-    [id, password, dispatch],
+    [id, password, errorMessage, dispatch],
   );
 
   return (
