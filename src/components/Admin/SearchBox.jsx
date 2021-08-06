@@ -22,7 +22,6 @@ const InputContainer = styled.div`
 `;
 
 const StyledInput = styled.input`
-  // TODO: 기본 스타일은 globalStyles 에서 날릴거니깐
   padding: 10px 10px;
   border: 0;
   flex: 1;

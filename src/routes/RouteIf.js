@@ -11,7 +11,6 @@ export default function RouteIf({
   redirect,
   ...rest
 }) {
-  console.log(redirect);
   return (
     <Route
       {...rest}
