@@ -1,9 +1,28 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
+
+const fadeInOut = keyframes`
+  0% {
+    opacity: 0;
+  }
+  
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+`;
 
 const Message = styled.p`
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  animation: ${fadeInOut} 4s forwards;
   position: fixed;
   top: 200px;
   left: 50%;
@@ -16,8 +35,8 @@ const Message = styled.p`
   transition: 0.3s linear;
 `;
 
-const ErrorMessage = ({ visible, message }) => {
-  return <Message visible={visible}>{message}</Message>;
+const ErrorMessage = ({ message }) => {
+  return <Message>{message}</Message>;
 };
 
 export default ErrorMessage;
