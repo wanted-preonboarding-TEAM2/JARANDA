@@ -70,7 +70,7 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
         expiredDate.replace(/-/g, '').replace(/(\d{2})(\d{2})/, '$1/$2'),
       );
     }
-  }, [cardNum, expiredDate]);
+  }, [expiredDate]);
 
   const cardInfoChange = e => {
     const { name, value } = e.target;
@@ -97,14 +97,32 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
       default:
     }
   };
+
+  //유효성 검사 할때 name이 현재 인풋을 클릭하면 반응이 없고 다음 인풋을 클릭해야 이전 인풋 네임이 반응이 되어 에러네임이 다른 인풋에서 호출됨.
+  // const checkValidation = e => {
+  //   const { name } = e.target;
+  //   const optinos = {
+  //     cardNum: setCardNumError(cardValidation(cardNum, name).message),
+  //     expDate: setExpiredDateError(cardValidation(expiredDate, name).message),
+  //     cvc: setCvcError(cardValidation(cvc, name).message),
+  //   };
+  //   optinos[name] && optinos[name]();
+  // };
+
   const checkValidation = e => {
     const { name } = e.target;
-    const optinos = {
-      cardNum: setCardNumError(cardValidation(cardNum, name).message),
-      expDate: setExpiredDateError(cardValidation(expiredDate, name).message),
-      cvc: setCvcError(cardValidation(cvc, name).message),
-    };
-    optinos[name] && optinos[name]();
+    switch (name) {
+      case 'cardNum':
+        setCardNumError(cardValidation(cardNum, name).message);
+        break;
+      case 'expiredDate':
+        setExpiredDateError(cardValidation(expiredDate, name).message);
+        break;
+      case 'cvc':
+        setCvcError(cardValidation(cvc, name).message);
+        break;
+      default:
+    }
   };
 
   const setCardInfo = () => {
