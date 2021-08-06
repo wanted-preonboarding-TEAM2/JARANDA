@@ -4,22 +4,24 @@ import React from 'react';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BsFillInboxFill } from 'react-icons/bs';
 import { setUserInfo } from 'services/LocalStorageWorker';
+import USER from 'constants/user';
+import ROLE, { ROLE_KR } from 'constants/role';
 
 const dataPropsMapper = {
   id: {
-    title: '아이디',
+    title: USER.KO.ID,
     parseData: data => data,
   },
   name: {
-    title: '이름',
+    title: USER.KO.NAME,
     parseData: data => data,
   },
   address: {
-    title: '주소',
+    title: USER.KO.ADDRESS,
     parseData: data => data,
   },
   cardInfo: {
-    title: '카드 번호',
+    title: USER.KO.CARD_NUMBER,
     parseData: ({ cardNum }) =>
       `${cardNum.substr(0, 4)}-${cardNum.substr(4, 4)}-${cardNum.substr(
         8,
@@ -27,14 +29,16 @@ const dataPropsMapper = {
       )}-${cardNum.substr(12, 4)}`,
   },
   age: {
-    title: '나이',
+    title: USER.KO.AGE,
     parseData: data => data,
   },
   role: {
-    title: '권한',
+    title: USER.KO.ROLE,
     parseData: data => data,
   },
 };
+
+const roleList = [ROLE.PARENT, ROLE.TEACHER, ROLE.ADMIN];
 
 const Table = ({ dataProps, currentPageData, tableData, setTableData }) => {
   const handleEditUserRole = data => {
@@ -75,32 +79,14 @@ const Table = ({ dataProps, currentPageData, tableData, setTableData }) => {
                     className={`${props}_table`}
                   >
                     <Dropdown
-                      visibleOption={
-                        dataPropsMapper[props].parseData(data[props]) === 1 ? (
-                          <>
-                            <StyledTag color="#389e0d">부모님</StyledTag>
-                            <StyledArrowDown />
-                          </>
-                        ) : dataPropsMapper[props].parseData(data[props]) ===
-                          2 ? (
-                          <>
-                            <StyledTag color="#096dd9">선생님</StyledTag>
-                            <StyledArrowDown />
-                          </>
-                        ) : (
-                          <>
-                            <StyledTag color="#cf1322">관리자</StyledTag>
-                            <StyledArrowDown />
-                          </>
-                        )
-                      }
-                      optionList={[1, 2, 3]}
+                      visibleOption={renderUserRoleTag(
+                        dataPropsMapper[props].parseData(data[props]),
+                      )}
+                      optionList={roleList}
                       onItemClick={value =>
                         handleEditUserRole({ ...data, role: value })
                       }
-                      print={data =>
-                        data === 1 ? '부모님' : data === 2 ? '선생님' : '관리자'
-                      }
+                      print={roleToKor}
                     />
                   </TableData>
                 ) : (
@@ -118,6 +104,30 @@ const Table = ({ dataProps, currentPageData, tableData, setTableData }) => {
         </tbody>
       </StyledTable>
     </Container>
+  );
+};
+
+const roleToKor = data =>
+  data === ROLE.PARENT
+    ? ROLE_KR.PARENT
+    : data === ROLE.TEACHER
+    ? ROLE_KR.TEACHER
+    : ROLE_KR.ADMIN;
+
+const renderUserRoleTag = data => {
+  const korData = roleToKor(data);
+  const color =
+    korData === ROLE_KR.PARENT
+      ? '#389e0d'
+      : korData === ROLE_KR.TEACHER
+      ? '#096dd9'
+      : '#cf1322';
+
+  return (
+    <>
+      <StyledTag color={color}>{korData}</StyledTag>
+      <StyledArrowDown />
+    </>
   );
 };
 
@@ -227,10 +237,6 @@ const TableRow = styled.tr`
   }
   .sibling_table {
     width: 10%;
-  }
-
-  :hover {
-    /* background-color: #dce35b33; */
   }
 `;
 
