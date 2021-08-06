@@ -48,12 +48,12 @@ export const nameValidation = name => {
 };
 
 export const addressValidation = data => {
-  const Regex = /^[가-힣0-9\\s]+$/;
+  const Regex = /^[가-힣0-9\s\W]+$/;
 
   if (!Regex.test(data)) {
     return {
       result: false,
-      message: '주소는 한글이나 숫자만 가능합니다',
+      message: '주소를 정확히 입력해주세요',
     };
   }
 

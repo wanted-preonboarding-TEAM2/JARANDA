@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { CustomButton, CustomInput } from 'elements';
+import { CustomButton, CustomInput } from 'components/common';
 
-import LinkButton from 'elements/LinkButton';
+import { LinkButton } from 'components/common';
 import styled from '@emotion/styled';
 
 const FormWrap = styled.div`

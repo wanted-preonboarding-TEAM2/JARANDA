@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { CustomInput, CustomButton } from 'elements';
+import { CustomInput, CustomButton } from 'components/common';
 
 const Container = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ const ErrorMessage = styled.div`
   width: 100%;
   text-align: left;
   color: red;
+  font-size: 12px;
 `;
 
 const AddressInfo = ({
@@ -65,26 +66,25 @@ const AddressInfo = ({
           name="address"
           placeholder=" 주소를 입력해주세요"
           value={userInfo.address}
+          onBlur={checkValidation}
           onChange={() => {
             return;
           }}
           readonly
         />
+
         <CustomButton type="button" width="100px" onClick={loadLayout}>
           주소
         </CustomButton>
       </div>
+      {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
       <CustomInput
         type="text"
         name="addressDetail"
         placeholder="나머지 주소를 입력해주세요"
         value={userInfo.addressDetail}
         onChange={handleChange}
-        onBlur={checkValidation}
       />
-      {errors.addressDetail && (
-        <ErrorMessage>{errors.addressDetail}</ErrorMessage>
-      )}
     </Container>
   );
 };

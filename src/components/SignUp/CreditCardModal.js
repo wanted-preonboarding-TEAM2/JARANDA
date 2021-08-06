@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
-import { CustomInput, CustomButton } from 'elements';
+import { CustomInput, CustomButton } from 'components/common';
 
 const ModalContainer = styled.div`
   display: flex;
@@ -50,9 +50,10 @@ const Box = styled.div`
 `;
 
 const ErrorMessage = styled.div`
-  margin: 0 auto;
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
   color: red;
-  text-align: center;
 `;
 
 const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
