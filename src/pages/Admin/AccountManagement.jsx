@@ -26,7 +26,6 @@ export default function AccountManagement() {
 
   useEffect(() => {
     const lastPage = Math.ceil(tableData.length / ITEMS_PER_PAGE);
-    // 총 갯수가 0개여도 토탈 페이지는 1을 유지
     setTotalPage(lastPage ? lastPage : 1);
   }, [tableData]);
 
@@ -65,12 +64,10 @@ export default function AccountManagement() {
         setTableData={setTableData}
       />
       <Pagination
-        // TODO: totalPageNumber -> totalPage
         totalPage={totalPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      {/* TODO: 이걸 하나의 컴포넌트로 뺄 것 */}
 
       <SignupModal
         isModalShow={isModalShow}
