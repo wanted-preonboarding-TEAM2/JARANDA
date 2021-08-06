@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import LinkButton from 'elements/LinkButton';
+import { LinkButton } from 'components/common';
 import { MdError } from 'react-icons/md';
 
 const RouteNoMatch = () => {

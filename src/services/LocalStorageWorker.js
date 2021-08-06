@@ -24,7 +24,6 @@ export const checkIdExist = id => {
   const idList = userInfos.map(user => user.id);
   if (idList.includes(id)) return true;
   else return false;
-  //console.log(idList);
 };
 
 export const getUserInfo = () => {
