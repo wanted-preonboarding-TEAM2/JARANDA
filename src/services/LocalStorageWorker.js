@@ -38,3 +38,7 @@ export const getLoginValidation = () => {
 
   return data;
 };
+
+export const removeLoginValidation = () => {
+  LSHelper.removeItem(LS_KEY.LOGIN_VALIDATION);
+};

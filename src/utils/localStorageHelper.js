@@ -5,4 +5,7 @@ export const localStorageHelper = {
   setItem: (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   },
+  removeItem: key => {
+    localStorage.removeItem(key);
+  },
 };
