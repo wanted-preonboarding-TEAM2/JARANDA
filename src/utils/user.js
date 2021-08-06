@@ -1,4 +1,4 @@
-import { getUserInfo } from 'services/LocalStorageWorker';
+import { getUserInfo } from 'services/utils/LocalStorageWorker';
 
 export const findLoginUser = ({ id, password }) => {
   const userInfo = getUserInfo();
