@@ -18,36 +18,7 @@ import {
 } from 'services/utils/validation';
 import ROLE from 'constants/role.js';
 import ROUTES from 'constants/routesPath.js';
-
-const initialUserInfo = {
-  id: '',
-  password: '',
-  name: '',
-  cardInfo: {
-    cardNum: '',
-    expiredDate: '',
-    cvc: '',
-  },
-  address: '',
-  addressDetail: '',
-  age: '',
-  role: ROLE.TEACHER,
-};
-
-const initialError = {
-  id: '',
-  password: '',
-  passwordConfirm: '',
-  name: '',
-  cardInfo: {
-    cardNum: '',
-    expiredDate: '',
-    cvc: '',
-  },
-  address: '',
-  addressDetail: '',
-  age: '',
-};
+import { initialUserInfo, initialError } from './initialData';
 
 const StyledForm = styled.form`
   width: 500px;
@@ -67,7 +38,6 @@ const ErrorMessage = styled.div`
 
 const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   const [userInfo, setUserInfo] = useState(initialUserInfo);
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const history = useHistory();
@@ -88,10 +58,6 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
             [name]: value,
           },
         });
-        return;
-      }
-      if (name === 'passwordConfirm') {
-        setPasswordConfirm(value);
         return;
       }
       setUserInfo({
@@ -118,19 +84,19 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
           [name]: pwValidation(userInfo.password).message,
         });
         return false;
-      case 'passwordConfirm':
-        if (passwordConfirm !== userInfo.password) {
-          setErrors({
-            ...errors,
-            [name]: '비밀번호와 일치하지 않습니다',
-          });
-          return;
-        }
-        setErrors({
-          ...errors,
-          [name]: pwValidation(passwordConfirm).message,
-        });
-        return false;
+      // case 'passwordConfirm':
+      //   if (passwordConfirm !== userInfo.password) {
+      //     setErrors({
+      //       ...errors,
+      //       [name]: '비밀번호와 일치하지 않습니다',
+      //     });
+      //     return;
+      //   }
+      //   setErrors({
+      //     ...errors,
+      //     [name]: pwValidation(passwordConfirm).message,
+      //   });
+      //   return false;
       case 'name':
         setErrors({
           ...errors,
@@ -167,14 +133,13 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     }
 
     if (isModal && !window.confirm('정말로 유저를 만드시겠습니까?')) return;
-    saveUserInfo(userInfo);
+    const { passwordConfirm, ...userInfoExcepConfirm } = userInfo;
+    saveUserInfo(userInfoExcepConfirm);
     if (isModal) {
       handleAddUser();
       closeModal();
       return;
     }
-    setUserInfo(initialUserInfo);
-    setPasswordConfirm('');
     history.replace(`${ROUTES.SIGNIN}`);
     alert('회원가입에 성공하셨습니다');
   };
@@ -205,7 +170,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         type="password"
         name="passwordConfirm"
         placeholder="비밀번호를 한번 더 입력해주세요"
-        value={passwordConfirm}
+        value={userInfo.passwordConfirm}
         onChange={handleChange}
         onBlur={checkValidation}
       />
