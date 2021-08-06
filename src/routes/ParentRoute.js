@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import ROUTES from 'constants/routesPath';
 import RouteIf from './RouteIf';
 import ROLE from 'constants/role.js';
-import Parents from 'pages/Parents.jsx';
+import Parents from 'pages/Parents/Parents.jsx';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserRole } from 'services/redux/slices/user';
 

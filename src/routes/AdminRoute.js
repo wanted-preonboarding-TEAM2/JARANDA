@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import RouteIf from './RouteIf';
 import ROLE from 'constants/role';
-import Admin from 'pages/Admin';
+import Admin from 'pages/Admin/Admin';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserRole } from 'services/redux/slices/user';
 import ROUTES from 'constants/routesPath';

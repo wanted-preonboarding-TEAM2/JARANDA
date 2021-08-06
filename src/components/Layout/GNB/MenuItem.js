@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-const MenuItemSytle = styled(NavLink)`
+const MenuItemStyle = styled(NavLink)`
   color: #999;
 
   & + & {
@@ -24,8 +24,13 @@ const MenuItemSytle = styled(NavLink)`
 
 export default function MenuItem({ children, to, handleLogout }) {
   return (
-    <MenuItemSytle to={to} activeStyle={{ color: '#333' }} onClick={handleLogout}>
+    <MenuItemStyle
+      exact
+      to={to}
+      activeStyle={{ color: `${handleLogout ? '#999' : '#333'}` }}
+      onClick={handleLogout}
+    >
       <li>{children}</li>
-    </MenuItemSytle>
+    </MenuItemStyle>
   );
 }

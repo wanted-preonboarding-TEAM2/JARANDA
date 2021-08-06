@@ -1,5 +1,5 @@
 import ROLE from 'constants/role.js';
-import Forbidden from 'pages/Forbidden.jsx';
+import Forbidden from 'pages/Forbidden/Forbidden.jsx';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
