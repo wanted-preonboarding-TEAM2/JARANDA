@@ -2,7 +2,9 @@
 
 ## 팀 로그
 
-[여기서 확인하세요 :)](https://nr2p.notion.site/b9df806a249048c59e7fc31002013064?v=0415169dfcff45f5bc4b250f06793832)
+### 1️⃣ <a href="https://www.notion.so/b9df806a249048c59e7fc31002013064?v=0415169dfcff45f5bc4b250f06793832" target="_blank">Team Log</a>
+### 2️⃣ <a href="https://www.notion.so/b884926ed4ea4cffa826f96f9fe6735d?v=600437679c8f44818b4535f5404b4745" target="_blank">Project Timeline</a>
+
 
 ### 설치
 
