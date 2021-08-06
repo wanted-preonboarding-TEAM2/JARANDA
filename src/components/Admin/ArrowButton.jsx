@@ -9,7 +9,6 @@ function ArrowButton({
   changePageNumbersBackward,
   changePageNumberForward,
 }) {
-  console.log(disabled);
   return (
     <>
       {type === 'back' && (

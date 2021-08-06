@@ -10,7 +10,7 @@ const initialState = {
   id: '',
   name: '',
   uid: '',
-  role: ROLE.ADMIN,
+  role: ROLE.NO_LOGIN,
   loginStatus: {
     loading: false,
     success: false,

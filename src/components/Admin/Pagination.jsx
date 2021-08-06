@@ -37,10 +37,7 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage }) {
   }, [showingNum, setCurrentPage]);
 
   const isFirstPage = showingNum.start === 1;
-  const isLastPage =
-    totalPage === currentPage ||
-    totalPage <= PAGES_PER_LIST ||
-    showingNum.end - showingNum.start < 4;
+  const isLastPage = showingNum.end === totalPage;
   const pages = getEmptyArray(showingNum.start, showingNum.end);
 
   return (

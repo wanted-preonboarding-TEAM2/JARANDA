@@ -5,7 +5,7 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import TableHeader from 'components/Table/tableHeader';
 import Pagination from 'components/Admin/Pagination';
-import usersData from 'components/Admin/users.json';
+
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import SignupModal from 'modal/SignupModal';
@@ -20,14 +20,7 @@ export default function Admin() {
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
 
-  // useEffect(() => {
-  //   localStorageHelper.setItem('userInfo', usersData);
-  //   setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
-  // }, []);
-
   useEffect(() => {
-    const users = localStorageHelper.getItem('userInfo');
-    !users?.length && localStorageHelper.setItem('userInfo', usersData);
     setTableData(localStorageHelper.getItem('userInfo'));
   }, []);
 
