@@ -1,19 +1,19 @@
 import ROLE from './role.js';
 
-const NO_LOGIN = [
+export const NO_LOGIN = [
   { to: '/parent/search', title: '자란다선생님 보기' },
   { to: '/index_teacher', title: '선생님 지원하기' },
   { to: '/help', title: '이용안내' },
   { to: '/signin', title: '로그인/회원가입' },
 ];
 
-const TEACHER = [
+export const TEACHER = [
   { to: '/teacher/student_management', title: '학생관리' },
   { to: '/teacher/class_management', title: '수업관리' },
   { to: '/teacher/search', title: '학생찾기' },
 ];
 
-const PARENT = [
+export const PARENT = [
   { to: '/parent/search', title: '선생님보기' },
   { to: '/parent/request_recommendation', title: '신청서작성하기' },
   { to: '/parent/recommendation', title: '신청내역' },
@@ -21,7 +21,7 @@ const PARENT = [
   { to: '/story', title: '방문일지' },
 ];
 
-const ADMIN = [
+export const ADMIN = [
   { to: '/admin/teacher', title: '선생님 관리' },
   { to: '/admin/parent', title: '학부모 관리' },
   { to: '/admin', title: '관리자' },
