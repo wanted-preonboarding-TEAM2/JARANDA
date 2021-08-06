@@ -2,7 +2,7 @@
 
 ## 팀 로그
 
-### 1️⃣ <a href="https://nr2p.notion.site/b9df806a249048c59e7fc31002013064" target="_blank">Team Log</a>
+### 1️⃣ <a href="https://nr2p.notion.site/nr2p/2021-Log-bef44b60fb944793a1586fc37ced1e8b" target="_blank">Team Log</a>
 ### 2️⃣ <a href="https://nr2p.notion.site/b884926ed4ea4cffa826f96f9fe6735d?v=600437679c8f44818b4535f5404b4745" target="_blank">Project Timeline</a>
 
 
