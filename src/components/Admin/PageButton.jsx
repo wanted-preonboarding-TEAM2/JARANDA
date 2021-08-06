@@ -9,7 +9,7 @@ function PageButton({ page, setCurrentPage, isActive }) {
     <PageButtonContainer isActive={isActive}>
       <StyledButton onClick={handleClickButton} isActive={isActive}>
         {page}
-    </StyledButton>
+      </StyledButton>
     </PageButtonContainer>
   );
 }
@@ -23,7 +23,7 @@ const PageButtonContainer = styled.li`
 const StyledButton = styled.button`
   width: 40px;
   height: 40px;
-  color: ${props => (props.isActive ? '#ffffff' : '#555555')};
+  color: ${props => (props.isActive ? '#ffffff' : '#333333')};
   font-weight: ${props => props.isActive && '900'};
   font-size: 14px;
   :hover {

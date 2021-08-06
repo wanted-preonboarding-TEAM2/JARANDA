@@ -47,9 +47,12 @@ export default function PagedButtonList({
     setCurrentPage(visiblePageNumbers[0]);
   }, [visiblePageNumbers, setCurrentPage]);
 
-  const isFirstPage = visiblePageNumbers[0] === 1;
+  const isFirstPage = visiblePageNumbers[0] === 1 || totalPageNumber === 0;
   const isLastPage =
-    totalPageNumber / PAGES_PER_LIST <= currentPage / PAGES_PER_LIST;
+    totalPageNumber / PAGES_PER_LIST <=
+      (currentPage + PAGES_PER_LIST - 1) / PAGES_PER_LIST ||
+    totalPageNumber === 0;
+
   return (
     <PageListContainer>
       <StyledButton
@@ -90,12 +93,12 @@ const PageListContainer = styled.ul`
 
 const StyledButton = styled.button`
   color: ${props =>
-    props.isFirstPage || props.isLastPage ? '#b3b2b2' : '#555555'};
+    props.isFirstPage || props.isLastPage ? '#b3b2b2' : '#333333'};
   font-size: 20px;
   padding: 10px;
   cursor: pointer;
   :hover {
     cursor: ${props =>
-      props.isFirstPage || props.isLastPage ? 'default' : 'point'};
+      props.isFirstPage || props.isLastPage ? 'default' : 'pointer'};
   }
 `;
