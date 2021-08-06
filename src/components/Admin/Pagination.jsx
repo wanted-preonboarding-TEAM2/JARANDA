@@ -14,13 +14,11 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage }) {
   });
 
   const changePageNumbersBackward = () => {
-    // 이전 페이지 버튼
     currentPage > PAGES_PER_LIST &&
       setShowingNum(prev => arrowHandler(prev, -1, totalPage));
   };
 
   const changePageNumberForward = () => {
-    // 다음페이지 버튼
     showingNum.end <= totalPage &&
       setShowingNum(prev => arrowHandler(prev, 1, totalPage));
   };
