@@ -21,7 +21,7 @@ export default function AccountManagement() {
   const [isModalShow, setIsModalShow] = useState(false);
 
   useEffect(() => {
-    setTableData(localStorageHelper.getItem('userInfo') || []);
+    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO) || []);
   }, []);
 
   useEffect(() => {

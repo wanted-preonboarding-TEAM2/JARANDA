@@ -1,5 +1,6 @@
 import { Title } from 'components/common';
 import { ADMIN } from 'constants/acceptedPageByRole';
+import ROUTES from 'constants/routesPath.js';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import AccountManagement from './AccountManagement';
@@ -15,7 +16,7 @@ export default function Admin() {
   return (
     <>
       <Title>{pageName}</Title>
-      {match.path === '/admin' && <AccountManagement />}
+      {match.path === ROUTES.ADMIN && <AccountManagement />}
     </>
   );
 }

@@ -16,6 +16,8 @@ import {
   cardValidation,
   ageValidation,
 } from 'services/utils/validation';
+import ROLE from 'constants/role.js';
+import ROUTES from 'constants/routesPath.js';
 
 const initialUserInfo = {
   id: '',
@@ -29,7 +31,7 @@ const initialUserInfo = {
   address: '',
   addressDetail: '',
   age: '',
-  role: 'teacher',
+  role: ROLE.TEACHER,
 };
 
 const initialError = {
@@ -173,7 +175,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     }
     setUserInfo(initialUserInfo);
     setPasswordConfirm('');
-    history.replace('/signin');
+    history.replace(`${ROUTES.SIGNIN}`);
     alert('회원가입에 성공하셨습니다');
   };
 
@@ -248,7 +250,11 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onBlur={checkValidation}
       />
       {errors.age && <ErrorMessage>{errors.age}</ErrorMessage>}
-      <Role handleChange={handleChange} name="role" defaultValue="teacher" />
+      <Role
+        handleChange={handleChange}
+        name="role"
+        defaultValue={ROLE.TEACHER}
+      />
       <CustomButton type="submit">
         {isModal ? '유저 생성' : '회원 가입'}
       </CustomButton>

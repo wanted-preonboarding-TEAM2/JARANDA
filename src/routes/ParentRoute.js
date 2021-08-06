@@ -47,7 +47,7 @@ export default function ParentRoute() {
         role={ROLE.PARENT}
         myRole={myRole}
         component={Parents}
-        path={'/story'}
+        path={`${ROUTES.STORY}`}
       />
     </Switch>
   );
