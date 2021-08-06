@@ -13,7 +13,7 @@ import {
 } from 'services/redux/slices/user';
 import ROLE from 'constants/role.js';
 import { useEffect } from 'react';
-import { getLoginValidation } from 'services/LocalStorageWorker';
+import { getLoginValidation } from 'services/utils/LocalStorageWorker';
 
 export default function AppRouter() {
   const dispatch = useDispatch();
