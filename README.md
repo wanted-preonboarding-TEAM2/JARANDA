@@ -43,8 +43,8 @@ yarn start
 ## 부모님
 
 | ID      | Password  |
-| ------- | --------- | ----- |
-| parent1 | parent123 | </br> |
+| ------- | --------- | 
+| parent1 | parent123 | 
 
 ---
 
