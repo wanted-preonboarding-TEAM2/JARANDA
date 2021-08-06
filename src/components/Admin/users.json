@@ -29,8 +29,8 @@
   },
   {
     "uid": 3,
-    "id": "dnfuivjk2312",
-    "password": "12341234",
+    "id": "teacher1",
+    "password": "teacher123",
     "name": "Moyna Dorning",
     "address": "9 Mcbride Circle",
     "cardInfo": {
@@ -43,8 +43,8 @@
   },
   {
     "uid": 4,
-    "id": "anmbixcm3242",
-    "password": "12341234",
+    "id": "teacher2",
+    "password": "teacher123",
     "name": "Mattias Mawdsley",
     "address": "41 Onsgard Street",
     "cardInfo": {
@@ -85,8 +85,8 @@
   },
   {
     "uid": 7,
-    "id": "aixnxcujv234",
-    "password": "12341234",
+    "id": "parent1",
+    "password": "parent123",
     "name": "Winston Nisby",
     "address": "00 Logan Trail",
     "cardInfo": {
@@ -113,8 +113,8 @@
   },
   {
     "uid": 9,
-    "id": "ccoverdale9",
-    "password": "12341234",
+    "id": "parent2",
+    "password": "parent123",
     "name": "Cherida Coverdale",
     "address": "3847 Badeau Avenue",
     "cardInfo": {
