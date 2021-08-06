@@ -33,5 +33,5 @@ const ErrorMessage = styled.div`
 `;
 
 const StyledLinkButton = styled(LinkButton)`
-  margin: 5% 20%;
+  margin-top: 50px;
 `;
