@@ -42,6 +42,13 @@ export default function ParentRoute() {
         component={Parents}
         path={`${ROUTES.PARENT}/visit`}
       />
+      <RouteIf
+        admin
+        role={ROLE.PARENT}
+        myRole={myRole}
+        component={Parents}
+        path={'/story'}
+      />
     </Switch>
   );
 }

@@ -36,6 +36,7 @@ export default function AppRouter() {
           <Route path={ROUTES.ADMIN} component={AdminRoute} />
           <Route path={ROUTES.TEACHER} component={TeacherRoute} />
           <Route path={ROUTES.PARENT} component={ParentRoute} />
+          <Route path={ROUTES.STORY} component={ParentRoute} />
           <Route path={ROUTES.HELP} component={Pages.Help} />
           <Route path={ROUTES.APPLY_TEACHER} component={Pages.ApplyTeacher} />
           <RouteIf

@@ -6,6 +6,7 @@ const ROUTES = {
   SIGNIN: '/signin',
   SIGNUP: '/signup',
   HELP: '/help',
+  STORY: '/story',
   APPLY_TEACHER: '/index_teacher',
 };
 
