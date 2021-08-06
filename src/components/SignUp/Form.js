@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useHistory } from 'react-router';
-import AddressInfo from 'pages/signup/AddressInfo';
-import CreditCardInfo from 'pages/signup/CreditCardInfo';
+import AddressInfo from 'pages/SignUp/AddressInfo';
+import CreditCardInfo from 'pages/SignUp/CreditCardInfo';
 import CreditCardModal from './CreditCardModal';
 import { saveUserInfo } from 'services/LocalStorageWorker';
-import { checkIdExist, checkErrorExists } from 'pages/signup/utils';
+import { checkIdExist, checkErrorExists } from 'pages/SignUp/utils';
 import { CustomInput, CustomButton } from 'elements';
-import Role from 'pages/signup/Role';
+import Role from 'pages/SignUp/Role';
 import {
   idValidation,
   pwValidation,

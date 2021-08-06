@@ -1,6 +1,6 @@
 import Modal from 'modal/Modal';
 import styled from '@emotion/styled';
-import SignUpForm from 'components/signup/Form';
+import SignUpForm from 'components/SignUp/Form';
 import { IoIosClose } from 'react-icons/io';
 
 const SignupModal = ({ isModalShow, closeModal, handleAddUser }) => {
