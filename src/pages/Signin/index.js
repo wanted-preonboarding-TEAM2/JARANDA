@@ -1,9 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import styled from '@emotion/styled';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { postLogin, selectUser } from 'services/redux/slices/user';
+import {
+  loginStatusReset,
+  postLogin,
+  selectUser,
+} from 'services/redux/slices/user';
 
 import LoginForm from './LoginForm';
 import ErrorMessage from './ErrorMessage';
@@ -47,8 +51,6 @@ const Signin = () => {
     password: '',
   });
 
-  const [errorVisible, setErrorVisible] = useState(false);
-
   const { id, password } = loginFields;
 
   const handleChange = useCallback(e => {
@@ -65,19 +67,19 @@ const Signin = () => {
       e.preventDefault();
 
       dispatch(postLogin({ id, password }));
-
-      if (errorMessage) {
-        setErrorVisible(true);
-
-        setTimeout(() => {
-          setErrorVisible(false);
-        }, [4000]);
-
-        return;
-      }
     },
-    [id, password, errorMessage, dispatch],
+    [id, password, dispatch],
   );
+
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        dispatch(loginStatusReset());
+      }, [4000]);
+
+      return;
+    }
+  }, [errorMessage, dispatch]);
 
   return (
     <>
@@ -96,9 +98,7 @@ const Signin = () => {
           onChange={handleChange}
         />
       </Container>
-      {errorMessage && (
-        <ErrorMessage visible={errorVisible} message={errorMessage} />
-      )}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </>
   );
 };

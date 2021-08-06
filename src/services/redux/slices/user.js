@@ -22,6 +22,11 @@ export const userSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
+    loginStatusReset: function (state) {
+      state.loginStatus.loading = false;
+      state.loginStatus.success = false;
+      state.loginStatus.failure = false;
+    },
     loginRequest: function (state) {
       state.loginStatus.loading = true;
       state.loginStatus.success = false;
@@ -88,7 +93,8 @@ export const postLogin =
     }
   };
 
-export const { loginRequest, loginSuccess, loginFailure } = userSlice.actions;
+export const { loginStatusReset, loginRequest, loginSuccess, loginFailure } =
+  userSlice.actions;
 
 export const selectUser = state => state.user;
 export const selectCurrentUserRole = state => state.user.role;
