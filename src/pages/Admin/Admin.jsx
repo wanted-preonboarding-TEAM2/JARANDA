@@ -1,112 +1,21 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import SearchBox from 'components/Admin/SearchBox.jsx';
-import Table from 'components/Table/table';
-import { AiOutlineUserAdd } from 'react-icons/ai';
-import styled from '@emotion/styled';
-import TableHeader from 'components/Table/tableHeader';
-import Pagination from 'components/Admin/Pagination';
-
-import { localStorageHelper } from 'utils/localStorageHelper';
-import LS_KEY from 'constants/localStorageKey';
-import SignupModal from 'modal/SignupModal';
-
-const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
-
-const ITEMS_PER_PAGE = 10;
+import { Title } from 'components/common';
+import { ADMIN } from 'constants/acceptedPageByRole';
+import React, { useEffect, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
+import AccountManagement from './AccountManagement';
 
 export default function Admin() {
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState([]);
-  const [isModalShow, setIsModalShow] = useState(false);
-
+  const [pageName, setPageName] = useState('');
+  const match = useRouteMatch();
   useEffect(() => {
-    setTableData(localStorageHelper.getItem('userInfo') || []);
-  }, []);
-
-  useEffect(() => {
-    const lastPage = Math.ceil(tableData.length / ITEMS_PER_PAGE);
-    // 총 갯수가 0개여도 토탈 페이지는 1을 유지
-    setTotalPage(lastPage ? lastPage : 1);
-  }, [tableData]);
-
-  const handleOnSearch = useCallback(result => {
-    setTableData(result);
-  }, []);
-
-  const handleClickAddUserBtn = () => {
-    setIsModalShow(true);
-  };
-
-  const handleAddUser = () => {
-    setTableData(localStorageHelper.getItem(LS_KEY.USER_INFO));
-  };
-
-  const currentPageData = tableData.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
+    ADMIN.forEach(e => {
+      e.to === match.path && setPageName(e.title);
+    });
+  }, [match.path]);
   return (
-    <TableContainer>
-      <HeaderContainer className="header">
-        <TableHeader title="계정 관리" number={tableData.length} />
-        <ButtonContainer>
-          <SearchBox handleOnSearch={handleOnSearch} />
-          <StyledAddUserButton onClick={handleClickAddUserBtn}>
-            <AiOutlineUserAdd />
-          </StyledAddUserButton>
-        </ButtonContainer>
-      </HeaderContainer>
-      <Table
-        dataProps={dataProps}
-        currentPageData={currentPageData}
-        tableData={tableData}
-        setTableData={setTableData}
-      />
-      <Pagination
-        // TODO: totalPageNumber -> totalPage
-        totalPage={totalPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-      {/* TODO: 이걸 하나의 컴포넌트로 뺄 것 */}
-
-      <SignupModal
-        isModalShow={isModalShow}
-        closeModal={() => setIsModalShow(false)}
-        handleAddUser={handleAddUser}
-      />
-    </TableContainer>
+    <>
+      <Title>{pageName}</Title>
+      {match.path === '/admin' && <AccountManagement />}
+    </>
   );
 }
-
-const TableContainer = styled.div`
-  padding-bottom: 40px;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 20px;
-`;
-
-const StyledAddUserButton = styled.button`
-  height: 37px;
-  width: 37px;
-  background-color: white;
-  border: 0.5px solid #edf1f9;
-  margin-left: 8px;
-  font-size: 14px;
-  color: black;
-  cursor: pointer;
-  border-radius: 50%;
-  &:hover {
-    background-color: #dce35b33;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-`;
