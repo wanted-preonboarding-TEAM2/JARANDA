@@ -64,7 +64,7 @@ export const cardValidation = (data, name) => {
   const cardNumRegex = /^[0-9\W]+$/;
   const expiredDateRegex = /^[0-9]{2}(\/)[0-9]{2}$/;
   const cvcRegex = /^[0-9]{3}$/;
-
+  console.log('name.options,', name, 'data', data);
   if (name === 'cardNum' && !cardNumRegex.test(data)) {
     return {
       result: false,
@@ -73,7 +73,6 @@ export const cardValidation = (data, name) => {
   }
 
   if (name === 'cardNum' && data.length < 16) {
-    console.log('data.cardNum', data);
     return {
       result: false,
       message: '카드 번호 정확히 16자리 입력해 주세요',
