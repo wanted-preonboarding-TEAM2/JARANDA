@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import ROUTES from 'constants/routesPath.js';
 import { LinkButton } from 'components/common';
 import { MdError } from 'react-icons/md';
 
@@ -10,11 +11,10 @@ const RouteNoMatch = () => {
         <h3>404 Error</h3>
         <h5>죄송합니다, 방문하신 페이지가 없습니다.</h5>
       </ErrorMessage>
-      <StyledLinkButton to="/">홈으로 돌아가기</StyledLinkButton>
+      <StyledLinkButton to={ROUTES.HOME}>홈으로 돌아가기</StyledLinkButton>
     </Container>
   );
 };
-
 export default RouteNoMatch;
 
 const Container = styled.div`

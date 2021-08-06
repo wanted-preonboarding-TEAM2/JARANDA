@@ -14,6 +14,7 @@ import MenuItem from './MenuItem.js';
 
 import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
 import { removeLoginValidation } from 'services/utils/LocalStorageWorker.js';
+import ROUTES from 'constants/routesPath.js';
 
 export default function GNB() {
   const currentRole = useSelector(selectCurrentUserRole);
@@ -32,7 +33,7 @@ export default function GNB() {
 
   return (
     <GNBContainer>
-      <Link to="/">
+      <Link to={ROUTES.HOME}>
         <StyledImg src="/images/jaranda_logo.png" alt="logo" />
       </Link>
       <StyledMenuList show={isOpenMenu} onClick={() => setIsOpenMenu(false)}>
@@ -42,7 +43,7 @@ export default function GNB() {
           </MenuItem>
         ))}
         {currentRole !== ROLE.NO_LOGIN && (
-          <MenuItem key={'logout'} to="/" handleLogout={handleLogout}>
+          <MenuItem key={'logout'} to={ROUTES.HOME} handleLogout={handleLogout}>
             로그아웃
           </MenuItem>
         )}

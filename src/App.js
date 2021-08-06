@@ -4,11 +4,12 @@ import AppRouter from 'routes/routes';
 import reset from 'styles/reset.js';
 import { localStorageHelper } from 'utils/localStorageHelper';
 import usersData from 'components/Admin/users.json';
+import LS_KEY from 'constants/localStorageKey.js';
 
 function App() {
   useEffect(() => {
-    const users = localStorageHelper.getItem('userInfo');
-    !users?.length && localStorageHelper.setItem('userInfo', usersData);
+    const users = localStorageHelper.getItem(LS_KEY.USER_INFO);
+    !users?.length && localStorageHelper.setItem(LS_KEY.USER_INFO, usersData);
   }, []);
 
   return (
