@@ -4,7 +4,8 @@ import Table from 'components/Table/table';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import TableHeader from 'components/Table/tableHeader';
-import PagedButtonList from 'components/Admin/PagedButtonList';
+import Pagination from 'components/Admin/Pagination';
+
 import { localStorageHelper } from 'utils/localStorageHelper';
 import LS_KEY from 'constants/localStorageKey';
 import SignupModal from 'modal/SignupModal';
@@ -14,18 +15,19 @@ const dataProps = ['id', 'name', 'address', 'cardInfo', 'age', 'role'];
 const ITEMS_PER_PAGE = 10;
 
 export default function Admin() {
-  const [totalPageNumber, setTotalPageNumber] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
 
   useEffect(() => {
-    setTableData(localStorageHelper.getItem('userInfo'));
+    setTableData(localStorageHelper.getItem('userInfo') || []);
   }, []);
 
   useEffect(() => {
-    const lastPageNumber = Math.ceil(tableData.length / ITEMS_PER_PAGE);
-    setTotalPageNumber(lastPageNumber);
+    const lastPage = Math.ceil(tableData.length / ITEMS_PER_PAGE);
+    // 총 갯수가 0개여도 토탈 페이지는 1을 유지
+    setTotalPage(lastPage ? lastPage : 1);
   }, [tableData]);
 
   const handleOnSearch = useCallback(result => {
@@ -62,9 +64,9 @@ export default function Admin() {
         tableData={tableData}
         setTableData={setTableData}
       />
-      <PagedButtonList
+      <Pagination
         // TODO: totalPageNumber -> totalPage
-        totalPageNumber={totalPageNumber}
+        totalPage={totalPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
