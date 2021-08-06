@@ -25,8 +25,9 @@ const MenuItemStyle = styled(NavLink)`
 export default function MenuItem({ children, to, handleLogout }) {
   return (
     <MenuItemStyle
+      exact
       to={to}
-      activeStyle={{ color: `${handleLogout ? 'color: #333' : 'color: #999'}` }}
+      activeStyle={{ color: `${handleLogout ? '#999' : '#333'}` }}
       onClick={handleLogout}
     >
       <li>{children}</li>
