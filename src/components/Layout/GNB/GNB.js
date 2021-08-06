@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import MenuItem from './MenuItem.js';
-import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUserRole, userSlice } from 'services/redux/slices/user.js';
+import styled from '@emotion/styled';
+import { GiHamburgerMenu } from 'react-icons/gi';
+
+import {
+  selectCurrentUserRole,
+  userSlice,
+} from 'services/redux/slices/user.js';
+
+import MenuItem from './MenuItem.js';
+
+import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
+import { removeLoginValidation } from 'services/LocalStorageWorker.js';
 
 export default function GNB() {
   const currentRole = useSelector(selectCurrentUserRole);
@@ -19,7 +26,8 @@ export default function GNB() {
 
   const handleLogout = () => {
     dispatch(logout());
-  }
+    removeLoginValidation();
+  };
 
   return (
     <GNBContainer>
@@ -32,7 +40,7 @@ export default function GNB() {
             {item.title}
           </MenuItem>
         ))}
-        { currentRole !== 'no_login' && (
+        {currentRole !== 'no_login' && (
           <MenuItem key={'logout'} to="/" handleLogout={handleLogout}>
             로그아웃
           </MenuItem>
