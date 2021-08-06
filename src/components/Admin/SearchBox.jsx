@@ -22,7 +22,6 @@ const InputContainer = styled.div`
 `;
 
 const StyledInput = styled.input`
-  // TODO: 기본 스타일은 globalStyles 에서 날릴거니깐
   padding: 10px 10px;
   border: 0;
   flex: 1;
@@ -58,7 +57,7 @@ export default function SearchBox({ handleOnSearch }) {
             {USER.KO[selectedOption.toUpperCase()]} <RiArrowDownSFill />
           </>
         }
-        optionList={Object.values(USER.EN)}
+        optionList={['id', 'name', 'address', 'age']}
         onItemClick={handleListClick}
         print={data => USER.KO[data.toUpperCase()]}
       />

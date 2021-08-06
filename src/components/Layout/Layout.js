@@ -6,7 +6,7 @@ const JarandaBannerContainer = styled.div`
   display: flex;
   height: 100px;
   width: 100%;
-  background: #dce35b; /* fallback for old browsers */
+  background: #dce35b;
   background: -webkit-linear-gradient(to right, #dce35b, #45b649);
   color: white;
   background: linear-gradient(to right, #dce35b, #45b649);
@@ -37,7 +37,6 @@ export default function Layout({ children }) {
       </JarandaBannerContainer>
       <GNB />
       <StyledSection>{children}</StyledSection>
-      {/* Footer */}
     </>
   );
 }

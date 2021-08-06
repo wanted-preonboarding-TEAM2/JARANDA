@@ -158,7 +158,6 @@ const EmptyMessage = styled.p`
 
 const Container = styled.div`
   width: 100%;
-  /* background-color: #f8faff; */
 `;
 const StyledTable = styled.table`
   width: 100%;

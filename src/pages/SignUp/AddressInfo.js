@@ -46,8 +46,6 @@ const AddressInfo = ({
             }
             fullAddr += extraAddr !== '' ? ` (${extraAddr})` : '';
           }
-          console.log(fullAddr);
-
           setUserInfo({
             ...userInfo,
             address: fullAddr,

@@ -9,7 +9,6 @@ import { selectCurrentUserRole } from 'services/redux/slices/user';
 
 export default function TeacherRoute() {
   const myRole = useSelector(selectCurrentUserRole);
-  console.log(myRole);
   return (
     <Switch>
       <RouteIf
