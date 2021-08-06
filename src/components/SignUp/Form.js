@@ -88,12 +88,10 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         });
         return;
       }
-
       if (name === 'passwordConfirm') {
         setPasswordConfirm(value);
         return;
       }
-
       setUserInfo({
         ...userInfo,
         [name]: value,
@@ -150,6 +148,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         });
         return false;
       default:
+        <ErrorMessage>입력 오류 메시지 정보가 없습니다.</ErrorMessage>;
     }
   };
 

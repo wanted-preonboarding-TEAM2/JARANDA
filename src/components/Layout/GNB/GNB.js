@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import ROLE from 'constants/role';
 
 import {
   selectCurrentUserRole,
@@ -40,7 +41,7 @@ export default function GNB() {
             {item.title}
           </MenuItem>
         ))}
-        {currentRole !== 'no_login' && (
+        {currentRole !== ROLE.NO_LOGIN && (
           <MenuItem key={'logout'} to="/" handleLogout={handleLogout}>
             로그아웃
           </MenuItem>

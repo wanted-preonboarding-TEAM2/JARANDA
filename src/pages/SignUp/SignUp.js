@@ -31,15 +31,7 @@ const Title = styled.p`
   margin-bottom: 40px;
 `;
 
-const CloseBtnContainer = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: 30px;
-  cursor: pointer;
-`;
-
-const Index = () => {
+const SignUp = () => {
   const postcodeRef = useRef(null);
 
   return (
@@ -64,4 +56,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default SignUp;
