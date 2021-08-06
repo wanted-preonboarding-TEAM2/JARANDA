@@ -21,7 +21,7 @@ export default function Admin() {
   const [isModalShow, setIsModalShow] = useState(false);
 
   useEffect(() => {
-    setTableData(localStorageHelper.getItem('userInfo'));
+    setTableData(localStorageHelper.getItem('userInfo') || []);
   }, []);
 
   useEffect(() => {
