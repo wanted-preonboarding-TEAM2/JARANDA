@@ -6,7 +6,7 @@ import CreditCardInfo from 'pages/SignUp/CreditCardInfo';
 import CreditCardModal from './CreditCardModal';
 import { saveUserInfo } from 'services/LocalStorageWorker';
 import { checkIdExist, checkErrorExists } from 'pages/SignUp/utils';
-import { CustomInput, CustomButton } from 'elements';
+import { CustomInput, CustomButton } from 'components/common';
 import Role from 'pages/SignUp/Role';
 import {
   idValidation,
@@ -15,7 +15,7 @@ import {
   nameValidation,
   cardValidation,
   ageValidation,
-} from 'utils/Validation';
+} from 'services/validation';
 
 const initialUserInfo = {
   id: '',
@@ -169,6 +169,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     if (isModal) {
       handleAddUser();
       closeModal();
+      return;
     }
     setUserInfo(initialUserInfo);
     setPasswordConfirm('');
@@ -246,6 +247,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
+      {errors.age && <ErrorMessage>{errors.age}</ErrorMessage>}
       <Role handleChange={handleChange} name="role" defaultValue="teacher" />
       <CustomButton type="submit">
         {isModal ? '유저 생성' : '회원 가입'}

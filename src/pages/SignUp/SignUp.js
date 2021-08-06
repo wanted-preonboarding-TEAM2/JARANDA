@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 
-import Form from 'components/signup/Form';
+import Form from 'components/SignUp/Form';
 
 const Container = styled.div`
   display: flex;
