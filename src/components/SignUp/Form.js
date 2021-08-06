@@ -8,17 +8,10 @@ import { saveUserInfo } from 'services/utils/LocalStorageWorker';
 import { checkIdExist, checkErrorExists } from 'pages/SignUp/utils';
 import { CustomInput, CustomButton } from 'components/common';
 import Role from 'pages/SignUp/Role';
-import {
-  idValidation,
-  pwValidation,
-  addressValidation,
-  nameValidation,
-  cardValidation,
-  ageValidation,
-} from 'services/utils/validation';
 import ROLE from 'constants/role.js';
 import ROUTES from 'constants/routesPath.js';
 import { initialUserInfo, initialError } from './initialData';
+import Validator from 'services/utils/SignUpValidator.js';
 
 const StyledForm = styled.form`
   width: 500px;
@@ -49,7 +42,6 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
   const handleChange = useCallback(
     e => {
       const { name, value } = e.target;
-
       if (creditModalOpen) {
         setUserInfo({
           ...userInfo,
@@ -70,54 +62,15 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
 
   const checkValidation = e => {
     const { name } = e.target;
-
-    switch (name) {
-      case 'id':
-        setErrors({
-          ...errors,
-          [name]: idValidation(userInfo.id).message,
-        });
-        return false;
-      case 'password':
-        setErrors({
-          ...errors,
-          [name]: pwValidation(userInfo.password).message,
-        });
-        return false;
-      // case 'passwordConfirm':
-      //   if (passwordConfirm !== userInfo.password) {
-      //     setErrors({
-      //       ...errors,
-      //       [name]: '비밀번호와 일치하지 않습니다',
-      //     });
-      //     return;
-      //   }
-      //   setErrors({
-      //     ...errors,
-      //     [name]: pwValidation(passwordConfirm).message,
-      //   });
-      //   return false;
-      case 'name':
-        setErrors({
-          ...errors,
-          [name]: nameValidation(userInfo.name).message,
-        });
-        return false;
-      case 'address':
-        setErrors({
-          ...errors,
-          [name]: addressValidation(userInfo.address).message,
-        });
-        return false;
-      case 'age':
-        setErrors({
-          ...errors,
-          [name]: ageValidation(userInfo.age).message,
-        });
-        return false;
-      default:
-        <ErrorMessage>입력 오류 메시지 정보가 없습니다.</ErrorMessage>;
-    }
+    if (!Validator[name]) return;
+    const validationResult =
+      name === 'passwordConfirm'
+        ? Validator[name](userInfo[name], userInfo.password)
+        : Validator[name](userInfo[name]);
+    setErrors({
+      ...errors,
+      [name]: validationResult,
+    });
   };
 
   const handleSubmit = e => {
@@ -201,7 +154,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         open={creditModalOpen}
         close={handleModalOpen}
         setUserInfo={setUserInfo}
-        cardValidation={cardValidation}
+        // cardValidation={cardValidation}
         errors={errors}
         setErrors={setErrors}
       />

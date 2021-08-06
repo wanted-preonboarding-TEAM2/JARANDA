@@ -100,22 +100,22 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
     }
   };
 
-  const checkValidation = e => {
-    const { name } = e.target;
-    switch (name) {
-      case 'cardNum':
-        setCardNumError(cardValidation(cardNum, name).message);
-        break;
-      case 'expiredDate':
-        setExpiredDateError(cardValidation(expiredDate, name).message);
-        break;
-      case 'cvc':
-        setCvcError(cardValidation(cvc, name).message);
-        break;
-      default:
-        <ErrorMessage>카드 입력 오류 메시지 정보가 없습니다.</ErrorMessage>;
-    }
-  };
+  // const  checkValidation = e => {
+  //   const { name } = e.target;
+  //   switch (name) {
+  //     case 'cardNum':
+  //       setCardNumError(cardValidation(cardNum, name).message);
+  //       break;
+  //     case 'expiredDate':
+  //       setExpiredDateError(cardValidation(expiredDate, name).message);
+  //       break;
+  //     case 'cvc':
+  //       setCvcError(cardValidation(cvc, name).message);
+  //       break;
+  //     default:
+  //       <ErrorMessage>카드 입력 오류 메시지 정보가 없습니다.</ErrorMessage>;
+  //   }
+  // };
 
   const setCardInfo = () => {
     setUserInfo(prev => {
@@ -144,7 +144,7 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
               placeholder="신용카드 번호"
               value={cardNum}
               onChange={cardInfoChange}
-              onBlur={checkValidation}
+              // onBlur={checkValidation}
             />
             {cardNumError && <ErrorMessage>{cardNumError}</ErrorMessage>}
             <div>
@@ -155,7 +155,7 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
                   placeholder="신용카드 만료일 (MM/YY)"
                   value={expiredDate}
                   onChange={cardInfoChange}
-                  onBlur={checkValidation}
+                  // onBlur={checkValidation}
                 />
 
                 {expiredDateError && (
@@ -173,7 +173,7 @@ const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
                   placeholder="신용카드 CVC"
                   value={cvc}
                   onChange={cardInfoChange}
-                  onBlur={checkValidation}
+                  // onBlur={checkValidation}
                 />
                 {cvcError && (
                   <ErrorMessage style={{ marginTop: '14px' }}>
