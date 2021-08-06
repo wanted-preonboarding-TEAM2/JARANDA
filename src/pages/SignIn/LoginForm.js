@@ -43,7 +43,7 @@ const LoginForm = ({ id, password, onSubmit, onChange }) => {
         />
         <CustomButton type="submit">로그인</CustomButton>
       </form>
-      <CustomLinkButton to="/signup">부모님 회원가입</CustomLinkButton>
+      <CustomLinkButton to="/signup">회원가입</CustomLinkButton>
     </FormWrap>
   );
 };

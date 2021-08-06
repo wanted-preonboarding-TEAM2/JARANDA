@@ -3,7 +3,7 @@ import Dropdown from 'components/Dropdown/DropDown';
 import React from 'react';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BsFillInboxFill } from 'react-icons/bs';
-import { setUserInfo } from 'services/LocalStorageWorker';
+import { setUserInfo } from 'services/utils/LocalStorageWorker';
 import USER from 'constants/user';
 import ROLE, { ROLE_KR } from 'constants/role';
 

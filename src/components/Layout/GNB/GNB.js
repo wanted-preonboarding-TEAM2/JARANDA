@@ -13,7 +13,7 @@ import {
 import MenuItem from './MenuItem.js';
 
 import ACCEPTED_PAGE_BY_ROLE from 'constants/acceptedPageByRole.js';
-import { removeLoginValidation } from 'services/LocalStorageWorker.js';
+import { removeLoginValidation } from 'services/utils/LocalStorageWorker.js';
 
 export default function GNB() {
   const currentRole = useSelector(selectCurrentUserRole);

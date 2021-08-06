@@ -58,7 +58,7 @@ export default function SearchBox({ handleOnSearch }) {
             {USER.KO[selectedOption.toUpperCase()]} <RiArrowDownSFill />
           </>
         }
-        optionList={Object.values(USER.EN)}
+        optionList={['id', 'name', 'address', 'age']}
         onItemClick={handleListClick}
         print={data => USER.KO[data.toUpperCase()]}
       />

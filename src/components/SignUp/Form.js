@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import AddressInfo from 'pages/SignUp/AddressInfo';
 import CreditCardInfo from 'pages/SignUp/CreditCardInfo';
 import CreditCardModal from './CreditCardModal';
-import { saveUserInfo } from 'services/LocalStorageWorker';
+import { saveUserInfo } from 'services/utils/LocalStorageWorker';
 import { checkIdExist, checkErrorExists } from 'pages/SignUp/utils';
 import { CustomInput, CustomButton } from 'components/common';
 import Role from 'pages/SignUp/Role';
@@ -15,7 +15,7 @@ import {
   nameValidation,
   cardValidation,
   ageValidation,
-} from 'services/validation';
+} from 'services/utils/validation';
 
 const initialUserInfo = {
   id: '',

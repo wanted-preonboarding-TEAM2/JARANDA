@@ -1,4 +1,4 @@
-import { getUserInfo } from 'services/LocalStorageWorker';
+import { getUserInfo } from 'services/utils/LocalStorageWorker';
 
 const checkIdExist = id => {
   const userInfos = getUserInfo();
