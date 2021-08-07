@@ -23,7 +23,7 @@ yarn start
 ## 테스트계정 (Id / Password)
 
 > 안정화 버전 배포 링크:
-> https://this-is-jaranda.netlify.app/admin/parent
+> https://this-is-jaranda.netlify.app
 
 > 개발 버전 배포 링크(실행상에 문제가 있을 수 있습니다!):
 > https://this-is-jaranda-develop.netlify.app/
