@@ -1,5 +1,3 @@
-// const regexTester = (arg, reg) => {};
-
 const Validator = {
   id: id => {
     const Regex = /^[a-z]{1}[0-9a-z]+$/;
@@ -34,26 +32,19 @@ const Validator = {
     if (!Regex.test(age)) return '나이는 숫자만 가능합니다.';
     return;
   },
-  card: (key, value) => {
-    const cardNumRegex = /^[0-9\W]+$/;
-    const expiredDateRegex = /^[0-9]{2}(\/)[0-9]{2}$/;
+  cardNum: cardNum => {
+    const cardNumRegex = /^[0-9\W]{16}$/;
+    if (!cardNumRegex.test(cardNum))
+      return '카드 번호 정확히 16자리 입력해 주세요';
+  },
+  expiredDate: expiredDate => {
+    const expiredDateRegex = /^[0-9]{4}$/;
+    if (!expiredDateRegex.test(expiredDate))
+      return '만료일 형식을 확인해주세요 (YY/MM)';
+  },
+  cvc: cvc => {
     const cvcRegex = /^[0-9]{3}$/;
-
-    const options = {
-      cardNum: () => {
-        if (!cardNumRegex.test(value)) return '카드번호를 정확히 입력해 주세요';
-        if (value.length !== 16) return '카드 번호 정확히 16자리 입력해 주세요';
-      },
-      expiredDate: () => {
-        if (!expiredDateRegex.test(value))
-          return '만료일 형식을 확인해주세요 (YY/MM)';
-      },
-      cvc: () => {
-        if (!cvcRegex.test(value) && value.length < 3)
-          return 'cvc 3자리 입력해주세요';
-      },
-    };
-    return options[key] && options[key]();
+    if (!cvcRegex.test(cvc)) return 'cvc 3자리 입력해주세요';
   },
 };
 

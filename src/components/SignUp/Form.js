@@ -1,64 +1,49 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useHistory } from 'react-router';
 import AddressInfo from 'pages/SignUp/AddressInfo';
 import CreditCardInfo from 'pages/SignUp/CreditCardInfo';
 import CreditCardModal from './CreditCardModal';
 import { saveUserInfo } from 'services/utils/LocalStorageWorker';
-import { checkIdExist, checkErrorExists } from 'pages/SignUp/utils';
+import { checkErrors } from 'pages/SignUp/utils';
 import { CustomInput, CustomButton } from 'components/common';
-import Role from 'pages/SignUp/Role';
+import RoleSelect from 'pages/SignUp/RoleSelect';
 import ROLE from 'constants/role.js';
 import ROUTES from 'constants/routesPath.js';
-import { initialUserInfo, initialError } from './initialData';
+import { initialUserInfo, initialError } from './initialState';
 import Validator from 'services/utils/SignUpValidator.js';
-
-const StyledForm = styled.form`
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px 0px;
-`;
-
-const ErrorMessage = styled.div`
-  width: 100%;
-  font-size: 12px;
-  text-align: left;
-  color: red;
-`;
+import useInputs from 'utils/hooks/useInputs.js';
 
 const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const {
+    values: userInfo,
+    setValues: setUserInfo,
+    handleChange,
+  } = useInputs(initialUserInfo);
   const [errors, setErrors] = useState(initialError);
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const history = useHistory();
 
   const handleModalOpen = () => {
-    setCreditModalOpen(!creditModalOpen);
+    setCreditModalOpen(true);
   };
 
-  const handleChange = useCallback(
-    e => {
-      const { name, value } = e.target;
-      if (creditModalOpen) {
-        setUserInfo({
-          ...userInfo,
-          cardInfo: {
-            ...userInfo.cardInfo,
-            [name]: value,
-          },
-        });
-        return;
-      }
-      setUserInfo({
-        ...userInfo,
-        [name]: value,
-      });
-    },
-    [creditModalOpen, userInfo],
-  );
+  const handleModalClose = () => {
+    setCreditModalOpen(false);
+  };
+
+  const handleSetCardInfo = (cardInfo, cardErrors) => {
+    setErrors({
+      ...errors,
+      ...cardErrors,
+    });
+    setUserInfo({
+      ...userInfo,
+      cardInfo: {
+        ...cardInfo,
+      },
+    });
+  };
 
   const checkValidation = e => {
     const { name } = e.target;
@@ -75,16 +60,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!checkErrorExists(errors)) {
-      alert('입력을 확인해주세요');
-      return;
-    }
-
-    if (checkIdExist(userInfo.id)) {
-      alert('아이디가 이미 존재합니다');
-      return;
-    }
-
+    if (!checkErrors(errors, userInfo.id)) return;
     if (isModal && !window.confirm('정말로 유저를 만드시겠습니까?')) return;
     const { passwordConfirm, ...userInfoExcepConfirm } = userInfo;
     saveUserInfo(userInfoExcepConfirm);
@@ -97,8 +73,6 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
     alert('회원가입에 성공하셨습니다');
   };
 
-  checkIdExist();
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       <CustomInput
@@ -109,7 +83,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
-      {errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
+      {!!errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
       <CustomInput
         type="password"
         name="password"
@@ -118,7 +92,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
-      {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+      {!!errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
       <CustomInput
         type="password"
         name="passwordConfirm"
@@ -127,7 +101,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
-      {errors.passwordConfirm && (
+      {!!errors.passwordConfirm && (
         <ErrorMessage>{errors.passwordConfirm}</ErrorMessage>
       )}
       <CustomInput
@@ -138,7 +112,7 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
-      {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+      {!!errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
       <AddressInfo
         userInfo={userInfo}
         setUserInfo={setUserInfo}
@@ -149,14 +123,12 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
       <CreditCardInfo
         handleModalOpen={handleModalOpen}
         cardInfo={userInfo.cardInfo}
+        errors={errors}
       />
       <CreditCardModal
         open={creditModalOpen}
-        close={handleModalOpen}
-        setUserInfo={setUserInfo}
-        // cardValidation={cardValidation}
-        errors={errors}
-        setErrors={setErrors}
+        close={handleModalClose}
+        handleSetCardInfo={handleSetCardInfo}
       />
       <CustomInput
         name="age"
@@ -167,8 +139,8 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
         onChange={handleChange}
         onBlur={checkValidation}
       />
-      {errors.age && <ErrorMessage>{errors.age}</ErrorMessage>}
-      <Role
+      {!!errors.age && <ErrorMessage>{errors.age}</ErrorMessage>}
+      <RoleSelect
         handleChange={handleChange}
         name="role"
         defaultValue={ROLE.TEACHER}
@@ -181,3 +153,19 @@ const SignUpForm = ({ isModal, closeModal, handleAddUser }) => {
 };
 
 export default React.memo(SignUpForm);
+
+const StyledForm = styled.form`
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px 0px;
+`;
+
+const ErrorMessage = styled.div`
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
+  color: red;
+`;

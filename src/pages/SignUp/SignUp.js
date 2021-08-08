@@ -1,7 +1,33 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
-
 import Form from 'components/SignUp/Form';
+
+const SignUp = () => {
+  const postcodeRef = useRef(null);
+
+  return (
+    <>
+      <BackgroundImage>
+        <img
+          src="https://jaranda.kr/assets/image/account/background.sign_in.png"
+          alt="backgroungImage"
+        />
+      </BackgroundImage>
+      <Container>
+        <Inner>
+          <Title>
+            10초만에 가입하고 <br />
+            선생님 정보를 받아보세요
+          </Title>
+          <Form />
+        </Inner>
+      </Container>
+      <div ref={postcodeRef}></div>
+    </>
+  );
+};
+
+export default SignUp;
 
 const Container = styled.div`
   display: flex;
@@ -30,30 +56,3 @@ const Title = styled.p`
   font-size: 24px;
   margin-bottom: 40px;
 `;
-
-const SignUp = () => {
-  const postcodeRef = useRef(null);
-
-  return (
-    <>
-      <BackgroundImage>
-        <img
-          src="https://jaranda.kr/assets/image/account/background.sign_in.png"
-          alt="backgroungImage"
-        />
-      </BackgroundImage>
-      <Container>
-        <Inner>
-          <Title>
-            10초만에 가입하고 <br />
-            선생님 정보를 받아보세요
-          </Title>
-          <Form />
-        </Inner>
-      </Container>
-      <div ref={postcodeRef}></div>
-    </>
-  );
-};
-
-export default SignUp;

@@ -7,7 +7,7 @@ const CustomSelect = styled.select`
   padding: 10px;
 `;
 
-function Role({ handleChange, name }) {
+function RoleSelect({ handleChange, name }) {
   return (
     <CustomSelect onChange={handleChange} name={name}>
       <option value={ROLE.TEACHER}>선생님</option>
@@ -16,4 +16,4 @@ function Role({ handleChange, name }) {
   );
 }
 
-export default Role;
+export default RoleSelect;

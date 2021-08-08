@@ -1,4 +1,4 @@
-const { default: ROLE } = require('constants/role.js');
+import ROLE from 'constants/role.js';
 
 const initialUserInfo = {
   id: '',
@@ -21,14 +21,29 @@ const initialError = {
   password: '',
   passwordConfirm: '',
   name: '',
-  cardInfo: {
-    cardNum: '',
-    expiredDate: '',
-    cvc: '',
-  },
+  cardNum: '',
+  expiredDate: '',
+  cvc: '',
   address: '',
   addressDetail: '',
   age: '',
 };
 
-export { initialUserInfo, initialError };
+const creditCardInfoInitialState = {
+  cardNum: '',
+  expiredDate: '',
+  cvc: '',
+};
+
+const creditCardInitialError = {
+  cardNum: '',
+  expiredDate: '',
+  cvc: '',
+};
+
+export {
+  initialUserInfo,
+  initialError,
+  creditCardInfoInitialState,
+  creditCardInitialError,
+};
