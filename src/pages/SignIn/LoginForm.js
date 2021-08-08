@@ -1,27 +1,7 @@
 import React from 'react';
-
-import { CustomButton, CustomInput } from 'components/common';
-
-import { LinkButton } from 'components/common';
 import styled from '@emotion/styled';
-
-const FormWrap = styled.div`
-  form {
-    input + input {
-      margin-top: 15px;
-    }
-
-    button {
-      margin-top: 20px;
-    }
-  }
-`;
-
-const CustomLinkButton = styled(LinkButton)`
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #dcdcdc;
-`;
+import { CustomButton, CustomInput } from 'components/common';
+import { LinkButton } from 'components/common';
 
 const LoginForm = ({ id, password, onSubmit, onChange }) => {
   return (
@@ -48,4 +28,22 @@ const LoginForm = ({ id, password, onSubmit, onChange }) => {
   );
 };
 
-export default LoginForm;
+export default React.memo(LoginForm);
+
+const FormWrap = styled.div`
+  form {
+    input + input {
+      margin-top: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+  }
+`;
+
+const CustomLinkButton = styled(LinkButton)`
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #dcdcdc;
+`;
