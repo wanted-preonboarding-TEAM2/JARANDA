@@ -1,22 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
 import { CustomInput } from 'components/common';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 15px 10px;
-  cursor: pointer;
-
-  div {
-    display: flex;
-    gap: 0 20px;
-  }
-`;
-
-const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
+const CreditCardInfo = ({ handleModalOpen, cardInfo, errors }) => {
   const { cardNum, expiredDate, cvc } = cardInfo;
   return (
     <Container onClick={handleModalOpen}>
@@ -41,8 +27,6 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
         />
         <CustomInput
           type="number"
-          minLength={3}
-          maxLength={3}
           placeholder="신용카드 CVC"
           value={cvc}
           onChange={() => {
@@ -51,8 +35,33 @@ const CreditCardInfo = ({ handleModalOpen, cardInfo }) => {
           readonly
         />
       </div>
+      {!!errors.cardNum && <ErrorMessage>{errors.cardNum}</ErrorMessage>}
+      {!!errors.expiredDate && (
+        <ErrorMessage>{errors.expiredDate}</ErrorMessage>
+      )}
+      {!!errors.cvc && <ErrorMessage>{errors.cvc}</ErrorMessage>}
     </Container>
   );
 };
 
 export default CreditCardInfo;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px 10px;
+  cursor: pointer;
+
+  div {
+    display: flex;
+    gap: 0 20px;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  width: 100%;
+  font-size: 12px;
+  text-align: left;
+  color: red;
+`;

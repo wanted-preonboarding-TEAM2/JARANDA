@@ -1,4 +1,4 @@
-import checkIdExist from './checkIdExists';
-import checkErrorExists from './checkErrorExists';
+import cardInfoLengthChecker from './cardInfoLengthChecker.js';
+import checkErrors from './checkErrors';
 
-export { checkIdExist, checkErrorExists };
+export { checkErrors, cardInfoLengthChecker };

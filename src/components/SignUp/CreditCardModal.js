@@ -1,7 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-
 import { CustomInput, CustomButton } from 'components/common';
+import Validator from 'services/utils/SignUpValidator.js';
+import cardInfoLengthChecker from 'pages/SignUp/utils/cardInfoLengthChecker.js';
+import {
+  creditCardInfoInitialState,
+  creditCardInitialError,
+} from './initialState.js';
+
+const CreditCardModal = ({ open, close, handleSetCardInfo }) => {
+  const [values, setValues] = useState(creditCardInfoInitialState);
+  const [errors, setErrors] = useState(creditCardInitialError);
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    if (!cardInfoLengthChecker(name, value.length)) return;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const checkValidation = ({ target }) => {
+    const { name } = target;
+    if (!Validator[name]) return;
+    const validationResult = Validator[name](values[name]);
+    setErrors({
+      ...errors,
+      [name]: validationResult,
+    });
+  };
+
+  const handleClick = () => {
+    handleSetCardInfo({ ...values }, { ...errors });
+    close();
+  };
+
+  return (
+    <>
+      {open ? (
+        <ModalContainer>
+          <ModalBox>
+            <CloseBtn onClick={close}>X</CloseBtn>
+            <CustomInput
+              type="number"
+              name="cardNum"
+              placeholder="신용카드 번호"
+              value={values.cardNum}
+              onChange={handleChange}
+              onBlur={checkValidation}
+            />
+            {!!errors.cardNum && <ErrorMessage>{errors.cardNum}</ErrorMessage>}
+            <div>
+              <Box>
+                <CustomInput
+                  type="number"
+                  name="expiredDate"
+                  placeholder="신용카드 만료일 (MMYY)"
+                  value={values.expiredDate}
+                  onChange={handleChange}
+                  onBlur={checkValidation}
+                />
+                {!!errors.expiredDate && (
+                  <ErrorMessage style={{ marginTop: '14px' }}>
+                    {errors.expiredDate}
+                  </ErrorMessage>
+                )}
+              </Box>
+              <Box>
+                <CustomInput
+                  type="number"
+                  name="cvc"
+                  placeholder="신용카드 CVC"
+                  value={values.cvc}
+                  onChange={handleChange}
+                  onBlur={checkValidation}
+                />
+                {!!errors.cvc && (
+                  <ErrorMessage style={{ marginTop: '14px' }}>
+                    {errors.cvc}
+                  </ErrorMessage>
+                )}
+              </Box>
+            </div>
+            <CustomButton onClick={handleClick}>카드 등록</CustomButton>
+          </ModalBox>
+        </ModalContainer>
+      ) : null}
+    </>
+  );
+};
+
+export default CreditCardModal;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -55,139 +145,3 @@ const ErrorMessage = styled.div`
   text-align: left;
   color: red;
 `;
-
-const CreditCardModal = ({ open, close, setUserInfo, cardValidation }) => {
-  const [cardNum, setCardNum] = useState('');
-  const [expiredDate, setExpiredDate] = useState('');
-  const [cvc, setCvc] = useState('');
-
-  const [cardNumError, setCardNumError] = useState('');
-  const [expiredDateError, setExpiredDateError] = useState('');
-  const [cvcError, setCvcError] = useState('');
-
-  useEffect(() => {
-    if (expiredDate.length === 4) {
-      setExpiredDate(
-        expiredDate.replace(/-/g, '').replace(/(\d{2})(\d{2})/, '$1/$2'),
-      );
-    }
-  }, [expiredDate]);
-
-  const cardInfoChange = e => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case 'cardNum':
-        const regex = /^[0-9\b -]{0,16}$/;
-        if (regex.test(value)) {
-          setCardNum(value);
-        }
-        break;
-      case 'expiredDate':
-        const regex2 = /^[0-9\b -]{0,4}$/;
-        if (regex2.test(value)) {
-          setExpiredDate(value);
-        }
-        break;
-      case 'cvc':
-        const regex3 = /^[0-9\b -]{0,3}$/;
-        if (regex3.test(value)) {
-          setCvc(value);
-        }
-        break;
-      default:
-        setCardNum(value);
-    }
-  };
-
-  const checkValidation = e => {
-    const { name } = e.target;
-    switch (name) {
-      case 'cardNum':
-        setCardNumError(cardValidation(cardNum, name).message);
-        break;
-      case 'expiredDate':
-        setExpiredDateError(cardValidation(expiredDate, name).message);
-        break;
-      case 'cvc':
-        setCvcError(cardValidation(cvc, name).message);
-        break;
-      default:
-        <ErrorMessage>카드 입력 오류 메시지 정보가 없습니다.</ErrorMessage>;
-    }
-  };
-
-  const setCardInfo = () => {
-    setUserInfo(prev => {
-      prev.cardInfo = {
-        cardNum,
-        expiredDate,
-        cvc,
-      };
-      return prev;
-    });
-    setCardNum('');
-    setExpiredDate('');
-    setCvc('');
-    close();
-  };
-
-  return (
-    <>
-      {open ? (
-        <ModalContainer>
-          <ModalBox>
-            <CloseBtn onClick={close}>X</CloseBtn>
-            <CustomInput
-              type="text"
-              name="cardNum"
-              placeholder="신용카드 번호"
-              value={cardNum}
-              onChange={cardInfoChange}
-              onBlur={checkValidation}
-            />
-            {cardNumError && <ErrorMessage>{cardNumError}</ErrorMessage>}
-            <div>
-              <Box>
-                <CustomInput
-                  type="text"
-                  name="expiredDate"
-                  placeholder="신용카드 만료일 (MM/YY)"
-                  value={expiredDate}
-                  onChange={cardInfoChange}
-                  onBlur={checkValidation}
-                />
-
-                {expiredDateError && (
-                  <ErrorMessage style={{ marginTop: '14px' }}>
-                    {expiredDateError}
-                  </ErrorMessage>
-                )}
-              </Box>
-              <Box>
-                <CustomInput
-                  type="number"
-                  name="cvc"
-                  minLength={3}
-                  maxLength={3}
-                  placeholder="신용카드 CVC"
-                  value={cvc}
-                  onChange={cardInfoChange}
-                  onBlur={checkValidation}
-                />
-                {cvcError && (
-                  <ErrorMessage style={{ marginTop: '14px' }}>
-                    {cvcError}
-                  </ErrorMessage>
-                )}
-              </Box>
-            </div>
-            <CustomButton onClick={setCardInfo}>카드 등록</CustomButton>
-          </ModalBox>
-        </ModalContainer>
-      ) : null}
-    </>
-  );
-};
-
-export default CreditCardModal;

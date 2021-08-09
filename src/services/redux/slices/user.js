@@ -34,7 +34,6 @@ export const userSlice = createSlice({
     },
     loginSuccess: function (state, action) {
       const { id, uid, name, role } = action.payload;
-
       state.id = id;
       state.uid = uid;
       state.name = name;
@@ -62,9 +61,7 @@ export const postLogin =
   ({ id, password }) =>
   dispatch => {
     dispatch(loginRequest());
-
     const user = findLoginUser({ id, password });
-
     if (!user) {
       dispatch(
         loginFailure({
@@ -74,21 +71,11 @@ export const postLogin =
       );
       return;
     }
-
     if (user) {
       const { id, uid, name, role } = user;
-
-      const loginValidation = {
-        id,
-        uid,
-        name,
-        role,
-      };
-
+      const loginValidation = { id, uid, name, role };
       dispatch(loginSuccess(loginValidation));
-
       LSHelper.setItem(LS_KEY.LOGIN_VALIDATION, loginValidation);
-
       return;
     }
   };
